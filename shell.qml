@@ -66,6 +66,14 @@ Scope {
             implicitHeight: 30
             color: "#cc141414"
 
+            VolumePopup {
+                id: volumePopup
+                audio: root.audio
+                anchor.window: bar
+                anchor.rect.x: Math.max(8, Math.min(bar.width - width - 8, status.x + volumeText.x + volumeText.width / 2 - width / 2))
+                anchor.rect.y: bar.height + 6
+            }
+
             BarText {
                 anchors.left: parent.left
                 anchors.leftMargin: 12
@@ -91,6 +99,7 @@ Scope {
                 BarText { text: "mem: " + root.percent(root.stats.memory) }
 
                 BarText {
+                    id: volumeText
                     text: !root.audio ? "vol: —" : root.audio.muted ? "vol: mute" : "vol: " + root.percent(root.audio.volume * 100)
                     MouseArea {
                         anchors.fill: parent
@@ -100,7 +109,7 @@ Scope {
                             if (mouse.button === Qt.RightButton) {
                                 if (root.audio) root.audio.muted = !root.audio.muted;
                             } else {
-                                Quickshell.execDetached(["pavucontrol"]);
+                                volumePopup.visible = !volumePopup.visible;
                             }
                         }
                         onWheel: wheel => {

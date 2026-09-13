@@ -5,7 +5,8 @@ Hyprland用の小さな上部バー。設定はこのリポジトリ内で管理
 - 左: フォーカス中のアプリ名
 - 中央: 日付と時計（システムのローカルタイム）
 - 右: CPU / メモリ / 音量 / バッテリー / Wi-Fi・有線接続
-- 音量: スクロールで5%ずつ変更、右クリックでミュート、左クリックでpavucontrol
+- 音量: スクロールで5%ずつ変更、右クリックでミュート、左クリックで音量パネル
+- 音量パネル: 0〜100%のスライダー、ミュート切り替え。外側クリックか「閉じる」で終了
 - 全モニターに表示。バッテリーがない場合は非表示
 
 ## 起動
@@ -43,6 +44,7 @@ exec-once = /home/atolix/development/quickshell-bar/run.sh
 
 - `shell.qml`: 配置、アプリ名、時計、PipeWire音量、UPowerバッテリー
 - `BarText.qml`: 共通のフォント・文字色
+- `VolumePopup.qml`: PipeWireと連動する音量スライダー
 - `scripts/metrics.py`: /procとnmcliから2秒間隔で統計を取得
 - `run.sh`: 配置先を基準に起動
 
