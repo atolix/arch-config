@@ -15,7 +15,10 @@ tooltip {
 }
 
 treeview.view,
-iconview.view {
+iconview.view,
+.sidebar,
+.sidebar.view,
+notebook {
   background-color: @theme_base_color;
   color: @theme_text_color;
 }
@@ -26,9 +29,43 @@ iconview.view:selected {
   color: @theme_selected_fg_color;
 }
 
+.sidebar row:selected,
+.sidebar.view:selected {
+  background-color: @theme_selected_bg_color;
+  color: @theme_selected_fg_color;
+}
+
+entry,
+spinbutton,
+button,
+combobox box,
 headerbar,
 toolbar {
   background-color: #1b1d24;
   color: @theme_fg_color;
+  border-color: #30384f;
   box-shadow: none;
+}
+
+entry:focus,
+button:checked,
+button:hover {
+  border-color: #a5b4fc;
+}
+
+scrollbar slider {
+  background-color: #41455a;
+  border-radius: 5px;
+  min-width: 8px;
+  min-height: 8px;
+}
+
+paned > separator {
+  background-color: #30384f;
+  min-width: 1px;
+  min-height: 1px;
+}
+
+tooltip {
+  border: 1px solid #30384f;
 }
