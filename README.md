@@ -1,94 +1,85 @@
 # Quickshell bar
 
-Hyprland用の小さな上部バー。設定はこのリポジトリ内で管理します。
+A small top bar for Hyprland, managed as a Git repository.
 
-- 左: 電源メニュー、フォーカス中のアプリ名
-- 中央: 日付と時計（システムのローカルタイム）
-- 時計クリック: 日曜始まりの英語カレンダー。前月・翌月の移動、「Today」で今月に戻る
-- 左端の電源アイコン: Lock / Suspend / Reboot / Shutdown
-- 右: 音量 / バッテリー / Wi-Fi・有線接続
-- 音量: スクロールで5%ずつ変更、右クリックでミュート、左クリックで音量パネル
-- バーの音量は状態に応じたスピーカーアイコン。隣の電球は明るさに応じて周囲の光線が連続的に伸縮。クリックで明るさOSDを表示
-- 音量アイコンは0%で波なし、低（1〜33%）で波1本、中（34〜66%）で2本、高（67〜100%）で3本。ミュート時は×印を表示
-- バッテリーはアイコン左に残量パーセントを表示。内部ゲージは残量に応じて連続的に増減し、外枠とゲージは角丸。30%以下は黄、15%以下は赤、充電中は緑
-- Wi-Fiは接続中のSSIDを表示。有線接続時は`eth: connected`、切断時は`net: offline`
-- 明るさキー操作は即時反映。それ以外の変更も約2秒間隔で取得
-- 音量パネル: 0〜100%のスライダー、Mute / Unmute切り替え。外側クリックか「Close」で終了
-- 全モニターに表示。バッテリーがない場合は非表示
-- 音量・明るさキー: 画面下中央に英語OSDを1.8秒表示。連打で表示時間を延長
+- Left: power menu and focused application name
+- Center: local date and time
+- Click the clock: English calendar with previous/next month navigation and a Today button
+- Power icon: Lock / Suspend / Reboot / Shutdown
+- Right: volume / brightness / battery / Wi-Fi or Ethernet
+- Volume: scroll to change by 5%, right-click to mute, left-click to open the volume panel
+- Volume icon: no wave at 0%, then one, two, or three waves for 1–33%, 34–66%, and 67–100%
+- Brightness icon: light rays expand continuously with the current brightness
+- Battery: percentage beside a rounded battery gauge; yellow below 30%, red below 15%, green while charging
+- Wi-Fi: connected SSID; Ethernet shows `eth: connected`, and disconnected networking shows `net: offline`
+- Volume and brightness keys: an English OSD appears at the bottom center for 1.8 seconds
+- The bar appears on every monitor. The battery icon and percentage are hidden when no battery is present.
 
-## 起動
+## Requirements
 
-Arch Linuxの依存パッケージ:
+Arch Linux packages:
 
 ```sh
-sudo pacman -S --needed quickshell python networkmanager upower pavucontrol
+sudo pacman -S --needed quickshell python networkmanager upower pavucontrol brightnessctl wireplumber
 ```
 
-PipeWireとNetworkManagerが動作しているWaylandセッションで起動:
+The bar expects a Wayland session with PipeWire and NetworkManager running.
+
+## Run
 
 ```sh
 cd ~/development/quickshell-bar
 ./run.sh
 ```
 
-Waybarが動いている場合はバーが2本になります。試用中は別のターミナルで
-`pkill -SIGUSR1 waybar` を実行すると表示を切り替えられます。
-QuickshellはCtrl+Cで終了。同じコマンドでWaybarを再表示できます。
-QMLの変更は保存すると自動反映されます。
+Quickshell hot-reloads QML changes when files are saved. Stop it with Ctrl+C.
+If Waybar is still running, stop it separately to avoid displaying two bars.
 
-## 音量・明るさOSD
+## Volume and brightness OSD
 
-`brightnessctl`と`wpctl`（wireplumber）が必要です。
-Hyprlandの既存の音量・明るさキー設定を以下の1行に置き換えます。
-この環境では設定済みです。
+The Hyprland key bindings are kept in `hyprland-osd.conf` and are already enabled in this setup:
 
 ```ini
 source = /home/atolix/development/quickshell-bar/hyprland-osd.conf
 ```
 
-音量は2%刻み（上限100%）、明るさは10%刻み（最小値1）。
-ミュートキーにも対応します。Quickshell停止中も音量・明るさの操作は機能します。
-OSDは全モニターに表示し、フォーカスやクリックを奪いません。
-スライダー操作ではOSDを出さず、ハードウェアキーから呼び出します。
-配置先を変更した場合は、このsource行と`hyprland-osd.conf`内のパスを変更してください。
+Volume changes use 2% steps up to 100%; brightness changes use 10% steps. The mute key is supported.
+The hardware controls continue to work even if Quickshell is stopped.
+The OSD is shown on every monitor without taking keyboard focus or pointer input.
 
-値を変えずに表示を試すには:
+To preview the OSD without changing a value:
 
 ```sh
 ./scripts/osd-control.py volume show
 ./scripts/osd-control.py brightness show
 ```
 
-## 自動起動
+## Autostart
 
-`~/.config/hypr/hyprland.conf` は以下の設定へ切り替え済みです。
+`~/.config/hypr/hyprland.conf` is configured to start Quickshell automatically:
 
 ```ini
 exec-once = /home/atolix/development/quickshell-bar/run.sh --no-duplicate --daemonize
 ```
 
-次のログインからQuickshellが自動起動します。戻すときは `exec-once = waybar` に戻します。
-別のユーザー・配置先ではパスを変更してください。
+For a different user or installation path, update the paths. To switch back to Waybar, replace the line with `exec-once = waybar`.
 
-## ファイル
+## Files
 
-- `shell.qml`: 配置、アプリ名、時計、PipeWire音量、UPowerバッテリー
-- `BarText.qml`: 共通のフォント・文字色
-- `BrightnessIcon.qml`: 明るさに合わせて光線が伸縮する電球アイコン
-- `VolumeIcon.qml`: 音量に合わせて0〜3本の波を描くスピーカーアイコン
-- `BatteryIcon.qml`: 角丸の残量ゲージと充電状態を描くバッテリーアイコン
-- `VolumePopup.qml`: PipeWireと連動する音量スライダー
-- `CalendarPopup.qml`: 今日の強調表示と月移動ができるカレンダー
-- `PowerPopup.qml`: ロック・サスペンド・再起動・シャットダウンのメニュー
-- `Osd.qml`: 音量・明るさの一時表示
-- `hyprland-osd.conf`: OSDと連動するハードウェアキー設定
-- `scripts/osd-control.py`: 音量・明るさを操作してOSDへ通知
-- `scripts/metrics.py`: /procとnmcliから2秒間隔で統計を取得
-- `run.sh`: 配置先を基準に起動
+- `shell.qml`: layout, focused application, clock, audio, battery, and popups
+- `BarText.qml`: shared font and text styling
+- `BrightnessIcon.qml`: light bulb whose rays expand with brightness
+- `VolumeIcon.qml`: speaker with zero to three volume waves
+- `BatteryIcon.qml`: rounded battery gauge and charging color
+- `VolumePopup.qml`: PipeWire volume slider and mute control
+- `CalendarPopup.qml`: calendar with today highlighting and month navigation
+- `PowerPopup.qml`: lock, suspend, reboot, and shutdown menu
+- `Osd.qml`: temporary volume and brightness display
+- `hyprland-osd.conf`: hardware key bindings for the OSD
+- `scripts/osd-control.py`: applies volume/brightness changes and triggers the OSD
+- `scripts/metrics.py`: reads brightness and NetworkManager status every two seconds
+- `run.sh`: starts the configuration relative to its own location
 
-ネットワーク情報を取得できない場合は `net: —` を表示します。
-フォントはJetBrainsMono、背景は元のWaybarに合わせた半透明の黒です。
-明るさ/ネットワーク取得は全モニターで1つのプロセスを共有します。
+The bar uses JetBrainsMono and a translucent dark background matching the previous Waybar setup.
 
-参考: [Quickshell公式ガイド](https://quickshell.org/docs/guide/introduction/)
+Reference: [Quickshell documentation](https://quickshell.org/docs/guide/introduction/)
