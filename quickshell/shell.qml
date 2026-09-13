@@ -264,7 +264,7 @@ Scope {
                 anchors.verticalCenter: parent.verticalCenter
                 x: clockText.x + clockText.width + Math.max(0, (status.x - clockText.x - clockText.width - width) / 2)
                 text: "cpu: " + root.stats.cpu + "% / mem: " + root.stats.mem + "%"
-                color: "#777d91"
+                color: "#eaeaea"
                 Accessible.name: "CPU " + root.stats.cpu + " percent, memory " + root.stats.mem + " percent"
             }
 
