@@ -8,7 +8,10 @@ import Quickshell.Services.UPower
 Scope {
     id: root
 
-    Osd {}
+    property var brightness: null
+    Osd {
+        onBrightnessReported: value => root.brightness = value
+    }
 
     property var stats: ({ cpu: null, memory: null, network: "…" })
     readonly property var audio: Pipewire.defaultAudioSink?.audio ?? null
@@ -43,7 +46,10 @@ Scope {
         running: true
         stdout: SplitParser {
             onRead: data => {
-                try { root.stats = JSON.parse(data); }
+                try {
+                    root.stats = JSON.parse(data);
+                    root.brightness = root.stats.brightness ?? null;
+                }
                 catch (error) { console.warn("Invalid metrics:", error); }
             }
         }
@@ -149,7 +155,8 @@ Scope {
                     font.family: "JetBrainsMono Nerd Font Mono"
                     font.pixelSize: 16
                     horizontalAlignment: Text.AlignHCenter
-                    text: ""
+                    text: root.brightness === null || root.brightness < 34 ? "󰌶" : root.brightness < 67 ? "󰌵" : "󰛨"
+                    color: root.brightness === null ? "#646978" : "#eaeaea"
                     Accessible.name: "Brightness"
                     MouseArea {
                         anchors.fill: parent

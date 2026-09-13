@@ -8,6 +8,7 @@ Scope {
     property string kind: "volume"
     property int percent: 0
     property bool muted: false
+    signal brightnessReported(int value)
 
     IpcHandler {
         target: "osd"
@@ -16,6 +17,7 @@ Scope {
             osd.kind = kind;
             osd.percent = Math.max(0, Math.min(100, percent));
             osd.muted = muted;
+            if (kind === "brightness") osd.brightnessReported(osd.percent);
             hideTimer.restart();
         }
     }

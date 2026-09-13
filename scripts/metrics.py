@@ -22,6 +22,18 @@ def memory_percent():
     return 100 * (1 - values["MemAvailable"] / values["MemTotal"])
 
 
+def brightness_percent():
+    for device in sorted(Path("/sys/class/backlight").glob("*")):
+        try:
+            maximum = int((device / "max_brightness").read_text())
+            current = int((device / "brightness").read_text())
+            if maximum > 0:
+                return max(0, min(100, round(100 * current / maximum)))
+        except (OSError, ValueError):
+            continue
+    return None
+
+
 def network_status():
     try:
         result = subprocess.run(
@@ -48,7 +60,7 @@ def main():
         idle = current[1] - previous[1]
         cpu = max(0, min(100, 100 * (1 - idle / total))) if total > 0 else None
         previous = current
-        print(json.dumps({"cpu": cpu, "memory": memory_percent(), "network": network_status()}), flush=True)
+        print(json.dumps({"cpu": cpu, "memory": memory_percent(), "network": network_status(), "brightness": brightness_percent()}), flush=True)
 
 
 if __name__ == "__main__":
