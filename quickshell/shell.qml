@@ -15,12 +15,12 @@ Scope {
         onBrightnessReported: value => root.brightness = value
     }
 
-    property var stats: ({ network: "…", network_type: "offline", signal: 0, cpu: 0, mem: 0, temp: null, input: "—" })
+    property var stats: ({ network: "…", network_type: "offline", signal: 0, cpu: 0, mem: 0, temp: null, fan: null, input: "—" })
 
     IpcHandler {
         target: "input"
         function setLayout(layout: string): void {
-            root.stats = { network: root.stats.network, network_type: root.stats.network_type, signal: root.stats.signal, cpu: root.stats.cpu, mem: root.stats.mem, temp: root.stats.temp, input: layout };
+            root.stats = { network: root.stats.network, network_type: root.stats.network_type, signal: root.stats.signal, cpu: root.stats.cpu, mem: root.stats.mem, temp: root.stats.temp, fan: root.stats.fan, input: layout };
         }
     }
     readonly property var audio: Pipewire.defaultAudioSink?.audio ?? null
@@ -414,16 +414,16 @@ Scope {
 
                     Item {
                         width: 18
-                        height: 240
+                        height: 420
 
                         BarText {
                             anchors.centerIn: parent
-                            width: 240
+                            width: 420
                             height: 18
                             horizontalAlignment: Text.AlignHCenter
                             font.pixelSize: 11
                             rotation: -90
-                            text: "cpu: " + root.stats.cpu + "% / mem: " + root.stats.mem + "% / temp: " + (root.stats.temp === null ? "—" : root.stats.temp) + "°C"
+                            text: "cpu: " + root.stats.cpu + "% / mem: " + root.stats.mem + "% / temp: " + (root.stats.temp === null ? "—" : root.stats.temp) + "°C / fan: " + (root.stats.fan === null ? "—" : root.stats.fan) + " RPM"
                         }
                     }
 

@@ -4,6 +4,7 @@
 import json
 import os
 from pathlib import Path
+import re
 import subprocess
 import time
 
@@ -75,6 +76,34 @@ def temperature_celsius():
     return None
 
 
+def hwmon_value(sensor_name, pattern):
+    for hwmon in sorted(Path("/sys/class/hwmon").glob("hwmon*/")):
+        try:
+            name = (hwmon / "name").read_text().strip()
+        except OSError:
+            name = ""
+        if sensor_name and name != sensor_name:
+            continue
+        for value_path in sorted(hwmon.glob(pattern)):
+            try:
+                return int(value_path.read_text().strip())
+            except (OSError, ValueError):
+                continue
+    return None
+
+
+def fan_rpm():
+    value = hwmon_value("", "fan*_input")
+    if value is not None and value >= 0:
+        return value
+    try:
+        output = subprocess.run(["sensors"], capture_output=True, text=True, timeout=2, check=True).stdout
+        match = re.search(r"^Exhaust\s*:\s*([0-9]+)\s+RPM", output, re.MULTILINE)
+        return int(match.group(1)) if match else None
+    except (OSError, subprocess.SubprocessError, ValueError):
+        return None
+
+
 def input_layout():
     try:
         engine = subprocess.run(
@@ -130,6 +159,7 @@ def main():
         network = network_status()
         print(json.dumps({**network, "brightness": brightness_percent(), "cpu": cpu,
                           "mem": memory_percent(), "temp": temperature_celsius(),
+                          "fan": fan_rpm(),
                           "input": input_layout()}), flush=True)
 
 
