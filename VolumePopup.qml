@@ -25,13 +25,13 @@ PopupWindow {
         BarText {
             x: 16
             y: 14
-            text: "音量"
+            text: "Volume"
         }
         BarText {
             anchors.right: parent.right
             anchors.rightMargin: 16
             y: 14
-            text: !popup.audio ? "出力なし" : popup.audio.muted ? "ミュート" : Math.round(popup.audio.volume * 100) + "%"
+            text: !popup.audio ? "No output" : popup.audio.muted ? "Muted" : Math.round(popup.audio.volume * 100) + "%"
         }
 
         Slider {
@@ -83,7 +83,7 @@ PopupWindow {
             enabled: popup.audio !== null
             onClicked: popup.audio.muted = !popup.audio.muted
             contentItem: BarText {
-                text: popup.audio?.muted ? "ミュート解除" : "ミュート"
+                text: popup.audio?.muted ? "Unmute" : "Mute"
                 horizontalAlignment: Text.AlignHCenter
             }
             background: Rectangle { radius: 5; color: parent.down ? "#50566a" : "#363b49" }
@@ -95,7 +95,7 @@ PopupWindow {
             width: 60
             height: 28
             onClicked: popup.visible = false
-            contentItem: BarText { text: "閉じる"; horizontalAlignment: Text.AlignHCenter }
+            contentItem: BarText { text: "Close"; horizontalAlignment: Text.AlignHCenter }
             background: Rectangle { radius: 5; color: parent.down ? "#50566a" : "#363b49" }
         }
     }

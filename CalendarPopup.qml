@@ -50,28 +50,28 @@ PopupWindow {
         CalendarButton {
             x: 16; y: 16
             text: "‹"
-            Accessible.name: "前の月"
+            Accessible.name: "Previous month"
             onClicked: popup.moveMonth(-1)
         }
         BarText {
             anchors.horizontalCenter: parent.horizontalCenter
             y: 16
             height: 28
-            text: Qt.formatDateTime(popup.month, "yyyy年 M月")
+            text: popup.month.toLocaleDateString(Qt.locale("en_US"), "MMMM yyyy")
         }
         CalendarButton {
             anchors.right: parent.right
             anchors.rightMargin: 16
             y: 16
             text: "›"
-            Accessible.name: "次の月"
+            Accessible.name: "Next month"
             onClicked: popup.moveMonth(1)
         }
 
         Row {
             x: 16; y: 56
             Repeater {
-                model: ["日", "月", "火", "水", "木", "金", "土"]
+                model: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
                 BarText {
                     required property string modelData
                     required property int index
@@ -112,7 +112,7 @@ PopupWindow {
         CalendarButton {
             x: 16; y: 300
             width: 70
-            text: "今日"
+            text: "Today"
             onClicked: popup.showToday()
         }
         CalendarButton {
@@ -120,7 +120,7 @@ PopupWindow {
             anchors.rightMargin: 16
             y: 300
             width: 70
-            text: "閉じる"
+            text: "Close"
             onClicked: popup.visible = false
         }
     }
