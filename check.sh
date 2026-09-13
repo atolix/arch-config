@@ -29,6 +29,12 @@ else
     ok 'config paths rendered'
 fi
 
+printf '\nPackages\n'
+while IFS= read -r package_name; do
+    [ -z "$package_name" ] && continue
+    if pacman -Q "$package_name" >/dev/null 2>&1; then ok "$package_name"; else fail "$package_name is not installed"; fi
+done < "$repo_dir/packages.txt"
+
 printf '\nSyntax checks\n'
 if bash -n "$repo_dir/install.sh" "$repo_dir/quickshell/run.sh" "$repo_dir/quickshell/scripts/lock-and-suspend.sh"; then ok 'shell scripts'; else fail 'shell script syntax'; fi
 if python3 -m py_compile "$repo_dir"/quickshell/scripts/*.py; then ok 'Python scripts'; else fail 'Python script syntax'; fi

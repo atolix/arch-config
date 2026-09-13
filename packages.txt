@@ -7,7 +7,6 @@ hyprland
 hyprlock
 network-manager-applet
 networkmanager
-pavucontrol
 pipewire
 python
 quickshell
