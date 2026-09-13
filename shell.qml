@@ -126,9 +126,9 @@ Scope {
                     id: volumeText
                     width: 24
                     font.family: "JetBrainsMono Nerd Font Mono"
-                    font.pixelSize: root.audio && !root.audio.muted && root.audio.volume < 0.25 ? 15 : 17
+                    font.pixelSize: 17
                     horizontalAlignment: Text.AlignHCenter
-                    text: !root.audio || root.audio.muted ? "󰝟" : root.audio.volume < 0.25 ? "󰕿" : root.audio.volume < 0.65 ? "󰖀" : "󰕾"
+                    text: !root.audio || root.audio.muted ? "󰝟" : root.audio.volume === 0 ? "󰖁" : root.audio.volume < 0.34 ? "󰕿" : root.audio.volume < 0.67 ? "󰖀" : "󰕾"
                     color: root.audio ? "#eaeaea" : "#646978"
                     Accessible.name: "Volume"
                     MouseArea {
