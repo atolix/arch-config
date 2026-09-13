@@ -124,11 +124,11 @@ Scope {
 
                 BarText {
                     id: volumeText
-                    width: 22
+                    width: 24
                     font.family: "JetBrainsMono Nerd Font Mono"
-                    font.pixelSize: 16
+                    font.pixelSize: 17
                     horizontalAlignment: Text.AlignHCenter
-                    text: !root.audio || root.audio.muted ? "󰝟" : root.audio.volume === 0 ? "" : root.audio.volume < 0.5 ? "" : ""
+                    text: !root.audio || root.audio.muted ? "󰝟" : root.audio.volume === 0 ? "󰕿" : root.audio.volume < 0.5 ? "󰕿" : root.audio.volume < 0.75 ? "󰖀" : "󰕾"
                     color: root.audio ? "#eaeaea" : "#646978"
                     Accessible.name: "Volume"
                     MouseArea {
