@@ -29,6 +29,7 @@ The bar appears on every monitor. The battery icon and percentage are hidden whe
 ## Other desktop tools
 
 - App launcher: press `Super+R` for the Wofi application launcher.
+- Clipboard history: press `Super+Shift+C` to search and paste saved text or images with Wofi.
 - Window switcher: press `Ctrl+S` for a wide Wofi list with application icons and window titles.
 - Thunar: dark GTK colors, compact controls, and matching selection accents.
 - Idle power saving: locks after 5 minutes, suspends 5 seconds later, and turns the display off after 10 minutes as a fallback.
