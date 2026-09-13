@@ -47,7 +47,6 @@ Scope {
             "com.mitchellh.ghostty": "Ghostty",
             "org.kde.dolphin": "Dolphin",
             "chromium": "Chromium",
-            "firefox": "Firefox"
         };
         return names[appId] ?? appId;
     }
