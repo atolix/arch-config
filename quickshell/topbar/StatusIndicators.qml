@@ -1,6 +1,6 @@
 import QtQuick
 import Quickshell
-import "shared"
+import "../shared"
 
 Row {
     id: root

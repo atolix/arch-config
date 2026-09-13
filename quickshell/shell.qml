@@ -10,6 +10,7 @@ import "shared/HyprlandHelpers.js" as HyprlandHelpers
 import "shared/Theme.js" as Theme
 import "shared"
 import "popups"
+import "topbar"
 
 Scope {
     id: root
