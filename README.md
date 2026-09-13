@@ -1,6 +1,6 @@
-# Quickshell bar
+# Arch configuration
 
-A small top bar for Hyprland, managed as a Git repository.
+Hyprland desktop configuration, managed as a Git repository. The Quickshell bar lives in `quickshell/`.
 
 - Left: power menu; focused workspace applications are centered between the power icon and clock
 - Center: local date and time in 24-hour format with seconds
@@ -72,6 +72,15 @@ exec-once = /home/atolix/development/arch-config/quickshell/run.sh --no-duplicat
 ```
 
 For a different user or installation path, update the paths. To switch back to Waybar, replace the line with `exec-once = waybar`.
+
+## Install and apply
+
+```sh
+./install.sh
+sudo pacman -S --needed - < packages.txt
+```
+
+The installer links user configuration files into `~/.config`. SDDM theme files are tracked under `sddm/mysddm`; installing them into `/usr/share/sddm/themes/mysddm` requires root privileges.
 
 ## Files
 

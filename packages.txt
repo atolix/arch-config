@@ -1,0 +1,17 @@
+awww
+brightnessctl
+fcitx5
+fcitx5-mozc
+hypridle
+hyprland
+hyprlock
+network-manager-applet
+networkmanager
+pavucontrol
+pipewire
+python
+quickshell
+sddm
+upower
+wireplumber
+wofi
