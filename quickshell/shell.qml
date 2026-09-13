@@ -179,36 +179,13 @@ Scope {
                 anchors.verticalCenter: parent.verticalCenter
             }
 
-            BarText {
-                id: clockText
-                anchors.centerIn: parent
-                text: Qt.formatDateTime(clock.date, "MM/dd ddd HH:mm:ss")
-                MouseArea {
-                    anchors.fill: parent
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: {
-                        volumePopup.visible = false;
-                        calendarPopup.visible = !calendarPopup.visible;
-                    }
+            ClockDisplay {
+                anchors.fill: parent
+                value: clock.date
+                openCalendar: function() {
+                    volumePopup.visible = false;
+                    calendarPopup.visible = !calendarPopup.visible;
                 }
-            }
-
-            BarText {
-                id: timezoneText
-                anchors.left: clockText.right
-                anchors.leftMargin: 6
-                anchors.verticalCenter: parent.verticalCenter
-                text: Qt.formatDateTime(clock.date, "t")
-                Accessible.name: "Timezone " + text
-            }
-
-            BarText {
-                id: yearText
-                anchors.right: clockText.left
-                anchors.rightMargin: 0
-                anchors.verticalCenter: parent.verticalCenter
-                text: Qt.formatDateTime(clock.date, "yyyy/")
-                Accessible.name: "Year " + text
             }
 
             StatusIndicators {
