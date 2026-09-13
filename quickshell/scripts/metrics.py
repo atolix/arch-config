@@ -37,21 +37,31 @@ def input_layout():
 def network_status():
     try:
         result = subprocess.run(
-            ["nmcli", "--terse", "--escape", "no", "--fields", "TYPE,STATE,CONNECTION,SIGNAL", "device", "status"],
+            ["nmcli", "--terse", "--escape", "no", "--fields", "TYPE,STATE,CONNECTION", "device", "status"],
             capture_output=True, text=True, timeout=3, check=True,
             env={**os.environ, "LC_ALL": "C"},
         )
     except (OSError, subprocess.SubprocessError):
         return {"network": "net: —", "network_type": "offline", "signal": 0}
-    connections = [line.split(":", 3) for line in result.stdout.splitlines()]
+    connections = [line.split(":", 2) for line in result.stdout.splitlines()]
     for kind in ("wifi", "ethernet"):
         for entry in connections:
-            if len(entry) >= 3 and entry[0] == kind and entry[1] == "connected":
+            if len(entry) == 3 and entry[0] == kind and entry[1] == "connected":
                 if kind == "wifi":
+                    signal = 0
                     try:
-                        signal = int(entry[3]) if len(entry) > 3 and entry[3] else 0
-                    except ValueError:
-                        signal = 0
+                        signal_result = subprocess.run(
+                            ["nmcli", "--terse", "--escape", "no", "--fields", "IN-USE,SIGNAL", "device", "wifi"],
+                            capture_output=True, text=True, timeout=3, check=True,
+                            env={**os.environ, "LC_ALL": "C"},
+                        )
+                        for signal_entry in signal_result.stdout.splitlines():
+                            fields = signal_entry.split(":", 1)
+                            if len(fields) == 2 and fields[0] == "*":
+                                signal = int(fields[1] or 0)
+                                break
+                    except (OSError, subprocess.SubprocessError, ValueError):
+                        pass
                     return {"network": entry[2], "network_type": "wifi", "signal": signal}
                 return {"network": "eth: connected", "network_type": "ethernet", "signal": 0}
     return {"network": "net: offline", "network_type": "offline", "signal": 0}
