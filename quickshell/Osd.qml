@@ -2,6 +2,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Io
 import Quickshell.Wayland
+import "Theme.js" as Theme
 
 Scope {
     id: osd
@@ -44,8 +45,8 @@ Scope {
             Rectangle {
                 anchors.fill: parent
                 radius: 12
-                color: "#f222242b"
-                border.color: "#414552"
+                color: Theme.surface
+                border.color: Theme.border
                 BarText {
                     x: 18; y: 14
                     text: osd.kind === "brightness" ? "Brightness" : "Volume"
@@ -61,12 +62,12 @@ Scope {
                     width: parent.width - 36
                     height: 6
                     radius: 3
-                    color: "#414552"
+                    color: Theme.border
                     Rectangle {
                         width: parent.width * (osd.muted ? 0 : osd.percent / 100)
                         height: parent.height
                         radius: 3
-                        color: "#a5b4fc"
+                        color: Theme.accent
                         Behavior on width { NumberAnimation { duration: 100 } }
                     }
                 }

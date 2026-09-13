@@ -1,5 +1,6 @@
 import QtQuick
 import Quickshell
+import "Theme.js" as Theme
 
 PopupWindow {
     id: popup
@@ -24,8 +25,8 @@ PopupWindow {
             width: notificationList.width
             height: bodyText.visible ? 92 : 68
             radius: 9
-            color: "#f222242b"
-            border.color: modelData.urgency === 2 ? "#f38ba8" : "#414552"
+            color: Theme.surface
+            border.color: modelData.urgency === 2 ? Theme.danger : Theme.border
 
             Column {
                 x: 14
@@ -62,7 +63,7 @@ PopupWindow {
                 width: 24
                 height: 24
                 text: "×"
-                color: closeArea.containsMouse ? "#ffffff" : "#9da3b8"
+                color: closeArea.containsMouse ? Theme.white : "#9da3b8"
                 font.pixelSize: 18
                 horizontalAlignment: Text.AlignHCenter
                 MouseArea {

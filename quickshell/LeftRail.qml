@@ -1,6 +1,7 @@
 import QtQuick
 import Quickshell
 import Quickshell.Hyprland
+import "Theme.js" as Theme
 
 PanelWindow {
     id: rail
@@ -12,7 +13,7 @@ PanelWindow {
     screen: screenRef
     anchors { left: true; top: true; bottom: true }
     implicitWidth: 38
-    color: "#cc141414"
+    color: Theme.background
 
     Column {
         anchors.bottom: parent.bottom

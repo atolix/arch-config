@@ -1,5 +1,6 @@
 import QtQuick
 import Quickshell.Hyprland
+import "Theme.js" as Theme
 
 Column {
     id: root
@@ -28,7 +29,7 @@ Column {
                 font.pixelSize: 11
                 rotation: -90
                 text: (index < appNameRepeater.count - 1 ? "/ " : "") + root.appLabel(modelData.wayland?.appId ?? modelData.handle?.appId ?? "")
-                color: modelData.activated ? "#a5b4fc" : "#eaeaea"
+                color: modelData.activated ? Theme.accent : Theme.text
             }
         }
     }

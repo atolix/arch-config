@@ -6,6 +6,7 @@ import Quickshell.Hyprland
 import Quickshell.Services.Pipewire
 import Quickshell.Services.UPower
 import Quickshell.Services.Notifications
+import "Theme.js" as Theme
 
 Scope {
     id: root
@@ -113,7 +114,7 @@ Scope {
             screen: modelData
             anchors { top: true; left: true; right: true }
             implicitHeight: 30
-            color: "#cc141414"
+            color: Theme.background
 
             VolumePopup {
                 id: volumePopup

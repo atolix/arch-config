@@ -1,5 +1,6 @@
 import QtQuick
 import Quickshell.Services.UPower
+import "Theme.js" as Theme
 
 Item {
     id: icon
@@ -7,7 +8,7 @@ Item {
     readonly property bool available: battery.ready && battery.isPresent
     readonly property real level: available ? Math.max(0, Math.min(1, battery.percentage)) : 0
     readonly property bool charging: available && (battery.state === UPowerDeviceState.Charging || battery.state === UPowerDeviceState.PendingCharge)
-    readonly property color levelColor: charging ? "#a6e3a1" : level <= 0.15 ? "#f38ba8" : level <= 0.3 ? "#f9e2af" : "#eaeaea"
+    readonly property color levelColor: charging ? Theme.success : level <= 0.15 ? Theme.danger : level <= 0.3 ? Theme.warning : Theme.text
 
     implicitWidth: 28
     implicitHeight: 22

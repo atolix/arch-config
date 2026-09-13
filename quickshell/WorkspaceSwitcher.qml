@@ -1,5 +1,6 @@
 import QtQuick
 import Quickshell.Hyprland
+import "Theme.js" as Theme
 
 Row {
     id: root
@@ -25,9 +26,9 @@ Row {
                 width: focused ? 14 : 7
                 height: focused ? 5 : 7
                 radius: height / 2
-                color: focused ? "#a5b4fc" : occupied ? "#a5b4fc" : "transparent"
+                color: focused ? Theme.accent : occupied ? Theme.accent : "transparent"
                 border.width: focused || occupied ? 0 : 1
-                border.color: "#646978"
+                border.color: Theme.muted
             }
 
             MouseArea {

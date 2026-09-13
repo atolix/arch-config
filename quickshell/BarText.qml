@@ -1,7 +1,8 @@
 import QtQuick
+import "Theme.js" as Theme
 
 Text {
-    color: "#eaeaea"
+    color: Theme.text
     font.family: "JetBrainsMono"
     font.pixelSize: 13
     textFormat: Text.PlainText

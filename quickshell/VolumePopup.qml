@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import Quickshell
 import Quickshell.Hyprland
+import "Theme.js" as Theme
 
 PopupWindow {
     id: popup
@@ -18,9 +19,9 @@ PopupWindow {
 
     Rectangle {
         anchors.fill: parent
-        color: "#f222242b"
+        color: Theme.surface
         radius: 10
-        border.color: "#414552"
+        border.color: Theme.border
 
         BarText {
             x: 16
@@ -57,12 +58,12 @@ PopupWindow {
                 width: slider.availableWidth
                 height: 4
                 radius: 2
-                color: "#414552"
+                color: Theme.border
                 Rectangle {
                     width: slider.visualPosition * parent.width
                     height: parent.height
                     radius: 2
-                    color: slider.enabled ? "#a5b4fc" : "#666666"
+                    color: slider.enabled ? Theme.accent : "#666666"
                 }
             }
             handle: Rectangle {
@@ -71,7 +72,7 @@ PopupWindow {
                 width: 14
                 height: 14
                 radius: 7
-                color: slider.pressed ? "#ffffff" : "#a5b4fc"
+                color: slider.pressed ? Theme.white : Theme.accent
             }
         }
 
@@ -86,7 +87,7 @@ PopupWindow {
                 text: popup.audio?.muted ? "Unmute" : "Mute"
                 horizontalAlignment: Text.AlignHCenter
             }
-            background: Rectangle { radius: 5; color: parent.down ? "#50566a" : "#363b49" }
+            background: Rectangle { radius: 5; color: parent.down ? Theme.buttonHover : Theme.button }
         }
         Button {
             anchors.right: parent.right
@@ -96,7 +97,7 @@ PopupWindow {
             height: 28
             onClicked: popup.visible = false
             contentItem: BarText { text: "Close"; horizontalAlignment: Text.AlignHCenter }
-            background: Rectangle { radius: 5; color: parent.down ? "#50566a" : "#363b49" }
+            background: Rectangle { radius: 5; color: parent.down ? Theme.buttonHover : Theme.button }
         }
     }
 }

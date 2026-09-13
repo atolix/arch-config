@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import Quickshell
 import Quickshell.Hyprland
+import "Theme.js" as Theme
 
 PopupWindow {
     id: popup
@@ -37,15 +38,15 @@ PopupWindow {
         }
         background: Rectangle {
             radius: 5
-            color: parent.down ? "#50566a" : parent.hovered ? "#414552" : "#363b49"
+            color: parent.down ? Theme.buttonHover : parent.hovered ? Theme.border : Theme.button
         }
     }
 
     Rectangle {
         anchors.fill: parent
-        color: "#f222242b"
+        color: Theme.surface
         radius: 10
-        border.color: "#414552"
+        border.color: Theme.border
 
         CalendarButton {
             x: 16; y: 16
@@ -79,7 +80,7 @@ PopupWindow {
                     height: 26
                     text: modelData
                     horizontalAlignment: Text.AlignHCenter
-                    color: index === 0 ? "#f38ba8" : index === 6 ? "#a5b4fc" : "#aeb3c2"
+                    color: index === 0 ? Theme.danger : index === 6 ? Theme.accent : "#aeb3c2"
                 }
             }
         }
@@ -98,12 +99,12 @@ PopupWindow {
                     width: 38.85
                     height: 34
                     radius: 7
-                    color: isToday ? "#a5b4fc" : "transparent"
+                    color: isToday ? Theme.accent : "transparent"
                     BarText {
                         anchors.fill: parent
                         horizontalAlignment: Text.AlignHCenter
                         text: dayCell.day.getDate()
-                        color: dayCell.isToday ? "#181a22" : !dayCell.inMonth ? "#646978" : dayCell.index % 7 === 0 ? "#f38ba8" : dayCell.index % 7 === 6 ? "#a5b4fc" : "#eaeaea"
+                        color: dayCell.isToday ? "#181a22" : !dayCell.inMonth ? Theme.muted : dayCell.index % 7 === 0 ? Theme.danger : dayCell.index % 7 === 6 ? Theme.accent : Theme.text
                     }
                 }
             }

@@ -1,4 +1,5 @@
 import QtQuick
+import "Theme.js" as Theme
 
 Item {
     id: icon
@@ -21,7 +22,7 @@ Item {
             radius: height / 2
             rotation: angle
             transformOrigin: Item.Left
-            color: "#eaeaea"
+            color: Theme.text
             opacity: icon.brightness === null ? 0 : 0.2 + icon.level * 0.8
 
             Behavior on width { NumberAnimation { duration: 120 } }
@@ -32,7 +33,7 @@ Item {
     Text {
         anchors.centerIn: parent
         text: "󰌵"
-        color: icon.brightness === null ? "#646978" : "#eaeaea"
+        color: icon.brightness === null ? Theme.muted : Theme.text
         font.family: "JetBrainsMono Nerd Font Mono"
         font.pixelSize: 13
         verticalAlignment: Text.AlignVCenter

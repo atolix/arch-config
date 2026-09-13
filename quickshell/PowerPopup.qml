@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import Quickshell
 import Quickshell.Hyprland
+import "Theme.js" as Theme
 
 PopupWindow {
     id: popup
@@ -30,15 +31,15 @@ PopupWindow {
         }
         background: Rectangle {
             radius: 6
-            color: parent.down ? "#50566a" : parent.hovered ? "#414552" : "#363b49"
+            color: parent.down ? Theme.buttonHover : parent.hovered ? Theme.border : Theme.button
         }
     }
 
     Rectangle {
         anchors.fill: parent
-        color: "#f222242b"
+        color: Theme.surface
         radius: 10
-        border.color: "#414552"
+        border.color: Theme.border
 
         BarText {
             x: 16
