@@ -4,6 +4,7 @@ Hyprland desktop configuration, managed as a Git repository. The Quickshell bar 
 
 - Left: power menu; focused workspace applications are centered between the power icon and clock
 - Center: local date and time in 24-hour format with seconds
+- Between the clock and right-side icons: CPU and memory usage percentages
 - Click the clock: English calendar with previous/next month navigation and a Today button
 - Power icon: Lock / Suspend / Reboot / Shutdown
 - Right: keyboard layout / volume / brightness / battery / Wi-Fi or Ethernet

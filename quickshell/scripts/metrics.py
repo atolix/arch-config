@@ -20,6 +20,39 @@ def brightness_percent():
     return None
 
 
+def cpu_ticks():
+    try:
+        fields = Path("/proc/stat").read_text().splitlines()[0].split()[1:]
+        values = [int(value) for value in fields]
+        return sum(values), values[3] + values[4]
+    except (IndexError, OSError, ValueError):
+        return None
+
+
+def cpu_percent(previous):
+    current = cpu_ticks()
+    if previous is None or current is None:
+        return 0, current
+    total_delta = current[0] - previous[0]
+    idle_delta = current[1] - previous[1]
+    if total_delta <= 0:
+        return 0, current
+    return max(0, min(100, round(100 * (total_delta - idle_delta) / total_delta))), current
+
+
+def memory_percent():
+    values = {}
+    try:
+        for line in Path("/proc/meminfo").read_text().splitlines():
+            key, value = line.split(":", 1)
+            values[key] = int(value.strip().split()[0])
+        total = values["MemTotal"]
+        available = values["MemAvailable"]
+        return max(0, min(100, round(100 * (total - available) / total)))
+    except (KeyError, OSError, ValueError, ZeroDivisionError):
+        return 0
+
+
 def input_layout():
     try:
         engine = subprocess.run(
@@ -68,10 +101,13 @@ def network_status():
 
 
 def main():
+    previous_cpu = cpu_ticks()
     while True:
         time.sleep(10)
+        cpu, previous_cpu = cpu_percent(previous_cpu)
         network = network_status()
-        print(json.dumps({**network, "brightness": brightness_percent(), "input": input_layout()}), flush=True)
+        print(json.dumps({**network, "brightness": brightness_percent(), "cpu": cpu,
+                          "mem": memory_percent(), "input": input_layout()}), flush=True)
 
 
 if __name__ == "__main__":

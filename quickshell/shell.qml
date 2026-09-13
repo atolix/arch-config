@@ -15,12 +15,12 @@ Scope {
         onBrightnessReported: value => root.brightness = value
     }
 
-    property var stats: ({ network: "…", network_type: "offline", signal: 0, input: "—" })
+    property var stats: ({ network: "…", network_type: "offline", signal: 0, cpu: 0, mem: 0, input: "—" })
 
     IpcHandler {
         target: "input"
         function setLayout(layout: string): void {
-            root.stats = { network: root.stats.network, network_type: root.stats.network_type, signal: root.stats.signal, input: layout };
+            root.stats = { network: root.stats.network, network_type: root.stats.network_type, signal: root.stats.signal, cpu: root.stats.cpu, mem: root.stats.mem, input: layout };
         }
     }
     readonly property var audio: Pipewire.defaultAudioSink?.audio ?? null
@@ -257,6 +257,16 @@ Scope {
                         calendarPopup.visible = !calendarPopup.visible;
                     }
                 }
+            }
+
+            BarText {
+                id: resourceStats
+                anchors.right: status.left
+                anchors.rightMargin: 12
+                anchors.verticalCenter: parent.verticalCenter
+                text: "cpu: " + root.stats.cpu + "% / mem: " + root.stats.mem + "%"
+                color: "#777d91"
+                Accessible.name: "CPU " + root.stats.cpu + " percent, memory " + root.stats.mem + " percent"
             }
 
             Row {
