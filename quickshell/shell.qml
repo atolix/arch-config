@@ -192,7 +192,7 @@ Scope {
                             anchors.centerIn: parent
                             readonly property bool focused: Hyprland.focusedWorkspace?.id === parent.modelData
                             readonly property bool occupied: root.workspaceOccupied(parent.modelData)
-                            width: focused ? 14 : occupied ? 10 : 7
+                            width: focused ? 14 : 7
                             height: focused ? 5 : 7
                             radius: height / 2
                             color: focused ? "#a5b4fc" : occupied ? "#818cf8" : "transparent"
