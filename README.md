@@ -2,28 +2,36 @@
 
 Hyprland desktop configuration, managed as a Git repository. The Quickshell bar lives in `quickshell/`.
 
-- Left: power menu; focused workspace applications are centered between the power icon and clock
-- Center: local date and time in 24-hour format with seconds
-- Between the clock and right-side icons: CPU and memory usage percentages
-- Click the clock: English calendar with previous/next month navigation and a Today button
-- Power icon: Lock / Suspend / Reboot / Shutdown
-- Right: keyboard layout / volume / brightness / battery / Wi-Fi or Ethernet
-- Volume: scroll to change by 5%, right-click to mute, left-click to open the volume panel
-- Volume icon: no wave at 0%, then one, two, or three waves for 1–33%, 34–66%, and 67–100%
-- Brightness icon: light rays expand continuously with the current brightness
-- Battery: percentage beside a rounded battery gauge; yellow below 30%, red below 15%, green while charging
-- Wi-Fi: connected SSID; Ethernet shows `eth: connected`, and disconnected networking shows `net: offline`
-- Keyboard layout: `JP` for Mozc and `EN` for the US keyboard engine
-- Focused workspace apps: application names separated by `/`; the focused app uses the accent color
-- Keyboard layout: press Ctrl+Space or click the `JP` / `EN` label to switch immediately
-- Volume and brightness keys: an English OSD appears at the bottom center for 1.8 seconds
-- Desktop notifications: Quickshell receives D-Bus notifications and shows them as cards below the top-right of the bar
-- App launcher: press `Super+R` to open the Wofi application launcher with matching bar colors
-- Window switcher: press `Ctrl+S` for a wide Wofi list with application icons and window titles
-- Workspaces: click the compact indicators or press `Super+1`–`Super+5` to switch desktops
-- Thunar: dark GTK colors, compact controls, and matching selection accents
-- Idle power saving: locks after 5 minutes, suspends 5 seconds later, and turns the display off after 10 minutes as a fallback
-- The bar appears on every monitor. The battery icon and percentage are hidden when no battery is present.
+## Quickshell bar
+
+| Position | Display |
+| --- | --- |
+| Left | Power menu, workspace indicators, and focused application names |
+| Center | Local date and time in 24-hour format with seconds |
+| Between center and right | `cpu: yy% / mem: xx% / temp: zz°C` |
+| Right | Keyboard layout, volume, brightness, battery, and network icons |
+
+| Component | Behavior |
+| --- | --- |
+| Workspaces | Empty spaces use hollow dots, occupied spaces use accent dots, and the current space uses a wider bar. Click a dot or press `Super+1`–`Super+5`. |
+| Power | Lock, suspend, reboot, and shutdown menu. `Super+Ctrl+Q` locks immediately. |
+| Volume | Scroll changes by 5%, right-click mutes, and left-click opens the volume panel. The icon shows 0–3 waves. |
+| Brightness | The icon changes with brightness; clicking opens the brightness OSD. |
+| Battery | Rounded gauge with percentage; charging is green, low charge is yellow, and critical charge is red. |
+| Network | Wi‑Fi signal, Ethernet, or disconnected icon. The SSID is not shown. |
+| Keyboard | `JP` / `EN`; click or press Ctrl+Space to switch immediately. |
+| Clock | Click for an English calendar with month navigation and a Today button. |
+| Notifications | Quickshell receives D-Bus notifications and shows cards below the top-right of the bar. |
+| OSD | Volume and brightness changes show an English OSD at the bottom center for 1.8 seconds. |
+
+The bar appears on every monitor. The battery icon and percentage are hidden when no battery is present.
+
+## Other desktop tools
+
+- App launcher: press `Super+R` for the Wofi application launcher.
+- Window switcher: press `Ctrl+S` for a wide Wofi list with application icons and window titles.
+- Thunar: dark GTK colors, compact controls, and matching selection accents.
+- Idle power saving: locks after 5 minutes, suspends 5 seconds later, and turns the display off after 10 minutes as a fallback.
 
 ## Requirements
 
