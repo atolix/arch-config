@@ -118,7 +118,13 @@ Scope {
 
                 BarText {
                     id: volumeText
-                    text: !root.audio ? "vol: —" : root.audio.muted ? "vol: mute" : "vol: " + root.percent(root.audio.volume * 100)
+                    width: 22
+                    font.family: "JetBrainsMono Nerd Font Mono"
+                    font.pixelSize: 16
+                    horizontalAlignment: Text.AlignHCenter
+                    text: !root.audio || root.audio.muted ? "󰝟" : root.audio.volume === 0 ? "" : root.audio.volume < 0.5 ? "" : ""
+                    color: root.audio ? "#eaeaea" : "#646978"
+                    Accessible.name: "Volume"
                     MouseArea {
                         anchors.fill: parent
                         acceptedButtons: Qt.LeftButton | Qt.RightButton
@@ -135,6 +141,20 @@ Scope {
                             if (root.audio && wheel.angleDelta.y !== 0)
                                 root.audio.volume = Math.max(0, Math.min(1, root.audio.volume + (wheel.angleDelta.y > 0 ? 0.05 : -0.05)));
                         }
+                    }
+                }
+
+                BarText {
+                    width: 22
+                    font.family: "JetBrainsMono Nerd Font Mono"
+                    font.pixelSize: 16
+                    horizontalAlignment: Text.AlignHCenter
+                    text: ""
+                    Accessible.name: "Brightness"
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
+                        onClicked: Quickshell.execDetached(["python3", Quickshell.shellPath("scripts/osd-control.py"), "brightness", "show"])
                     }
                 }
 
