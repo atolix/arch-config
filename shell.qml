@@ -25,6 +25,7 @@ Scope {
     }
     readonly property var audio: Pipewire.defaultAudioSink?.audio ?? null
     readonly property var battery: UPower.displayDevice
+    property var notifications: []
 
     NotificationServer {
         id: notificationServer
@@ -32,7 +33,10 @@ Scope {
         bodyMarkupSupported: false
         actionsSupported: true
         imageSupported: true
-        onNotification: notification => notification.tracked = true
+        onNotification: notification => {
+            notification.tracked = true;
+            root.notifications = root.notifications.concat([notification]);
+        }
     }
     function percent(value) {
         return value === null || value === undefined ? "—" : Math.round(value) + "%";
@@ -116,6 +120,7 @@ Scope {
 
             NotificationPopup {
                 server: notificationServer
+                notifications: root.notifications
                 anchor.window: bar
                 anchor.rect.x: bar.width - width - 8
                 anchor.rect.y: bar.height + 8

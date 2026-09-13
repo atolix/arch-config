@@ -3,19 +3,20 @@ import Quickshell
 
 PopupWindow {
     id: popup
-    required property var server
+    property var server
+    property var notifications: []
 
     implicitWidth: 360
-    implicitHeight: Math.min(520, notificationList.contentHeight + 12)
+    implicitHeight: Math.min(520, Math.max(80, notificationList.contentHeight + 12))
     color: "transparent"
-    visible: server && server.trackedNotifications.count > 0
+    visible: notifications.length > 0
 
     ListView {
         id: notificationList
         anchors.fill: parent
         anchors.margins: 6
         spacing: 8
-        model: popup.server ? popup.server.trackedNotifications : null
+        model: popup.notifications
         clip: true
 
         delegate: Rectangle {
@@ -70,6 +71,13 @@ PopupWindow {
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
                     onClicked: modelData.dismiss()
+                }
+            }
+
+            Connections {
+                target: modelData
+                function onClosed() {
+                    popup.notifications = popup.notifications.filter(item => item !== modelData);
                 }
             }
         }
