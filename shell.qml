@@ -103,9 +103,11 @@ Scope {
                 anchors.leftMargin: 12
                 anchors.verticalCenter: parent.verticalCenter
                 width: 22
+                height: 22
                 font.family: "JetBrainsMono Nerd Font Mono"
                 font.pixelSize: 17
                 horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
                 text: "󰐥"
                 Accessible.name: "Power"
                 MouseArea {
@@ -124,6 +126,8 @@ Scope {
                 anchors.leftMargin: 42
                 anchors.verticalCenter: parent.verticalCenter
                 width: Math.max(0, Math.min(290, clockText.x - 54))
+                height: 22
+                verticalAlignment: Text.AlignVCenter
                 text: root.appName
             }
 
