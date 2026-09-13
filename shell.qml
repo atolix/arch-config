@@ -150,13 +150,8 @@ Scope {
                     }
                 }
 
-                BarText {
-                    width: 22
-                    font.family: "JetBrainsMono Nerd Font Mono"
-                    font.pixelSize: 16
-                    horizontalAlignment: Text.AlignHCenter
-                    text: root.brightness === null || root.brightness < 34 ? "󰌶" : root.brightness < 67 ? "󰌵" : "󰛨"
-                    color: root.brightness === null ? "#646978" : "#eaeaea"
+                BrightnessIcon {
+                    brightness: root.brightness
                     Accessible.name: "Brightness"
                     MouseArea {
                         anchors.fill: parent
