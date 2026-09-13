@@ -25,7 +25,7 @@ A small top bar for Hyprland, managed as a Git repository.
 Arch Linux packages:
 
 ```sh
-sudo pacman -S --needed quickshell python networkmanager upower pavucontrol brightnessctl wireplumber
+sudo pacman -S --needed quickshell hyprlock python networkmanager upower pavucontrol brightnessctl wireplumber
 ```
 
 The bar expects a Wayland session with PipeWire and NetworkManager running.
@@ -84,6 +84,7 @@ For a different user or installation path, update the paths. To switch back to W
 - `NotificationPopup.qml`: event-driven desktop notification cards
 - `Osd.qml`: temporary volume and brightness display
 - `hyprland-osd.conf`: hardware key bindings for the OSD
+- `~/.config/hypr/hyprlock.conf`: lock screen appearance
 - `scripts/osd-control.py`: applies volume/brightness changes and triggers the OSD
 - `scripts/input-toggle.py`: toggles Fcitx5 and updates the layout label immediately
 - `scripts/metrics.py`: reads brightness, input engine, and NetworkManager status every 10 seconds

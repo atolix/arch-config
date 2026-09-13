@@ -51,7 +51,7 @@ PopupWindow {
             y: 45
             spacing: 6
 
-            ActionButton { label: "Lock"; command: ["loginctl", "lock-session"] }
+            ActionButton { label: "Lock"; command: ["hyprlock"] }
             ActionButton { label: "Suspend"; command: ["systemctl", "suspend"] }
             ActionButton { label: "Reboot"; command: ["systemctl", "reboot"] }
             ActionButton { label: "Shutdown"; command: ["systemctl", "poweroff"] }
