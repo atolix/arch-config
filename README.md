@@ -118,19 +118,35 @@ arch-config/
 │   │   └── hyprlock.conf             # Lock screen appearance
 │   └── wofi/style.css                # Launcher and window switcher styling
 ├── quickshell/
-│   ├── shell.qml                     # Bar layout, services, and popup wiring
-│   ├── WorkspaceSwitcher.qml         # Workspace indicators and switching
-│   ├── StatusIndicators.qml          # Keyboard, volume, brightness, battery, and network
-│   ├── ClockDisplay.qml              # Date, time, seconds, and timezone
-│   ├── AppList.qml                   # Focused application names on the left rail
-│   ├── StatsText.qml                 # CPU, memory, temperature, and fan text
-│   ├── LeftRail.qml                  # Left-side application and statistics rail
-│   ├── BatteryStatus.qml             # Battery percentage and icon
-│   ├── *.qml                         # Other shared widgets and popups
+│   ├── shell.qml                     # Services, panel instances, and popup wiring
+│   ├── topbar/
+│   │   ├── TopBar.qml                # Top bar layout
+│   │   ├── StatusIndicators.qml      # Keyboard, volume, brightness, battery, and network
+│   │   ├── WorkspaceSwitcher.qml     # Workspace indicators and switching
+│   │   ├── ClockDisplay.qml          # Date, time, seconds, and timezone
+│   │   └── BatteryStatus.qml          # Battery percentage and icon
+│   ├── leftrail/
+│   │   ├── LeftRail.qml              # Left-side application and statistics rail
+│   │   ├── AppList.qml               # Focused application names
+│   │   └── StatsText.qml             # CPU, memory, temperature, and fan text
+│   ├── popups/
+│   │   ├── CalendarPopup.qml
+│   │   ├── VolumePopup.qml
+│   │   ├── PowerPopup.qml
+│   │   └── NotificationPopup.qml
+│   ├── shared/
+│   │   ├── BarText.qml               # Shared text styling
+│   │   ├── BatteryIcon.qml
+│   │   ├── BrightnessIcon.qml
+│   │   ├── VolumeIcon.qml
+│   │   ├── Osd.qml
+│   │   ├── Theme.js                   # Shared colors
+│   │   └── HyprlandHelpers.js         # Hyprland data helpers
 │   ├── hypridle.conf                 # Idle locking and suspend timers
 │   ├── hyprland-osd.conf             # Hardware key bindings for the OSD
 │   ├── run.sh                         # Start Quickshell relative to this directory
 │   └── scripts/
+│       ├── paths.sh                  # Shared screenshot and recording directories
 │       ├── metrics.py                # Brightness, input, network, CPU, memory, and temperature
 │       ├── osd-control.py             # Apply volume/brightness changes and show the OSD
 │       ├── input-toggle.py            # Toggle Fcitx5 and update the layout label
