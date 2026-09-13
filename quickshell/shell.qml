@@ -209,58 +209,6 @@ Scope {
                 }
             }
 
-            Row {
-                id: workspaceApps
-                visible: false
-                anchors.verticalCenter: parent.verticalCenter
-                property real leftEdge: workspaceSwitcher.x + workspaceSwitcher.width + 10
-                property real availableWidth: Math.max(0, clockText.x - leftEdge - 10)
-                width: Math.min(implicitWidth, availableWidth)
-                x: leftEdge + (availableWidth - width) / 2
-                height: 22
-                spacing: 6
-                clip: true
-
-                Repeater {
-                    id: workspaceRepeater
-                    model: Hyprland.focusedWorkspace?.toplevels ?? []
-
-                    delegate: Row {
-                        required property var modelData
-                        required property int index
-                        spacing: 6
-
-                        BarText {
-                            height: 22
-                            verticalAlignment: Text.AlignVCenter
-                            text: root.appLabel(modelData.wayland?.appId ?? modelData.handle?.appId ?? "")
-                            color: modelData.activated ? "#a5b4fc" : "#eaeaea"
-                            MouseArea {
-                                anchors.fill: parent
-                                cursorShape: Qt.PointingHandCursor
-                                onClicked: (modelData.wayland ?? modelData.handle)?.activate()
-                            }
-                        }
-
-                        BarText {
-                            height: 22
-                            verticalAlignment: Text.AlignVCenter
-                            text: "/"
-                            color: "#646978"
-                            visible: index < workspaceRepeater.count - 1
-                        }
-                    }
-                }
-
-                BarText {
-                    visible: workspaceRepeater.count === 0
-                    height: 22
-                    verticalAlignment: Text.AlignVCenter
-                    text: "—"
-                    color: "#646978"
-                }
-            }
-
             BarText {
                 id: clockText
                 anchors.centerIn: parent
@@ -291,16 +239,6 @@ Scope {
                 anchors.verticalCenter: parent.verticalCenter
                 text: Qt.formatDateTime(clock.date, "yyyy/")
                 Accessible.name: "Year " + text
-            }
-
-            BarText {
-                id: resourceStats
-                visible: false
-                anchors.verticalCenter: parent.verticalCenter
-                x: clockText.x + clockText.width + Math.max(0, (status.x - clockText.x - clockText.width - width) / 2)
-                text: "cpu: " + root.stats.cpu + "% / mem: " + root.stats.mem + "% / temp: " + (root.stats.temp === null ? "—" : root.stats.temp) + "°C"
-                color: "#eaeaea"
-                Accessible.name: "CPU " + root.stats.cpu + " percent, memory " + root.stats.mem + " percent"
             }
 
             Row {
