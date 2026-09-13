@@ -76,11 +76,11 @@ For a different user or installation path, update the paths. To switch back to W
 ## Install and apply
 
 ```sh
-./install.sh
 sudo pacman -S --needed - < packages.txt
+./install.sh
 ```
 
-The installer links user configuration files into `~/.config`. SDDM theme files are tracked under `sddm/mysddm`; installing them into `/usr/share/sddm/themes/mysddm` requires root privileges.
+The installer links user configuration files into `~/.config` and applies the tracked SDDM theme and system configuration with sudo.
 
 ## Files
 
