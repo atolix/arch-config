@@ -8,7 +8,7 @@ Hyprland desktop configuration, managed as a Git repository. The Quickshell bar 
 | --- | --- |
 | Left | Power menu, workspace indicators, and focused application names |
 | Center | Local date and time in 24-hour format with seconds |
-| Between center and right | `cpu: yy% / mem: xx% / temp: zz°C` |
+| Left rail | Focused application names and `cpu: yy% / mem: xx% / temp: zz°C / fan: n RPM` |
 | Right | Keyboard layout, volume, brightness, battery, and network icons |
 
 | Component | Behavior |
@@ -101,7 +101,12 @@ Restart Thunar after applying the settings to load the new GTK theme.
 
 ```text
 arch-config/
-├── check.sh                         # Validate packages, configs, and session state
+├── check.sh                         # Run all validation checks
+├── checks/
+│   ├── commands.sh                  # Check commands and installed packages
+│   ├── config.sh                    # Check rendered user configuration
+│   ├── syntax.sh                    # Check shell, Python, and Git syntax
+│   └── session.sh                   # Check the running Hyprland and Quickshell session
 ├── install.sh                       # Render user configs and apply the SDDM theme
 ├── packages.txt                     # Required Arch packages
 ├── home/atolix/.config/
@@ -113,8 +118,15 @@ arch-config/
 │   │   └── hyprlock.conf             # Lock screen appearance
 │   └── wofi/style.css                # Launcher and window switcher styling
 ├── quickshell/
-│   ├── shell.qml                     # Bar layout, workspaces, status, and popups
-│   ├── *.qml                         # Shared bar widgets and popups
+│   ├── shell.qml                     # Bar layout, services, and popup wiring
+│   ├── WorkspaceSwitcher.qml         # Workspace indicators and switching
+│   ├── StatusIndicators.qml          # Keyboard, volume, brightness, battery, and network
+│   ├── ClockDisplay.qml              # Date, time, seconds, and timezone
+│   ├── AppList.qml                   # Focused application names on the left rail
+│   ├── StatsText.qml                 # CPU, memory, temperature, and fan text
+│   ├── LeftRail.qml                  # Left-side application and statistics rail
+│   ├── BatteryStatus.qml             # Battery percentage and icon
+│   ├── *.qml                         # Other shared widgets and popups
 │   ├── hypridle.conf                 # Idle locking and suspend timers
 │   ├── hyprland-osd.conf             # Hardware key bindings for the OSD
 │   ├── run.sh                         # Start Quickshell relative to this directory
