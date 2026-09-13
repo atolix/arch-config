@@ -25,9 +25,14 @@ render_config "$repo_dir/home/atolix/.config/hypr/hyprlock.conf" "$config_dir/hy
 render_config "$repo_dir/quickshell/hypridle.conf" "$config_dir/hypr/hypridle.conf"
 render_config "$repo_dir/quickshell/hyprland-osd.conf" "$config_dir/hypr/hyprland-osd.conf"
 render_config "$repo_dir/home/atolix/.config/wofi/style.css" "$config_dir/wofi/style.css"
+render_config "$repo_dir/home/atolix/.config/dolphinrc" "$config_dir/dolphinrc"
+render_config "$repo_dir/home/atolix/.config/kdeglobals" "$config_dir/kdeglobals"
 render_config "$repo_dir/home/atolix/.config/fcitx5/config" "$config_dir/fcitx5/config"
 render_config "$repo_dir/home/atolix/.config/fcitx5/profile" "$config_dir/fcitx5/profile"
 render_config "$repo_dir/home/atolix/.config/fcitx5/conf/notifications.conf" "$config_dir/fcitx5/conf/notifications.conf"
+mkdir -p "$HOME/.local/share/color-schemes"
+install -m 644 "$repo_dir/home/atolix/.local/share/color-schemes/ArchDark.colors" \
+    "$HOME/.local/share/color-schemes/ArchDark.colors"
 
 sudo install -d /usr/share/sddm/themes/mysddm /etc/sddm.conf.d
 sudo cp -a "$repo_dir/sddm/mysddm/." /usr/share/sddm/themes/mysddm/

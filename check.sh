@@ -19,7 +19,10 @@ for file in \
     "$config_dir/hypr/hyprlock.conf" \
     "$config_dir/hypr/hypridle.conf" \
     "$config_dir/hypr/hyprland-osd.conf" \
-    "$config_dir/wofi/style.css"; do
+    "$config_dir/wofi/style.css" \
+    "$config_dir/dolphinrc" \
+    "$config_dir/kdeglobals" \
+    "$HOME/.local/share/color-schemes/ArchDark.colors"; do
     if [ -f "$file" ]; then ok "$file"; else fail "$file is missing"; fi
 done
 
