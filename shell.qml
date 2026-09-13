@@ -171,6 +171,8 @@ Scope {
                 }
 
                 BarText {
+                    height: 22
+                    verticalAlignment: Text.AlignVCenter
                     text: root.stats.network
                     width: Math.min(implicitWidth, 180)
                     Accessible.name: root.stats.network
