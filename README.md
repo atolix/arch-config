@@ -20,7 +20,7 @@ Hyprland desktop configuration, managed as a Git repository. The Quickshell bar 
 - Desktop notifications: Quickshell receives D-Bus notifications and shows them as cards below the top-right of the bar
 - App launcher: press `Super+R` to open the Wofi application launcher with matching bar colors
 - Window switcher: press `Ctrl+S` for a wide Wofi list with application icons and window titles
-- Workspaces: click the `1`–`5` buttons or press `Super+1`–`Super+5` to switch desktops
+- Workspaces: click the compact indicators or press `Super+1`–`Super+5` to switch desktops
 - Thunar: dark GTK colors, compact controls, and matching selection accents
 - Idle power saving: locks after 5 minutes, suspends 5 seconds later, and turns the display off after 10 minutes as a fallback
 - The bar appears on every monitor. The battery icon and percentage are hidden when no battery is present.

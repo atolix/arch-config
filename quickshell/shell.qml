@@ -170,19 +170,17 @@ Scope {
 
                     delegate: Rectangle {
                         required property int modelData
-                        width: 22
+                        width: 18
                         height: 22
-                        radius: 5
-                        color: Hyprland.focusedWorkspace?.id === modelData ? "#41455a" : "transparent"
-                        border.width: Hyprland.focusedWorkspace?.id === modelData ? 1 : 0
-                        border.color: "#a5b4fc"
+                        color: "transparent"
+                        Accessible.name: "Workspace " + modelData
 
-                        BarText {
-                            anchors.fill: parent
-                            text: String(parent.modelData)
-                            color: Hyprland.focusedWorkspace?.id === parent.modelData ? "#c7d2fe" : "#777d91"
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
+                        Rectangle {
+                            anchors.centerIn: parent
+                            width: Hyprland.focusedWorkspace?.id === parent.modelData ? 14 : 6
+                            height: Hyprland.focusedWorkspace?.id === parent.modelData ? 5 : 4
+                            radius: height / 2
+                            color: Hyprland.focusedWorkspace?.id === parent.modelData ? "#a5b4fc" : "#646978"
                         }
 
                         MouseArea {
