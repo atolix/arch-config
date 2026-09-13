@@ -59,8 +59,8 @@ The OSD is shown on every monitor without taking keyboard focus or pointer input
 To preview the OSD without changing a value:
 
 ```sh
-./scripts/osd-control.py volume show
-./scripts/osd-control.py brightness show
+./quickshell/scripts/osd-control.py volume show
+./quickshell/scripts/osd-control.py brightness show
 ```
 
 ## Autostart
@@ -84,24 +84,16 @@ The installer links user configuration files into `~/.config`. SDDM theme files 
 
 ## Files
 
-- `shell.qml`: layout, workspace apps, clock, audio, battery, and popups
-- `BarText.qml`: shared font and text styling
-- `BrightnessIcon.qml`: light bulb whose rays expand with brightness
-- `VolumeIcon.qml`: speaker with zero to three volume waves
-- `BatteryIcon.qml`: rounded battery gauge and charging color
-- `VolumePopup.qml`: PipeWire volume slider and mute control
-- `CalendarPopup.qml`: calendar with today highlighting and month navigation
-- `PowerPopup.qml`: lock, suspend, reboot, and shutdown menu
-- `NotificationPopup.qml`: event-driven desktop notification cards
-- `Osd.qml`: temporary volume and brightness display
-- `hyprland-osd.conf`: hardware key bindings for the OSD
-- `hypridle.conf`: idle locking, display power saving, and suspend timers
-- `~/.config/hypr/hyprlock.conf`: lock screen appearance
-- `scripts/osd-control.py`: applies volume/brightness changes and triggers the OSD
-- `scripts/input-toggle.py`: toggles Fcitx5 and updates the layout label immediately
-- `scripts/window-switcher.py`: lists Hyprland windows in Wofi and focuses the selected one
-- `scripts/metrics.py`: reads brightness, input engine, and NetworkManager status every 10 seconds
-- `run.sh`: starts the configuration relative to its own location
+- `quickshell/shell.qml`: layout, workspace apps, clock, audio, battery, and popups
+- `quickshell/*.qml`: shared bar widgets and popups
+- `quickshell/hyprland-osd.conf`: hardware key bindings for the OSD
+- `quickshell/hypridle.conf`: idle locking, display power saving, and suspend timers
+- `home/atolix/.config/hypr/hyprlock.conf`: lock screen appearance
+- `quickshell/scripts/osd-control.py`: applies volume/brightness changes and triggers the OSD
+- `quickshell/scripts/input-toggle.py`: toggles Fcitx5 and updates the layout label immediately
+- `quickshell/scripts/window-switcher.py`: lists Hyprland windows in Wofi and focuses the selected one
+- `quickshell/scripts/metrics.py`: reads brightness, input engine, and NetworkManager status every 10 seconds
+- `quickshell/run.sh`: starts the bar configuration relative to its own location
 
 The bar uses JetBrainsMono and a translucent dark background matching the previous Waybar setup.
 
