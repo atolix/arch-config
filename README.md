@@ -18,6 +18,7 @@ A small top bar for Hyprland, managed as a Git repository.
 - Volume and brightness keys: an English OSD appears at the bottom center for 1.8 seconds
 - Desktop notifications: Quickshell receives D-Bus notifications and shows them as cards below the top-right of the bar
 - App launcher: press `Super+R` to open the Wofi application launcher with matching bar colors
+- Idle power saving: locks after 5 minutes, turns the display off after 10 minutes, and suspends after 15 minutes
 - The bar appears on every monitor. The battery icon and percentage are hidden when no battery is present.
 
 ## Requirements
@@ -84,6 +85,7 @@ For a different user or installation path, update the paths. To switch back to W
 - `NotificationPopup.qml`: event-driven desktop notification cards
 - `Osd.qml`: temporary volume and brightness display
 - `hyprland-osd.conf`: hardware key bindings for the OSD
+- `hypridle.conf`: idle locking, display power saving, and suspend timers
 - `~/.config/hypr/hyprlock.conf`: lock screen appearance
 - `scripts/osd-control.py`: applies volume/brightness changes and triggers the OSD
 - `scripts/input-toggle.py`: toggles Fcitx5 and updates the layout label immediately
