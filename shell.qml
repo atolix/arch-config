@@ -161,8 +161,10 @@ Scope {
 
                 BarText {
                     id: inputLayout
+                    width: 24
                     height: 22
                     verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignHCenter
                     text: root.stats.input
                     Accessible.name: "Keyboard layout " + text
                     MouseArea {
