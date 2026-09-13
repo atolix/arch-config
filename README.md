@@ -13,6 +13,7 @@ A small top bar for Hyprland, managed as a Git repository.
 - Battery: percentage beside a rounded battery gauge; yellow below 30%, red below 15%, green while charging
 - Wi-Fi: connected SSID; Ethernet shows `eth: connected`, and disconnected networking shows `net: offline`
 - Keyboard layout: `JP` for Mozc and `EN` for the US keyboard engine
+- Keyboard layout: press Ctrl+Space or click the `JP` / `EN` label to switch immediately
 - Volume and brightness keys: an English OSD appears at the bottom center for 1.8 seconds
 - The bar appears on every monitor. The battery icon and percentage are hidden when no battery is present.
 
@@ -78,6 +79,7 @@ For a different user or installation path, update the paths. To switch back to W
 - `Osd.qml`: temporary volume and brightness display
 - `hyprland-osd.conf`: hardware key bindings for the OSD
 - `scripts/osd-control.py`: applies volume/brightness changes and triggers the OSD
+- `scripts/input-toggle.py`: toggles Fcitx5 and updates the layout label immediately
 - `scripts/metrics.py`: reads brightness, input engine, and NetworkManager status every 10 seconds
 - `run.sh`: starts the configuration relative to its own location
 

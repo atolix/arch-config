@@ -14,6 +14,13 @@ Scope {
     }
 
     property var stats: ({ network: "…", input: "—" })
+
+    IpcHandler {
+        target: "input"
+        function setLayout(layout: string): void {
+            root.stats = { network: root.stats.network, input: layout };
+        }
+    }
     readonly property var audio: Pipewire.defaultAudioSink?.audio ?? null
     readonly property var battery: UPower.displayDevice
     readonly property string appName: {
@@ -153,10 +160,16 @@ Scope {
                 spacing: 10
 
                 BarText {
+                    id: inputLayout
                     height: 22
                     verticalAlignment: Text.AlignVCenter
                     text: root.stats.input
                     Accessible.name: "Keyboard layout " + text
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
+                        onClicked: Quickshell.execDetached(["python3", Quickshell.shellPath("scripts/input-toggle.py")])
+                    }
                 }
 
                 VolumeIcon {
