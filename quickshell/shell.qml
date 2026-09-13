@@ -45,7 +45,6 @@ Scope {
     function appLabel(appId) {
         const names = {
             "com.mitchellh.ghostty": "Ghostty",
-            "org.kde.dolphin": "Dolphin",
             "chromium": "Chromium",
         };
         return names[appId] ?? appId;
