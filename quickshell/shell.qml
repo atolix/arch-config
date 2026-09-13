@@ -119,7 +119,7 @@ Scope {
                 id: volumePopup
                 audio: root.audio
                 anchor.window: bar
-                anchor.rect.x: Math.max(8, Math.min(bar.width - width - 8, status.x + volumeText.x + volumeText.width / 2 - width / 2))
+                anchor.rect.x: Math.max(8, Math.min(bar.width - width - 8, status.x + status.volumeItem.x + status.volumeItem.width / 2 - width / 2))
                 anchor.rect.y: bar.height + 6
             }
 
@@ -211,75 +211,20 @@ Scope {
                 Accessible.name: "Year " + text
             }
 
-            Row {
+            StatusIndicators {
                 id: status
                 anchors.right: parent.right
                 anchors.rightMargin: 12
                 anchors.verticalCenter: parent.verticalCenter
-                spacing: 10
-
-                BarText {
-                    id: inputLayout
-                    width: 24
-                    height: 22
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignHCenter
-                    text: root.stats.input
-                    Accessible.name: "Keyboard layout " + text
-                    MouseArea {
-                        anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
-                        onClicked: Quickshell.execDetached(["python3", Quickshell.shellPath("scripts/input-toggle.py")])
-                    }
-                }
-
-                VolumeIcon {
-                    id: volumeText
-                    audio: root.audio
-                    Accessible.name: "Volume"
-                    MouseArea {
-                        anchors.fill: parent
-                        acceptedButtons: Qt.LeftButton | Qt.RightButton
-                        cursorShape: Qt.PointingHandCursor
-                        onClicked: mouse => {
-                            if (mouse.button === Qt.RightButton) {
-                                if (root.audio) root.audio.muted = !root.audio.muted;
-                            } else {
-                                calendarPopup.visible = false;
-                                volumePopup.visible = !volumePopup.visible;
-                            }
-                        }
-                        onWheel: wheel => {
-                            if (root.audio && wheel.angleDelta.y !== 0)
-                                root.audio.volume = Math.max(0, Math.min(1, root.audio.volume + (wheel.angleDelta.y > 0 ? 0.05 : -0.05)));
-                        }
-                    }
-                }
-
-                BrightnessIcon {
-                    brightness: root.brightness
-                    Accessible.name: "Brightness"
-                    MouseArea {
-                        anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
-                        onClicked: Quickshell.execDetached(["python3", Quickshell.shellPath("scripts/osd-control.py"), "brightness", "show"])
-                    }
-                }
-
-                BatteryStatus {
-                    battery: root.battery
-                    percent: root.percent
-                }
-
-                BarText {
-                    height: 22
-                    verticalAlignment: Text.AlignVCenter
-                    width: 22
-                    horizontalAlignment: Text.AlignHCenter
-                    text: root.networkIcon()
-                    font.family: "JetBrainsMono Nerd Font Mono"
-                    font.pixelSize: 17
-                    Accessible.name: root.stats.network
+                audio: root.audio
+                brightness: root.brightness
+                battery: root.battery
+                input: root.stats.input
+                percent: root.percent
+                networkIcon: root.networkIcon
+                openVolumePopup: function() {
+                    calendarPopup.visible = false;
+                    volumePopup.visible = !volumePopup.visible;
                 }
             }
 
