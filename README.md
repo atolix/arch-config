@@ -3,7 +3,7 @@
 A small top bar for Hyprland, managed as a Git repository.
 
 - Left: power menu and focused application name
-- Center: local date and time
+- Center: local date and time in 24-hour format with seconds
 - Click the clock: English calendar with previous/next month navigation and a Today button
 - Power icon: Lock / Suspend / Reboot / Shutdown
 - Right: keyboard layout / volume / brightness / battery / Wi-Fi or Ethernet

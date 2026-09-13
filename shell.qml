@@ -44,7 +44,7 @@ Scope {
 
     SystemClock {
         id: clock
-        precision: SystemClock.Minutes
+        precision: SystemClock.Seconds
     }
 
     Process {
@@ -141,7 +141,7 @@ Scope {
             BarText {
                 id: clockText
                 anchors.centerIn: parent
-                text: Qt.formatDateTime(clock.date, "MMM d ddd hh:mm AP")
+                text: Qt.formatDateTime(clock.date, "MMM d ddd HH:mm:ss")
                 MouseArea {
                     anchors.fill: parent
                     cursorShape: Qt.PointingHandCursor
