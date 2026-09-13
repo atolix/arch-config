@@ -8,6 +8,8 @@ import Quickshell.Services.UPower
 Scope {
     id: root
 
+    Osd {}
+
     property var stats: ({ cpu: null, memory: null, network: "…" })
     readonly property var audio: Pipewire.defaultAudioSink?.audio ?? null
     readonly property var battery: UPower.displayDevice

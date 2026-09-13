@@ -9,6 +9,7 @@ Hyprland用の小さな上部バー。設定はこのリポジトリ内で管理
 - 音量: スクロールで5%ずつ変更、右クリックでミュート、左クリックで音量パネル
 - 音量パネル: 0〜100%のスライダー、Mute / Unmute切り替え。外側クリックか「Close」で終了
 - 全モニターに表示。バッテリーがない場合は非表示
+- 音量・明るさキー: 画面下中央に英語OSDを1.8秒表示。連打で表示時間を延長
 
 ## 起動
 
@@ -30,6 +31,29 @@ Waybarが動いている場合はバーが2本になります。試用中は別�
 QuickshellはCtrl+Cで終了。同じコマンドでWaybarを再表示できます。
 QMLの変更は保存すると自動反映されます。
 
+## 音量・明るさOSD
+
+`brightnessctl`と`wpctl`（wireplumber）が必要です。
+Hyprlandの既存の音量・明るさキー設定を以下の1行に置き換えます。
+この環境では設定済みです。
+
+```ini
+source = /home/atolix/development/quickshell-bar/hyprland-osd.conf
+```
+
+音量は2%刻み（上限100%）、明るさは10%刻み（最小値1）。
+ミュートキーにも対応します。Quickshell停止中も音量・明るさの操作は機能します。
+OSDは全モニターに表示し、フォーカスやクリックを奪いません。
+スライダー操作ではOSDを出さず、ハードウェアキーから呼び出します。
+配置先を変更した場合は、このsource行と`hyprland-osd.conf`内のパスを変更してください。
+
+値を変えずに表示を試すには:
+
+```sh
+./scripts/osd-control.py volume show
+./scripts/osd-control.py brightness show
+```
+
 ## 自動起動へ切り替える場合
 
 `~/.config/hypr/hyprland.conf` の `exec-once = waybar` を以下に置き換えます。
@@ -47,6 +71,9 @@ exec-once = /home/atolix/development/quickshell-bar/run.sh
 - `BarText.qml`: 共通のフォント・文字色
 - `VolumePopup.qml`: PipeWireと連動する音量スライダー
 - `CalendarPopup.qml`: 今日の強調表示と月移動ができるカレンダー
+- `Osd.qml`: 音量・明るさの一時表示
+- `hyprland-osd.conf`: OSDと連動するハードウェアキー設定
+- `scripts/osd-control.py`: 音量・明るさを操作してOSDへ通知
 - `scripts/metrics.py`: /procとnmcliから2秒間隔で統計を取得
 - `run.sh`: 配置先を基準に起動
 
