@@ -1,5 +1,6 @@
 import QtQuick
-import "Theme.js" as Theme
+import "shared/Theme.js" as Theme
+import "shared"
 
 Row {
     id: root

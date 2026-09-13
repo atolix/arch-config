@@ -6,8 +6,9 @@ import Quickshell.Hyprland
 import Quickshell.Services.Pipewire
 import Quickshell.Services.UPower
 import Quickshell.Services.Notifications
-import "HyprlandHelpers.js" as HyprlandHelpers
-import "Theme.js" as Theme
+import "shared/HyprlandHelpers.js" as HyprlandHelpers
+import "shared/Theme.js" as Theme
+import "shared"
 
 Scope {
     id: root

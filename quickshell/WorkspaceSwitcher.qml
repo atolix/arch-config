@@ -1,6 +1,6 @@
 import QtQuick
 import Quickshell.Hyprland
-import "Theme.js" as Theme
+import "shared/Theme.js" as Theme
 
 Row {
     id: root
