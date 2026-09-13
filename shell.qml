@@ -31,6 +31,8 @@ Scope {
     IpcHandler {
         target: "launcher"
         function toggle(): void { root.launcherVisible = !root.launcherVisible; }
+        function open(): void { root.launcherVisible = true; }
+        function close(): void { root.launcherVisible = false; }
     }
 
     NotificationServer {
