@@ -11,6 +11,7 @@ import "shared/Theme.js" as Theme
 import "shared"
 import "popups"
 import "topbar"
+import "leftrail"
 
 Scope {
     id: root

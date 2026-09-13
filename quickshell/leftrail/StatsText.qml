@@ -1,5 +1,5 @@
 import QtQuick
-import "shared"
+import "../shared"
 
 Item {
     id: root

@@ -1,7 +1,6 @@
 import QtQuick
 import Quickshell
-import Quickshell.Hyprland
-import "shared/Theme.js" as Theme
+import "../shared/Theme.js" as Theme
 
 PanelWindow {
     id: rail
