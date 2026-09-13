@@ -27,7 +27,7 @@ Hyprland desktop configuration, managed as a Git repository. The Quickshell bar 
 Arch Linux packages:
 
 ```sh
-sudo pacman -S --needed quickshell hyprlock python networkmanager upower pavucontrol brightnessctl wireplumber
+sudo pacman -S --needed - < packages.txt
 ```
 
 The bar expects a Wayland session with PipeWire and NetworkManager running.
@@ -40,16 +40,14 @@ cd ~/development/arch-config/quickshell
 ```
 
 Quickshell hot-reloads QML changes when files are saved. Stop it with Ctrl+C.
-If Waybar is still running, stop it separately to avoid displaying two bars.
-
-Quickshell owns the desktop notification service. The setup masks the user `dunst.service` so notifications are not displayed twice.
+Quickshell owns the desktop notification service.
 
 ## Volume and brightness OSD
 
 The Hyprland key bindings are kept in `hyprland-osd.conf` and are already enabled in this setup:
 
 ```ini
-source = /home/atolix/development/arch-config/quickshell/hyprland-osd.conf
+source = ~/.config/hypr/hyprland-osd.conf
 ```
 
 Volume changes use 2% steps up to 100%; brightness changes use 10% steps. The mute key is supported.
@@ -68,10 +66,10 @@ To preview the OSD without changing a value:
 `~/.config/hypr/hyprland.conf` is configured to start Quickshell automatically:
 
 ```ini
-exec-once = /home/atolix/development/arch-config/quickshell/run.sh --no-duplicate --daemonize
+exec-once = <repo>/quickshell/run.sh --no-duplicate --daemonize
 ```
 
-For a different user or installation path, update the paths. To switch back to Waybar, replace the line with `exec-once = waybar`.
+`install.sh` renders the repository path into the active Hyprland configuration.
 
 ## Install and apply
 
@@ -81,7 +79,7 @@ sudo pacman -S --needed - < packages.txt
 ./check.sh
 ```
 
-The installer links user configuration files into `~/.config` and applies the tracked SDDM theme and system configuration with sudo.
+The installer renders user configuration files into `~/.config` and applies the tracked SDDM theme and system configuration with sudo. Existing files are backed up under `~/.local/state/arch-config/backups/` before they are replaced.
 
 ## Files
 
