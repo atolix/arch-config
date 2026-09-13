@@ -2,6 +2,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Io
 import Quickshell.Wayland
+import Quickshell.Hyprland
 import Quickshell.Services.Pipewire
 import Quickshell.Services.UPower
 
@@ -23,19 +24,18 @@ Scope {
     }
     readonly property var audio: Pipewire.defaultAudioSink?.audio ?? null
     readonly property var battery: UPower.displayDevice
-    readonly property string appName: {
-        const app = ToplevelManager.activeToplevel?.appId ?? "";
+    function percent(value) {
+        return value === null || value === undefined ? "—" : Math.round(value) + "%";
+    }
+
+    function appLabel(appId) {
         const names = {
             "com.mitchellh.ghostty": "Ghostty",
             "org.kde.dolphin": "Dolphin",
             "chromium": "Chromium",
             "firefox": "Firefox"
         };
-        return names[app] ?? app;
-    }
-
-    function percent(value) {
-        return value === null || value === undefined ? "—" : Math.round(value) + "%";
+        return names[appId] ?? appId;
     }
 
     PwObjectTracker {
@@ -128,14 +128,54 @@ Scope {
                 }
             }
 
-            BarText {
+            Row {
+                id: workspaceApps
                 anchors.left: parent.left
                 anchors.leftMargin: 42
                 anchors.verticalCenter: parent.verticalCenter
                 width: Math.max(0, Math.min(290, clockText.x - 54))
                 height: 22
-                verticalAlignment: Text.AlignVCenter
-                text: root.appName
+                spacing: 6
+                clip: true
+
+                Repeater {
+                    id: workspaceRepeater
+                    model: Hyprland.focusedWorkspace?.toplevels ?? []
+
+                    delegate: Row {
+                        required property var modelData
+                        required property int index
+                        spacing: 6
+
+                        BarText {
+                            height: 22
+                            verticalAlignment: Text.AlignVCenter
+                            text: root.appLabel(modelData.wayland?.appId ?? modelData.handle?.appId ?? "")
+                            color: modelData.activated ? "#a5b4fc" : "#eaeaea"
+                            MouseArea {
+                                anchors.fill: parent
+                                cursorShape: Qt.PointingHandCursor
+                                onClicked: (modelData.wayland ?? modelData.handle)?.activate()
+                            }
+                        }
+
+                        BarText {
+                            height: 22
+                            verticalAlignment: Text.AlignVCenter
+                            text: "/"
+                            color: "#646978"
+                            visible: index < workspaceRepeater.count - 1
+                        }
+                    }
+                }
+
+                BarText {
+                    visible: workspaceRepeater.count === 0
+                    height: 22
+                    verticalAlignment: Text.AlignVCenter
+                    text: "—"
+                    color: "#646978"
+                }
             }
 
             BarText {

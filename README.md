@@ -2,7 +2,7 @@
 
 A small top bar for Hyprland, managed as a Git repository.
 
-- Left: power menu and focused application name
+- Left: power menu and applications in the focused workspace
 - Center: local date and time in 24-hour format with seconds
 - Click the clock: English calendar with previous/next month navigation and a Today button
 - Power icon: Lock / Suspend / Reboot / Shutdown
@@ -13,6 +13,7 @@ A small top bar for Hyprland, managed as a Git repository.
 - Battery: percentage beside a rounded battery gauge; yellow below 30%, red below 15%, green while charging
 - Wi-Fi: connected SSID; Ethernet shows `eth: connected`, and disconnected networking shows `net: offline`
 - Keyboard layout: `JP` for Mozc and `EN` for the US keyboard engine
+- Focused workspace apps: application names separated by `/`; the focused app uses the accent color
 - Keyboard layout: press Ctrl+Space or click the `JP` / `EN` label to switch immediately
 - Volume and brightness keys: an English OSD appears at the bottom center for 1.8 seconds
 - The bar appears on every monitor. The battery icon and percentage are hidden when no battery is present.
@@ -68,7 +69,7 @@ For a different user or installation path, update the paths. To switch back to W
 
 ## Files
 
-- `shell.qml`: layout, focused application, clock, audio, battery, and popups
+- `shell.qml`: layout, workspace apps, clock, audio, battery, and popups
 - `BarText.qml`: shared font and text styling
 - `BrightnessIcon.qml`: light bulb whose rays expand with brightness
 - `VolumeIcon.qml`: speaker with zero to three volume waves
