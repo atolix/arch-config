@@ -18,7 +18,7 @@ A small top bar for Hyprland, managed as a Git repository.
 - Volume and brightness keys: an English OSD appears at the bottom center for 1.8 seconds
 - Desktop notifications: Quickshell receives D-Bus notifications and shows them as cards below the top-right of the bar
 - App launcher: press `Super+R` to open the Wofi application launcher with matching bar colors
-- Idle power saving: locks after 5 minutes, turns the display off after 10 minutes, and suspends after 15 minutes
+- Idle power saving: locks after 5 minutes, suspends 5 seconds later, and turns the display off after 10 minutes as a fallback
 - The bar appears on every monitor. The battery icon and percentage are hidden when no battery is present.
 
 ## Requirements
