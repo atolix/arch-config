@@ -190,10 +190,14 @@ Scope {
 
                         Rectangle {
                             anchors.centerIn: parent
-                            width: Hyprland.focusedWorkspace?.id === parent.modelData ? 14 : root.workspaceOccupied(parent.modelData) ? 10 : 6
-                            height: Hyprland.focusedWorkspace?.id === parent.modelData ? 5 : 4
+                            readonly property bool focused: Hyprland.focusedWorkspace?.id === parent.modelData
+                            readonly property bool occupied: root.workspaceOccupied(parent.modelData)
+                            width: focused ? 14 : occupied ? 10 : 7
+                            height: focused ? 5 : 7
                             radius: height / 2
-                            color: Hyprland.focusedWorkspace?.id === parent.modelData ? "#a5b4fc" : root.workspaceOccupied(parent.modelData) ? "#8993b5" : "#646978"
+                            color: focused ? "#a5b4fc" : occupied ? "#8993b5" : "transparent"
+                            border.width: focused || occupied ? 0 : 1
+                            border.color: "#646978"
                         }
 
                         MouseArea {
