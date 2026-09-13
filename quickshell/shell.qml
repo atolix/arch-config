@@ -195,7 +195,7 @@ Scope {
                             width: focused ? 14 : 7
                             height: focused ? 5 : 7
                             radius: height / 2
-                            color: focused ? "#a5b4fc" : occupied ? "#818cf8" : "transparent"
+                            color: focused ? "#a5b4fc" : occupied ? "#a5b4fc" : "transparent"
                             border.width: focused || occupied ? 0 : 1
                             border.color: "#646978"
                         }
