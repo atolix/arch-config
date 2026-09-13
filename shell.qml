@@ -26,14 +26,6 @@ Scope {
     readonly property var audio: Pipewire.defaultAudioSink?.audio ?? null
     readonly property var battery: UPower.displayDevice
     property var notifications: []
-    property bool launcherVisible: false
-
-    IpcHandler {
-        target: "launcher"
-        function toggle(): void { root.launcherVisible = !root.launcherVisible; }
-        function open(): void { root.launcherVisible = true; }
-        function close(): void { root.launcherVisible = false; }
-    }
 
     NotificationServer {
         id: notificationServer
@@ -134,12 +126,6 @@ Scope {
                 anchor.rect.y: bar.height + 8
             }
 
-            LauncherPopup {
-                opened: root.launcherVisible
-                anchor.window: bar
-                anchor.rect.x: (bar.width - width) / 2
-                anchor.rect.y: bar.height + 10
-            }
 
             BarText {
                 id: powerIcon
