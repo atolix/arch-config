@@ -2,7 +2,7 @@
 
 A small top bar for Hyprland, managed as a Git repository.
 
-- Left: power menu and applications in the focused workspace
+- Left: power menu; focused workspace applications are centered between the power icon and clock
 - Center: local date and time in 24-hour format with seconds
 - Click the clock: English calendar with previous/next month navigation and a Today button
 - Power icon: Lock / Suspend / Reboot / Shutdown

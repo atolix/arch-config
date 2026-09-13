@@ -130,10 +130,10 @@ Scope {
 
             Row {
                 id: workspaceApps
-                anchors.left: parent.left
-                anchors.leftMargin: 42
                 anchors.verticalCenter: parent.verticalCenter
-                width: Math.max(0, Math.min(290, clockText.x - 54))
+                property real availableWidth: Math.max(0, clockText.x - (powerIcon.x + powerIcon.width) - 20)
+                width: Math.min(implicitWidth, availableWidth)
+                x: powerIcon.x + powerIcon.width + 10 + (availableWidth - width) / 2
                 height: 22
                 spacing: 6
                 clip: true
