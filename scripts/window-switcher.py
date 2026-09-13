@@ -65,6 +65,7 @@ def main():
     for label, address, _ in rows:
         if selected == label:
             subprocess.run(["hyprctl", "dispatch", "focuswindow", f"address:{address}"], check=False)
+            subprocess.run(["hyprctl", "dispatch", "alterzorder", "top"], check=False)
             break
 
 
