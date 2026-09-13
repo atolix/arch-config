@@ -4,3 +4,7 @@ Name=ArchDark
 
 [Icons]
 Theme=breeze-dark
+
+[KDE]
+LookAndFeelPackage=org.kde.breeze.desktop
+widgetStyle=Breeze

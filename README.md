@@ -82,6 +82,7 @@ sudo pacman -S --needed - < packages.txt
 ```
 
 The installer renders user configuration files into `~/.config` and applies the tracked SDDM theme and system configuration with sudo. Existing files are backed up under `~/.local/state/arch-config/backups/` before they are replaced.
+After installing the KDE theme packages, restart Dolphin; a new login session may be needed for the Qt environment variables to reach applications launched from Hyprland.
 
 ## Files
 
