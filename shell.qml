@@ -154,6 +154,8 @@ Scope {
 
                 BarText {
                     visible: root.battery.ready && root.battery.isPresent
+                    height: 22
+                    verticalAlignment: Text.AlignVCenter
                     text: root.percent(root.battery.percentage * 100)
                     color: root.battery.percentage <= 0.15 ? "#f38ba8" : root.battery.percentage <= 0.3 ? "#f9e2af" : "#eaeaea"
                     Accessible.name: "Battery percentage " + text
