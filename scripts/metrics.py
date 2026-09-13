@@ -39,7 +39,7 @@ def network_status():
 
 def main():
     while True:
-        time.sleep(2)
+        time.sleep(10)
         network = network_status()
         print(json.dumps({**network, "brightness": brightness_percent()}), flush=True)
 

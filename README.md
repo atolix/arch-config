@@ -77,7 +77,7 @@ For a different user or installation path, update the paths. To switch back to W
 - `Osd.qml`: temporary volume and brightness display
 - `hyprland-osd.conf`: hardware key bindings for the OSD
 - `scripts/osd-control.py`: applies volume/brightness changes and triggers the OSD
-- `scripts/metrics.py`: reads brightness and NetworkManager status every two seconds
+- `scripts/metrics.py`: reads brightness and NetworkManager status every 10 seconds
 - `run.sh`: starts the configuration relative to its own location
 
 The bar uses JetBrainsMono and a translucent dark background matching the previous Waybar setup.
