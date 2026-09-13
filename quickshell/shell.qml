@@ -59,6 +59,19 @@ Scope {
         return "󰤢";
     }
 
+    function workspaceFor(id) {
+        const workspaces = Hyprland.workspaces?.values ?? [];
+        for (const workspace of workspaces) {
+            if (workspace.id === id) return workspace;
+        }
+        return null;
+    }
+
+    function workspaceOccupied(id) {
+        const workspace = workspaceFor(id);
+        return workspace !== null && (workspace.toplevels?.values?.length ?? 0) > 0;
+    }
+
     PwObjectTracker {
         objects: Pipewire.defaultAudioSink ? [Pipewire.defaultAudioSink] : []
     }
@@ -177,10 +190,10 @@ Scope {
 
                         Rectangle {
                             anchors.centerIn: parent
-                            width: Hyprland.focusedWorkspace?.id === parent.modelData ? 14 : 6
+                            width: Hyprland.focusedWorkspace?.id === parent.modelData ? 14 : root.workspaceOccupied(parent.modelData) ? 10 : 6
                             height: Hyprland.focusedWorkspace?.id === parent.modelData ? 5 : 4
                             radius: height / 2
-                            color: Hyprland.focusedWorkspace?.id === parent.modelData ? "#a5b4fc" : "#646978"
+                            color: Hyprland.focusedWorkspace?.id === parent.modelData ? "#a5b4fc" : root.workspaceOccupied(parent.modelData) ? "#8993b5" : "#646978"
                         }
 
                         MouseArea {
