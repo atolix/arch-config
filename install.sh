@@ -3,11 +3,17 @@ set -euo pipefail
 
 repo_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 config_dir="${XDG_CONFIG_HOME:-$HOME/.config}"
+backup_dir="$HOME/.local/state/arch-config/backups/$(date +%Y%m%d-%H%M%S)"
 
 render_config() {
     local source="$1"
     local target="$2"
     mkdir -p "$(dirname -- "$target")"
+    if [ -e "$target" ] && [ ! -L "$target" ]; then
+        local relative_target="${target#"$HOME/"}"
+        mkdir -p "$backup_dir/$(dirname -- "$relative_target")"
+        cp -a "$target" "$backup_dir/$relative_target"
+    fi
     if [ -L "$target" ]; then
         rm -f "$target"
     fi
@@ -28,5 +34,8 @@ sudo cp -a "$repo_dir/sddm/mysddm/." /usr/share/sddm/themes/mysddm/
 sudo install -m 644 "$repo_dir/etc/sddm.conf.d/theme.conf" /etc/sddm.conf.d/theme.conf
 
 echo "Linked user configuration from $repo_dir"
+if [ -d "$backup_dir" ]; then
+    echo "Backed up existing user configuration to $backup_dir"
+fi
 echo "Install packages with: sudo pacman -S --needed - < $repo_dir/packages.txt"
 echo "Applied SDDM theme from $repo_dir/sddm/mysddm"
