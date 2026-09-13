@@ -27,31 +27,31 @@ Item {
             ctx.lineWidth = 1.5;
             ctx.lineJoin = "round";
 
+            function roundedRect(x, y, width, height, radius, fill) {
+                const r = Math.min(radius, width / 2, height / 2);
+                ctx.beginPath();
+                ctx.moveTo(x + r, y);
+                ctx.lineTo(x + width - r, y);
+                ctx.quadraticCurveTo(x + width, y, x + width, y + r);
+                ctx.lineTo(x + width, y + height - r);
+                ctx.quadraticCurveTo(x + width, y + height, x + width - r, y + height);
+                ctx.lineTo(x + r, y + height);
+                ctx.quadraticCurveTo(x, y + height, x, y + height - r);
+                ctx.lineTo(x, y + r);
+                ctx.quadraticCurveTo(x, y, x + r, y);
+                ctx.closePath();
+                fill ? ctx.fill() : ctx.stroke();
+            }
+
             // Battery outline and positive terminal.
             ctx.strokeStyle = icon.levelColor.toString();
-            ctx.strokeRect(2.5, 5.5, 20, 11);
+            roundedRect(2.5, 5.5, 20, 11, 3, false);
             ctx.fillStyle = icon.levelColor.toString();
-            ctx.fillRect(23.5, 8.5, 2, 5);
+            roundedRect(23.5, 8.5, 2, 5, 1, true);
 
             // Charge level, with a small inset so the outline remains clear.
-            ctx.fillRect(4.5, 7.5, 16 * icon.level, 7);
-
-            if (icon.charging) {
-                // A contrasting bolt remains visible at every charge level.
-                ctx.fillStyle = "#181a22";
-                ctx.beginPath();
-                ctx.moveTo(14.5, 3.5);
-                ctx.lineTo(9.5, 11.5);
-                ctx.lineTo(13, 11.5);
-                ctx.lineTo(11.5, 18.5);
-                ctx.lineTo(18, 9.5);
-                ctx.lineTo(14.2, 9.5);
-                ctx.closePath();
-                ctx.fill();
-                ctx.strokeStyle = "#f9e2af";
-                ctx.lineWidth = 1;
-                ctx.stroke();
-            }
+            if (icon.level > 0)
+                roundedRect(4.5, 7.5, 16 * icon.level, 7, 1.8, true);
         }
     }
 }
