@@ -2,8 +2,8 @@ import QtQuick
 import QtQuick.Controls
 import Quickshell
 import Quickshell.Hyprland
-import "shared/Theme.js" as Theme
-import "shared"
+import "../shared/Theme.js" as Theme
+import "../shared"
 
 PopupWindow {
     id: popup

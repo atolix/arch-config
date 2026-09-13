@@ -1,7 +1,7 @@
 import QtQuick
 import Quickshell
-import "shared/Theme.js" as Theme
-import "shared"
+import "../shared/Theme.js" as Theme
+import "../shared"
 
 PopupWindow {
     id: popup
