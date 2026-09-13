@@ -74,6 +74,14 @@ Scope {
                 anchor.rect.y: bar.height + 6
             }
 
+            CalendarPopup {
+                id: calendarPopup
+                today: clock.date
+                anchor.window: bar
+                anchor.rect.x: (bar.width - width) / 2
+                anchor.rect.y: bar.height + 6
+            }
+
             BarText {
                 anchors.left: parent.left
                 anchors.leftMargin: 12
@@ -86,6 +94,14 @@ Scope {
                 id: clockText
                 anchors.centerIn: parent
                 text: Qt.formatDateTime(clock.date, "MMM d ddd hh:mm AP")
+                MouseArea {
+                    anchors.fill: parent
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: {
+                        volumePopup.visible = false;
+                        calendarPopup.visible = !calendarPopup.visible;
+                    }
+                }
             }
 
             Row {
@@ -109,6 +125,7 @@ Scope {
                             if (mouse.button === Qt.RightButton) {
                                 if (root.audio) root.audio.muted = !root.audio.muted;
                             } else {
+                                calendarPopup.visible = false;
                                 volumePopup.visible = !volumePopup.visible;
                             }
                         }
