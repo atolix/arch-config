@@ -5,6 +5,7 @@ import Quickshell.Wayland
 import Quickshell.Hyprland
 import Quickshell.Services.Pipewire
 import Quickshell.Services.UPower
+import Quickshell.Services.Notifications
 
 Scope {
     id: root
@@ -24,6 +25,15 @@ Scope {
     }
     readonly property var audio: Pipewire.defaultAudioSink?.audio ?? null
     readonly property var battery: UPower.displayDevice
+
+    NotificationServer {
+        id: notificationServer
+        bodySupported: true
+        bodyMarkupSupported: false
+        actionsSupported: true
+        imageSupported: true
+        onNotification: notification => notification.tracked = true
+    }
     function percent(value) {
         return value === null || value === undefined ? "—" : Math.round(value) + "%";
     }
@@ -102,6 +112,13 @@ Scope {
                 anchor.window: bar
                 anchor.rect.x: 8
                 anchor.rect.y: bar.height + 6
+            }
+
+            NotificationPopup {
+                server: notificationServer
+                anchor.window: bar
+                anchor.rect.x: bar.width - width - 8
+                anchor.rect.y: bar.height + 8
             }
 
             BarText {
