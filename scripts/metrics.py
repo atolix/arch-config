@@ -20,6 +20,20 @@ def brightness_percent():
     return None
 
 
+def input_layout():
+    try:
+        engine = subprocess.run(
+            ["fcitx5-remote", "-n"], capture_output=True, text=True, timeout=2, check=True
+        ).stdout.strip().lower()
+    except (OSError, subprocess.SubprocessError):
+        return "—"
+    if "mozc" in engine or "japanese" in engine or "keyboard-jp" in engine:
+        return "JP"
+    if "keyboard-us" in engine or engine in ("us", "english"):
+        return "EN"
+    return engine.upper()[:4] if engine else "—"
+
+
 def network_status():
     try:
         result = subprocess.run(
@@ -41,7 +55,7 @@ def main():
     while True:
         time.sleep(10)
         network = network_status()
-        print(json.dumps({**network, "brightness": brightness_percent()}), flush=True)
+        print(json.dumps({**network, "brightness": brightness_percent(), "input": input_layout()}), flush=True)
 
 
 if __name__ == "__main__":

@@ -13,7 +13,7 @@ Scope {
         onBrightnessReported: value => root.brightness = value
     }
 
-    property var stats: ({ network: "…" })
+    property var stats: ({ network: "…", input: "—" })
     readonly property var audio: Pipewire.defaultAudioSink?.audio ?? null
     readonly property var battery: UPower.displayDevice
     readonly property string appName: {
@@ -151,6 +151,13 @@ Scope {
                 anchors.rightMargin: 12
                 anchors.verticalCenter: parent.verticalCenter
                 spacing: 10
+
+                BarText {
+                    height: 22
+                    verticalAlignment: Text.AlignVCenter
+                    text: root.stats.input
+                    Accessible.name: "Keyboard layout " + text
+                }
 
                 VolumeIcon {
                     id: volumeText

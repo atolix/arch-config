@@ -6,12 +6,13 @@ A small top bar for Hyprland, managed as a Git repository.
 - Center: local date and time
 - Click the clock: English calendar with previous/next month navigation and a Today button
 - Power icon: Lock / Suspend / Reboot / Shutdown
-- Right: volume / brightness / battery / Wi-Fi or Ethernet
+- Right: keyboard layout / volume / brightness / battery / Wi-Fi or Ethernet
 - Volume: scroll to change by 5%, right-click to mute, left-click to open the volume panel
 - Volume icon: no wave at 0%, then one, two, or three waves for 1–33%, 34–66%, and 67–100%
 - Brightness icon: light rays expand continuously with the current brightness
 - Battery: percentage beside a rounded battery gauge; yellow below 30%, red below 15%, green while charging
 - Wi-Fi: connected SSID; Ethernet shows `eth: connected`, and disconnected networking shows `net: offline`
+- Keyboard layout: `JP` for Mozc and `EN` for the US keyboard engine
 - Volume and brightness keys: an English OSD appears at the bottom center for 1.8 seconds
 - The bar appears on every monitor. The battery icon and percentage are hidden when no battery is present.
 
@@ -77,7 +78,7 @@ For a different user or installation path, update the paths. To switch back to W
 - `Osd.qml`: temporary volume and brightness display
 - `hyprland-osd.conf`: hardware key bindings for the OSD
 - `scripts/osd-control.py`: applies volume/brightness changes and triggers the OSD
-- `scripts/metrics.py`: reads brightness and NetworkManager status every 10 seconds
+- `scripts/metrics.py`: reads brightness, input engine, and NetworkManager status every 10 seconds
 - `run.sh`: starts the configuration relative to its own location
 
 The bar uses JetBrainsMono and a translucent dark background matching the previous Waybar setup.
