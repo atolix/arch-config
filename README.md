@@ -17,7 +17,7 @@ A small top bar for Hyprland, managed as a Git repository.
 - Keyboard layout: press Ctrl+Space or click the `JP` / `EN` label to switch immediately
 - Volume and brightness keys: an English OSD appears at the bottom center for 1.8 seconds
 - Desktop notifications: Quickshell receives D-Bus notifications and shows them as cards below the top-right of the bar
-- App launcher: press `Super+Space` to search and launch installed applications
+- App launcher: press `Super+R` to open the Wofi application launcher with matching bar colors
 - The bar appears on every monitor. The battery icon and percentage are hidden when no battery is present.
 
 ## Requirements
@@ -82,7 +82,6 @@ For a different user or installation path, update the paths. To switch back to W
 - `CalendarPopup.qml`: calendar with today highlighting and month navigation
 - `PowerPopup.qml`: lock, suspend, reboot, and shutdown menu
 - `NotificationPopup.qml`: event-driven desktop notification cards
-- `LauncherPopup.qml`: searchable application launcher
 - `Osd.qml`: temporary volume and brightness display
 - `hyprland-osd.conf`: hardware key bindings for the OSD
 - `scripts/osd-control.py`: applies volume/brightness changes and triggers the OSD
