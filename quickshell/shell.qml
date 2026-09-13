@@ -6,6 +6,7 @@ import Quickshell.Hyprland
 import Quickshell.Services.Pipewire
 import Quickshell.Services.UPower
 import Quickshell.Services.Notifications
+import "HyprlandHelpers.js" as HyprlandHelpers
 import "Theme.js" as Theme
 
 Scope {
@@ -44,33 +45,19 @@ Scope {
     }
 
     function appLabel(appId) {
-        const names = {
-            "com.mitchellh.ghostty": "Ghostty",
-            "chromium": "Chromium",
-        };
-        return names[appId] ?? appId;
+        return HyprlandHelpers.appLabel(appId);
     }
 
     function networkIcon() {
-        if (root.stats.network_type === "ethernet") return "󰈀";
-        if (root.stats.network_type !== "wifi") return "󰤭";
-        const signal = Number(root.stats.signal ?? 0);
-        if (signal >= 70) return "󰤨";
-        if (signal >= 40) return "󰤥";
-        return "󰤢";
+        return HyprlandHelpers.networkIcon(root.stats.network_type, root.stats.signal);
     }
 
     function workspaceFor(id) {
-        const workspaces = Hyprland.workspaces?.values ?? [];
-        for (const workspace of workspaces) {
-            if (workspace.id === id) return workspace;
-        }
-        return null;
+        return HyprlandHelpers.workspaceFor(Hyprland.workspaces?.values ?? [], id);
     }
 
     function workspaceOccupied(id) {
-        const workspace = workspaceFor(id);
-        return workspace !== null && (workspace.toplevels?.values?.length ?? 0) > 0;
+        return HyprlandHelpers.workspaceOccupied(Hyprland.workspaces?.values ?? [], id);
     }
 
     PwObjectTracker {
