@@ -18,7 +18,10 @@ Item {
 
     readonly property alias statusItem: status
 
-    anchors.fill: parent
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    height: parent.height
 
     BarText {
         id: powerIcon
