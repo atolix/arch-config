@@ -9,7 +9,7 @@ ok() { printf '  [ok] %s\n' "$1"; }
 fail() { printf '  [!!] %s\n' "$1"; failed=1; }
 
 printf 'Commands\n'
-for command_name in hyprctl hypridle hyprlock quickshell wofi cliphist wl-copy wl-paste python3 pacman; do
+for command_name in hyprctl hypridle hyprlock quickshell wofi cliphist grim slurp wf-recorder wl-copy wl-paste python3 pacman; do
     if command -v "$command_name" >/dev/null 2>&1; then ok "$command_name"; else fail "$command_name is not installed"; fi
 done
 
@@ -38,7 +38,7 @@ while IFS= read -r package_name; do
 done < "$repo_dir/packages.txt"
 
 printf '\nSyntax checks\n'
-if bash -n "$repo_dir/install.sh" "$repo_dir/quickshell/run.sh" "$repo_dir/quickshell/scripts/lock-and-suspend.sh" "$repo_dir/quickshell/scripts/clipboard-picker.sh"; then ok 'shell scripts'; else fail 'shell script syntax'; fi
+if bash -n "$repo_dir/install.sh" "$repo_dir/quickshell/run.sh" "$repo_dir/quickshell/scripts/lock-and-suspend.sh" "$repo_dir/quickshell/scripts/clipboard-picker.sh" "$repo_dir/quickshell/scripts/screenshot.sh" "$repo_dir/quickshell/scripts/screen-record.sh"; then ok 'shell scripts'; else fail 'shell script syntax'; fi
 if python3 -m py_compile "$repo_dir"/quickshell/scripts/*.py; then ok 'Python scripts'; else fail 'Python script syntax'; fi
 if git -C "$repo_dir" diff --check; then ok 'Git whitespace'; else fail 'Git whitespace errors'; fi
 

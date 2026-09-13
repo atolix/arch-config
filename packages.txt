@@ -3,6 +3,7 @@ brightnessctl
 cliphist
 fcitx5
 fcitx5-mozc
+grim
 hypridle
 hyprland
 hyprlock
@@ -12,7 +13,9 @@ pipewire
 python
 quickshell
 sddm
+slurp
 thunar
 upower
+wf-recorder
 wireplumber
 wofi
