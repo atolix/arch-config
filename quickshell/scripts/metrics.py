@@ -37,18 +37,24 @@ def input_layout():
 def network_status():
     try:
         result = subprocess.run(
-            ["nmcli", "--terse", "--escape", "no", "--fields", "TYPE,STATE,CONNECTION", "device", "status"],
+            ["nmcli", "--terse", "--escape", "no", "--fields", "TYPE,STATE,CONNECTION,SIGNAL", "device", "status"],
             capture_output=True, text=True, timeout=3, check=True,
             env={**os.environ, "LC_ALL": "C"},
         )
     except (OSError, subprocess.SubprocessError):
-        return {"network": "net: —"}
-    connections = [line.split(":", 2) for line in result.stdout.splitlines()]
+        return {"network": "net: —", "network_type": "offline", "signal": 0}
+    connections = [line.split(":", 3) for line in result.stdout.splitlines()]
     for kind in ("wifi", "ethernet"):
         for entry in connections:
-            if len(entry) == 3 and entry[0] == kind and entry[1] == "connected":
-                return {"network": entry[2] if kind == "wifi" else "eth: connected"}
-    return {"network": "net: offline"}
+            if len(entry) >= 3 and entry[0] == kind and entry[1] == "connected":
+                if kind == "wifi":
+                    try:
+                        signal = int(entry[3]) if len(entry) > 3 and entry[3] else 0
+                    except ValueError:
+                        signal = 0
+                    return {"network": entry[2], "network_type": "wifi", "signal": signal}
+                return {"network": "eth: connected", "network_type": "ethernet", "signal": 0}
+    return {"network": "net: offline", "network_type": "offline", "signal": 0}
 
 
 def main():

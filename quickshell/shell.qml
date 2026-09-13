@@ -15,12 +15,12 @@ Scope {
         onBrightnessReported: value => root.brightness = value
     }
 
-    property var stats: ({ network: "…", input: "—" })
+    property var stats: ({ network: "…", network_type: "offline", signal: 0, input: "—" })
 
     IpcHandler {
         target: "input"
         function setLayout(layout: string): void {
-            root.stats = { network: root.stats.network, input: layout };
+            root.stats = { network: root.stats.network, network_type: root.stats.network_type, signal: root.stats.signal, input: layout };
         }
     }
     readonly property var audio: Pipewire.defaultAudioSink?.audio ?? null
@@ -48,6 +48,15 @@ Scope {
             "chromium": "Chromium",
         };
         return names[appId] ?? appId;
+    }
+
+    function networkIcon() {
+        if (root.stats.network_type === "ethernet") return "󰈀";
+        if (root.stats.network_type !== "wifi") return "󰤭";
+        const signal = Number(root.stats.signal ?? 0);
+        if (signal >= 70) return "󰤨";
+        if (signal >= 40) return "󰤥";
+        return "󰤢";
     }
 
     PwObjectTracker {
@@ -326,8 +335,11 @@ Scope {
                 BarText {
                     height: 22
                     verticalAlignment: Text.AlignVCenter
-                    text: root.stats.network
-                    width: Math.min(implicitWidth, 180)
+                    width: 22
+                    horizontalAlignment: Text.AlignHCenter
+                    text: root.networkIcon()
+                    font.family: "JetBrainsMono Nerd Font Mono"
+                    font.pixelSize: 17
                     Accessible.name: root.stats.network
                 }
             }
