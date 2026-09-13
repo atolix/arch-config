@@ -13,7 +13,7 @@ Scope {
         onBrightnessReported: value => root.brightness = value
     }
 
-    property var stats: ({ network: "…", networkKind: "offline", wifiSignal: 0 })
+    property var stats: ({ network: "…" })
     readonly property var audio: Pipewire.defaultAudioSink?.audio ?? null
     readonly property var battery: UPower.displayDevice
     readonly property string appName: {
@@ -157,9 +157,9 @@ Scope {
                     Accessible.name: "Battery " + root.percent(root.battery.percentage * 100)
                 }
 
-                NetworkIcon {
-                    kind: root.stats.networkKind
-                    signal: root.stats.wifiSignal
+                BarText {
+                    text: root.stats.network
+                    width: Math.min(implicitWidth, 180)
                     Accessible.name: root.stats.network
                 }
             }
