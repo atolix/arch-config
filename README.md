@@ -57,15 +57,15 @@ OSDは全モニターに表示し、フォーカスやクリックを奪いま�
 ./scripts/osd-control.py brightness show
 ```
 
-## 自動起動へ切り替える場合
+## 自動起動
 
-`~/.config/hypr/hyprland.conf` の `exec-once = waybar` を以下に置き換えます。
+`~/.config/hypr/hyprland.conf` は以下の設定へ切り替え済みです。
 
 ```ini
-exec-once = /home/atolix/development/quickshell-bar/run.sh
+exec-once = /home/atolix/development/quickshell-bar/run.sh --no-duplicate --daemonize
 ```
 
-次のログインから有効です。戻すときは `exec-once = waybar` に戻します。
+次のログインからQuickshellが自動起動します。戻すときは `exec-once = waybar` に戻します。
 別のユーザー・配置先ではパスを変更してください。
 
 ## ファイル
