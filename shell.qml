@@ -90,11 +90,40 @@ Scope {
                 anchor.rect.y: bar.height + 6
             }
 
+            PowerPopup {
+                id: powerPopup
+                anchor.window: bar
+                anchor.rect.x: 8
+                anchor.rect.y: bar.height + 6
+            }
+
             BarText {
+                id: powerIcon
                 anchors.left: parent.left
                 anchors.leftMargin: 12
                 anchors.verticalCenter: parent.verticalCenter
-                width: Math.max(0, Math.min(320, clockText.x - 24))
+                width: 22
+                font.family: "JetBrainsMono Nerd Font Mono"
+                font.pixelSize: 17
+                horizontalAlignment: Text.AlignHCenter
+                text: "󰐥"
+                Accessible.name: "Power"
+                MouseArea {
+                    anchors.fill: parent
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: {
+                        volumePopup.visible = false;
+                        calendarPopup.visible = false;
+                        powerPopup.visible = !powerPopup.visible;
+                    }
+                }
+            }
+
+            BarText {
+                anchors.left: parent.left
+                anchors.leftMargin: 42
+                anchors.verticalCenter: parent.verticalCenter
+                width: Math.max(0, Math.min(290, clockText.x - 54))
                 text: root.appName
             }
 

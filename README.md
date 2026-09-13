@@ -2,9 +2,10 @@
 
 Hyprland用の小さな上部バー。設定はこのリポジトリ内で管理します。
 
-- 左: フォーカス中のアプリ名
+- 左: 電源メニュー、フォーカス中のアプリ名
 - 中央: 日付と時計（システムのローカルタイム）
 - 時計クリック: 日曜始まりの英語カレンダー。前月・翌月の移動、「Today」で今月に戻る
+- 左端の電源アイコン: Lock / Suspend / Reboot / Shutdown
 - 右: 音量 / バッテリー / Wi-Fi・有線接続
 - 音量: スクロールで5%ずつ変更、右クリックでミュート、左クリックで音量パネル
 - バーの音量は状態に応じたスピーカーアイコン。隣の電球は明るさに応じて周囲の光線が連続的に伸縮。クリックで明るさOSDを表示
@@ -79,6 +80,7 @@ exec-once = /home/atolix/development/quickshell-bar/run.sh --no-duplicate --daem
 - `BatteryIcon.qml`: 角丸の残量ゲージと充電状態を描くバッテリーアイコン
 - `VolumePopup.qml`: PipeWireと連動する音量スライダー
 - `CalendarPopup.qml`: 今日の強調表示と月移動ができるカレンダー
+- `PowerPopup.qml`: ロック・サスペンド・再起動・シャットダウンのメニュー
 - `Osd.qml`: 音量・明るさの一時表示
 - `hyprland-osd.conf`: OSDと連動するハードウェアキー設定
 - `scripts/osd-control.py`: 音量・明るさを操作してOSDへ通知
