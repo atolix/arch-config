@@ -49,19 +49,8 @@ PanelWindow {
             }
         }
 
-        Item {
-            width: 18
-            height: 420
-
-            BarText {
-                anchors.centerIn: parent
-                width: 420
-                height: 18
-                horizontalAlignment: Text.AlignHCenter
-                font.pixelSize: 11
-                rotation: -90
-                text: "cpu: " + rail.stats.cpu + "% / mem: " + rail.stats.mem + "% / temp: " + (rail.stats.temp === null ? "—" : rail.stats.temp) + "°C / fan: " + (rail.stats.fan === null ? "—" : rail.stats.fan) + " RPM"
-            }
+        StatsText {
+            stats: rail.stats
         }
     }
 }
