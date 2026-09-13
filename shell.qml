@@ -77,7 +77,7 @@ Scope {
             BarText {
                 id: clockText
                 anchors.centerIn: parent
-                text: Qt.formatDateTime(clock.date, "MMM  dd  ddd  hh : mm  AP")
+                text: Qt.formatDateTime(clock.date, "MMM d ddd hh:mm AP")
             }
 
             Row {
@@ -85,7 +85,7 @@ Scope {
                 anchors.right: parent.right
                 anchors.rightMargin: 12
                 anchors.verticalCenter: parent.verticalCenter
-                spacing: 18
+                spacing: 10
 
                 BarText { text: "cpu: " + root.percent(root.stats.cpu) }
                 BarText { text: "mem: " + root.percent(root.stats.memory) }
