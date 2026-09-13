@@ -122,14 +122,9 @@ Scope {
                 BarText { text: "cpu: " + root.percent(root.stats.cpu) }
                 BarText { text: "mem: " + root.percent(root.stats.memory) }
 
-                BarText {
+                VolumeIcon {
                     id: volumeText
-                    width: 24
-                    font.family: "JetBrainsMono Nerd Font Mono"
-                    font.pixelSize: 17
-                    horizontalAlignment: Text.AlignHCenter
-                    text: !root.audio || root.audio.muted ? "󰝟" : root.audio.volume === 0 ? "󰖁" : root.audio.volume < 0.34 ? "󰕿" : root.audio.volume < 0.67 ? "󰖀" : "󰕾"
-                    color: root.audio ? "#eaeaea" : "#646978"
+                    audio: root.audio
                     Accessible.name: "Volume"
                     MouseArea {
                         anchors.fill: parent
