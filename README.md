@@ -87,18 +87,34 @@ Restart Thunar after applying the settings to load the new GTK theme.
 
 ## Files
 
-- `quickshell/shell.qml`: layout, workspace apps, clock, audio, battery, and popups
-- `quickshell/*.qml`: shared bar widgets and popups
-- `quickshell/hyprland-osd.conf`: hardware key bindings for the OSD
-- `quickshell/hypridle.conf`: idle locking, display power saving, and suspend timers
-- `home/atolix/.config/hypr/hyprlock.conf`: lock screen appearance
-- `quickshell/scripts/osd-control.py`: applies volume/brightness changes and triggers the OSD
-- `quickshell/scripts/input-toggle.py`: toggles Fcitx5 and updates the layout label immediately
-- `quickshell/scripts/window-switcher.py`: lists Hyprland windows in Wofi and focuses the selected one
-- `quickshell/scripts/metrics.py`: reads brightness, input engine, and NetworkManager status every 10 seconds
-- `quickshell/run.sh`: starts the bar configuration relative to its own location
-- `home/atolix/.config/gtk-3.0/settings.ini`: shared GTK theme settings
-- `home/atolix/.config/gtk-3.0/gtk.css`: shared GTK colors and selection styling
+```text
+arch-config/
+├── check.sh                         # Validate packages, configs, and session state
+├── install.sh                       # Render user configs and apply the SDDM theme
+├── packages.txt                     # Required Arch packages
+├── home/atolix/.config/
+│   ├── gtk-3.0/
+│   │   ├── settings.ini             # Shared GTK theme settings
+│   │   └── gtk.css                  # Shared GTK colors and selection styling
+│   ├── hypr/
+│   │   ├── hyprland.conf            # Hyprland key bindings and window rules
+│   │   └── hyprlock.conf             # Lock screen appearance
+│   └── wofi/style.css                # Launcher and window switcher styling
+├── quickshell/
+│   ├── shell.qml                     # Bar layout, workspaces, status, and popups
+│   ├── *.qml                         # Shared bar widgets and popups
+│   ├── hypridle.conf                 # Idle locking and suspend timers
+│   ├── hyprland-osd.conf             # Hardware key bindings for the OSD
+│   ├── run.sh                         # Start Quickshell relative to this directory
+│   └── scripts/
+│       ├── metrics.py                # Brightness, input, network, CPU, memory, and temperature
+│       ├── osd-control.py             # Apply volume/brightness changes and show the OSD
+│       ├── input-toggle.py            # Toggle Fcitx5 and update the layout label
+│       ├── window-switcher.py         # List and focus Hyprland windows in Wofi
+│       └── lock-and-suspend.sh        # Lock and suspend after idle timeouts
+├── etc/sddm.conf.d/theme.conf        # SDDM theme selection
+└── sddm/mysddm/                      # Tracked SDDM theme files
+```
 
 The bar uses JetBrainsMono and a translucent dark background matching the previous Waybar setup.
 
