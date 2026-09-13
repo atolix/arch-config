@@ -9,7 +9,7 @@ ok() { printf '  [ok] %s\n' "$1"; }
 fail() { printf '  [!!] %s\n' "$1"; failed=1; }
 
 printf 'Commands\n'
-for command_name in hyprctl hypridle hyprlock quickshell wofi cliphist grim slurp wf-recorder wl-copy wl-paste python3 pacman; do
+for command_name in hyprctl hypridle hyprlock quickshell wofi cliphist grim slurp wf-recorder mpv wl-copy wl-paste python3 pacman; do
     if command -v "$command_name" >/dev/null 2>&1; then ok "$command_name"; else fail "$command_name is not installed"; fi
 done
 
@@ -21,7 +21,9 @@ for file in \
     "$config_dir/hypr/hyprland-osd.conf" \
     "$config_dir/wofi/style.css" \
     "$config_dir/gtk-3.0/settings.ini" \
-    "$config_dir/gtk-3.0/gtk.css"; do
+    "$config_dir/gtk-3.0/gtk.css" \
+    "$config_dir/mimeapps.list" \
+    "$config_dir/mpv/mpv.conf"; do
     if [ -f "$file" ]; then ok "$file"; else fail "$file is missing"; fi
 done
 

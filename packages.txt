@@ -9,6 +9,7 @@ hyprland
 hyprlock
 network-manager-applet
 networkmanager
+mpv
 pipewire
 python
 quickshell

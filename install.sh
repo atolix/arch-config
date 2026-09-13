@@ -27,6 +27,8 @@ render_config "$repo_dir/quickshell/hyprland-osd.conf" "$config_dir/hypr/hyprlan
 render_config "$repo_dir/home/atolix/.config/wofi/style.css" "$config_dir/wofi/style.css"
 render_config "$repo_dir/home/atolix/.config/gtk-3.0/settings.ini" "$config_dir/gtk-3.0/settings.ini"
 render_config "$repo_dir/home/atolix/.config/gtk-3.0/gtk.css" "$config_dir/gtk-3.0/gtk.css"
+render_config "$repo_dir/home/atolix/.config/mimeapps.list" "$config_dir/mimeapps.list"
+render_config "$repo_dir/home/atolix/.config/mpv/mpv.conf" "$config_dir/mpv/mpv.conf"
 render_config "$repo_dir/home/atolix/.config/fcitx5/config" "$config_dir/fcitx5/config"
 render_config "$repo_dir/home/atolix/.config/fcitx5/profile" "$config_dir/fcitx5/profile"
 render_config "$repo_dir/home/atolix/.config/fcitx5/conf/notifications.conf" "$config_dir/fcitx5/conf/notifications.conf"
