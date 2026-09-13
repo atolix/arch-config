@@ -78,6 +78,7 @@ For a different user or installation path, update the paths. To switch back to W
 ```sh
 sudo pacman -S --needed - < packages.txt
 ./install.sh
+./check.sh
 ```
 
 The installer links user configuration files into `~/.config` and applies the tracked SDDM theme and system configuration with sudo.
