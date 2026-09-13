@@ -155,10 +155,9 @@ Scope {
                     }
                 }
 
-                BarText {
-                    visible: root.battery.ready && root.battery.isPresent
-                    text: "bat: " + root.percent(root.battery.percentage * 100) + (root.battery.state === UPowerDeviceState.Charging ? " +" : "")
-                    color: root.battery.percentage <= 0.15 ? "#f38ba8" : "#eaeaea"
+                BatteryIcon {
+                    battery: root.battery
+                    Accessible.name: "Battery " + root.percent(root.battery.percentage * 100)
                 }
 
                 BarText {
