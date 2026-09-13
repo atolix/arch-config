@@ -20,7 +20,7 @@ Hyprland desktop configuration, managed as a Git repository. The Quickshell bar 
 - App launcher: press `Super+R` to open the Wofi application launcher with matching bar colors
 - Window switcher: press `Ctrl+S` for a wide Wofi list with application icons and window titles
 - Workspaces: click the `1`–`5` buttons or press `Super+1`–`Super+5` to switch desktops
-- Dolphin: dark colors, Breeze Dark icons, compact places panel, and a minimal menu bar
+- Thunar: dark GTK colors, compact controls, and matching selection accents
 - Idle power saving: locks after 5 minutes, suspends 5 seconds later, and turns the display off after 10 minutes as a fallback
 - The bar appears on every monitor. The battery icon and percentage are hidden when no battery is present.
 
@@ -82,7 +82,7 @@ sudo pacman -S --needed - < packages.txt
 ```
 
 The installer renders user configuration files into `~/.config` and applies the tracked SDDM theme and system configuration with sudo. Existing files are backed up under `~/.local/state/arch-config/backups/` before they are replaced.
-After installing the KDE theme packages, restart Dolphin; a new login session may be needed for the Qt environment variables to reach applications launched from Hyprland.
+Restart Thunar after applying the settings to load the new GTK theme.
 
 ## Files
 
@@ -96,9 +96,8 @@ After installing the KDE theme packages, restart Dolphin; a new login session ma
 - `quickshell/scripts/window-switcher.py`: lists Hyprland windows in Wofi and focuses the selected one
 - `quickshell/scripts/metrics.py`: reads brightness, input engine, and NetworkManager status every 10 seconds
 - `quickshell/run.sh`: starts the bar configuration relative to its own location
-- `home/atolix/.config/dolphinrc`: Dolphin layout and panel settings
-- `home/atolix/.config/kdeglobals`: shared KDE color and icon theme settings
-- `home/atolix/.local/share/color-schemes/ArchDark.colors`: repository-local dark color scheme
+- `home/atolix/.config/gtk-3.0/settings.ini`: shared GTK theme settings
+- `home/atolix/.config/gtk-3.0/gtk.css`: shared GTK colors and selection styling
 
 The bar uses JetBrainsMono and a translucent dark background matching the previous Waybar setup.
 

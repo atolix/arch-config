@@ -1,0 +1,34 @@
+@define-color theme_bg_color #14161c;
+@define-color theme_fg_color #eaeaea;
+@define-color theme_base_color #14161c;
+@define-color theme_text_color #eaeaea;
+@define-color theme_selected_bg_color #41455a;
+@define-color theme_selected_fg_color #ffffff;
+
+window,
+dialog,
+popover,
+menu,
+tooltip {
+  background-color: @theme_bg_color;
+  color: @theme_fg_color;
+}
+
+treeview.view,
+iconview.view {
+  background-color: @theme_base_color;
+  color: @theme_text_color;
+}
+
+treeview.view:selected,
+iconview.view:selected {
+  background-color: @theme_selected_bg_color;
+  color: @theme_selected_fg_color;
+}
+
+headerbar,
+toolbar {
+  background-color: #1b1d24;
+  color: @theme_fg_color;
+  box-shadow: none;
+}

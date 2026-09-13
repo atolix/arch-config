@@ -1,6 +1,5 @@
 awww
 brightnessctl
-breeze
 fcitx5
 fcitx5-mozc
 hypridle
@@ -8,11 +7,11 @@ hyprland
 hyprlock
 network-manager-applet
 networkmanager
-plasma-integration
 pipewire
 python
 quickshell
 sddm
+thunar
 upower
 wireplumber
 wofi
