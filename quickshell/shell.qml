@@ -111,7 +111,7 @@ Scope {
                 id: volumePopup
                 audio: root.audio
                 anchor.window: bar
-                anchor.rect.x: Math.max(8, Math.min(bar.width - width - 8, status.x + status.volumeItem.x + status.volumeItem.width / 2 - width / 2))
+                anchor.rect.x: Math.max(8, Math.min(bar.width - width - 8, topBar.x + topBar.statusItem.x + topBar.statusItem.volumeItem.x + topBar.statusItem.volumeItem.width / 2 - width / 2))
                 anchor.rect.y: bar.height + 6
             }
 
@@ -155,52 +155,19 @@ Scope {
             }
 
 
-            BarText {
-                id: powerIcon
-                anchors.left: parent.left
-                anchors.leftMargin: 8
-                anchors.verticalCenter: parent.verticalCenter
-                width: 22
-                height: 22
-                font.family: "JetBrainsMono Nerd Font Mono"
-                font.pixelSize: 17
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                text: "󰐥"
-                Accessible.name: "Power"
-                MouseArea {
-                    anchors.fill: parent
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: bar.togglePowerPopup()
-                }
-            }
-
-            WorkspaceSwitcher {
-                id: workspaceSwitcher
-                workspaceOccupied: root.workspaceOccupied
-                anchors.left: powerIcon.right
-                anchors.leftMargin: 8
-                anchors.verticalCenter: parent.verticalCenter
-            }
-
-            ClockDisplay {
-                anchors.fill: parent
-                value: clock.date
-                openCalendar: bar.toggleCalendarPopup
-            }
-
-            StatusIndicators {
-                id: status
-                anchors.right: parent.right
-                anchors.rightMargin: 12
-                anchors.verticalCenter: parent.verticalCenter
+            TopBar {
+                id: topBar
                 audio: root.audio
                 brightness: root.brightness
                 battery: root.battery
-                input: root.stats.input
+                stats: root.stats
+                clockValue: clock.date
                 percent: root.percent
                 networkIcon: root.networkIcon
-                openVolumePopup: bar.toggleVolumePopup
+                workspaceOccupied: root.workspaceOccupied
+                togglePower: bar.togglePowerPopup
+                openCalendar: bar.toggleCalendarPopup
+                openVolume: bar.toggleVolumePopup
             }
 
             LeftRail {
