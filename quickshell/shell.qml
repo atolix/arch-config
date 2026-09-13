@@ -134,6 +134,22 @@ Scope {
                 anchor.rect.y: bar.height + 8
             }
 
+            function toggleVolumePopup() {
+                calendarPopup.visible = false;
+                volumePopup.visible = !volumePopup.visible;
+            }
+
+            function toggleCalendarPopup() {
+                volumePopup.visible = false;
+                calendarPopup.visible = !calendarPopup.visible;
+            }
+
+            function togglePowerPopup() {
+                volumePopup.visible = false;
+                calendarPopup.visible = false;
+                powerPopup.visible = !powerPopup.visible;
+            }
+
 
             BarText {
                 id: powerIcon
@@ -151,11 +167,7 @@ Scope {
                 MouseArea {
                     anchors.fill: parent
                     cursorShape: Qt.PointingHandCursor
-                    onClicked: {
-                        volumePopup.visible = false;
-                        calendarPopup.visible = false;
-                        powerPopup.visible = !powerPopup.visible;
-                    }
+                    onClicked: bar.togglePowerPopup()
                 }
             }
 
@@ -170,10 +182,7 @@ Scope {
             ClockDisplay {
                 anchors.fill: parent
                 value: clock.date
-                openCalendar: function() {
-                    volumePopup.visible = false;
-                    calendarPopup.visible = !calendarPopup.visible;
-                }
+                openCalendar: bar.toggleCalendarPopup
             }
 
             StatusIndicators {
@@ -187,10 +196,7 @@ Scope {
                 input: root.stats.input
                 percent: root.percent
                 networkIcon: root.networkIcon
-                openVolumePopup: function() {
-                    calendarPopup.visible = false;
-                    volumePopup.visible = !volumePopup.visible;
-                }
+                openVolumePopup: bar.toggleVolumePopup
             }
 
             LeftRail {
