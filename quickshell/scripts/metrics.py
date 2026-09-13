@@ -53,6 +53,28 @@ def memory_percent():
         return 0
 
 
+def temperature_celsius():
+    preferred = ("x86_pkg_temp", "cpu_thermal", "coretemp")
+    zones = sorted(Path("/sys/class/thermal").glob("thermal_zone*/"))
+    def zone_priority(zone):
+        try:
+            return preferred.index((zone / "type").read_text().strip())
+        except (OSError, ValueError):
+            return len(preferred)
+
+    zones.sort(key=zone_priority)
+    for zone in zones:
+        try:
+            zone_type = (zone / "type").read_text().strip()
+            if zone_type not in preferred:
+                continue
+            value = int((zone / "temp").read_text().strip())
+            return round(value / 1000)
+        except (OSError, ValueError):
+            continue
+    return None
+
+
 def input_layout():
     try:
         engine = subprocess.run(
@@ -107,7 +129,8 @@ def main():
         cpu, previous_cpu = cpu_percent(previous_cpu)
         network = network_status()
         print(json.dumps({**network, "brightness": brightness_percent(), "cpu": cpu,
-                          "mem": memory_percent(), "input": input_layout()}), flush=True)
+                          "mem": memory_percent(), "temp": temperature_celsius(),
+                          "input": input_layout()}), flush=True)
 
 
 if __name__ == "__main__":

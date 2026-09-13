@@ -15,12 +15,12 @@ Scope {
         onBrightnessReported: value => root.brightness = value
     }
 
-    property var stats: ({ network: "…", network_type: "offline", signal: 0, cpu: 0, mem: 0, input: "—" })
+    property var stats: ({ network: "…", network_type: "offline", signal: 0, cpu: 0, mem: 0, temp: null, input: "—" })
 
     IpcHandler {
         target: "input"
         function setLayout(layout: string): void {
-            root.stats = { network: root.stats.network, network_type: root.stats.network_type, signal: root.stats.signal, cpu: root.stats.cpu, mem: root.stats.mem, input: layout };
+            root.stats = { network: root.stats.network, network_type: root.stats.network_type, signal: root.stats.signal, cpu: root.stats.cpu, mem: root.stats.mem, temp: root.stats.temp, input: layout };
         }
     }
     readonly property var audio: Pipewire.defaultAudioSink?.audio ?? null
@@ -263,7 +263,7 @@ Scope {
                 id: resourceStats
                 anchors.verticalCenter: parent.verticalCenter
                 x: clockText.x + clockText.width + Math.max(0, (status.x - clockText.x - clockText.width - width) / 2)
-                text: "cpu: " + root.stats.cpu + "% / mem: " + root.stats.mem + "%"
+                text: "cpu: " + root.stats.cpu + "% / mem: " + root.stats.mem + "% / temp: " + (root.stats.temp === null ? "—" : root.stats.temp) + "°C"
                 color: "#eaeaea"
                 Accessible.name: "CPU " + root.stats.cpu + " percent, memory " + root.stats.mem + " percent"
             }
