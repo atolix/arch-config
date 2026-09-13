@@ -30,8 +30,8 @@ The bar appears on every monitor. The battery icon and percentage are hidden whe
 
 - App launcher: press `Super+R` for the Wofi application launcher.
 - Clipboard history: press `Super+Shift+C` to search and paste saved text or images with Wofi.
-- Screenshot: press `Super+Shift+5` to select an area and save it under `~/Pictures/Screenshots/`.
-- Screen recording: press `Super+Shift+4` to select an area and start or stop recording under `~/Videos/Recordings/`.
+- Screenshot: press `Super+Shift+4` to select an area and save it under `~/Pictures/Screenshots/`.
+- Screen recording: press `Super+Shift+5` to select an area and start or stop recording under `~/Videos/Recordings/`.
 - Window switcher: press `Ctrl+S` for a wide Wofi list with application icons and window titles.
 - Thunar: dark GTK colors, compact controls, and matching selection accents.
 - Idle power saving: locks after 5 minutes, suspends 5 seconds later, and turns the display off after 10 minutes as a fallback.
