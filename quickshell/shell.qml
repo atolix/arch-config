@@ -151,11 +151,48 @@ Scope {
             }
 
             Row {
+                id: workspaceSwitcher
+                anchors.left: powerIcon.right
+                anchors.leftMargin: 8
+                anchors.verticalCenter: parent.verticalCenter
+                spacing: 3
+
+                Repeater {
+                    model: [1, 2, 3, 4, 5]
+
+                    delegate: Rectangle {
+                        required property int modelData
+                        width: 22
+                        height: 22
+                        radius: 5
+                        color: Hyprland.focusedWorkspace?.id === modelData ? "#41455a" : "transparent"
+                        border.width: Hyprland.focusedWorkspace?.id === modelData ? 1 : 0
+                        border.color: "#a5b4fc"
+
+                        BarText {
+                            anchors.fill: parent
+                            text: String(parent.modelData)
+                            color: Hyprland.focusedWorkspace?.id === parent.modelData ? "#c7d2fe" : "#777d91"
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: Hyprland.dispatch("workspace " + parent.modelData)
+                        }
+                    }
+                }
+            }
+
+            Row {
                 id: workspaceApps
                 anchors.verticalCenter: parent.verticalCenter
-                property real availableWidth: Math.max(0, clockText.x - (powerIcon.x + powerIcon.width) - 20)
+                property real leftEdge: workspaceSwitcher.x + workspaceSwitcher.width + 10
+                property real availableWidth: Math.max(0, clockText.x - leftEdge - 10)
                 width: Math.min(implicitWidth, availableWidth)
-                x: powerIcon.x + powerIcon.width + 10 + (availableWidth - width) / 2
+                x: leftEdge + (availableWidth - width) / 2
                 height: 22
                 spacing: 6
                 clip: true
