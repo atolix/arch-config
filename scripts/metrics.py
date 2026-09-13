@@ -1,25 +1,11 @@
 #!/usr/bin/env python3
-"""Stream CPU, memory and NetworkManager status as JSON lines to Quickshell."""
+"""Stream brightness and NetworkManager status as JSON lines to Quickshell."""
 
 import json
 import os
 from pathlib import Path
 import subprocess
 import time
-
-
-def cpu_sample():
-    # Exclude guest counters: Linux already includes them in user/nice.
-    values = [int(v) for v in Path("/proc/stat").read_text().splitlines()[0].split()[1:9]]
-    return sum(values), values[3] + values[4]
-
-
-def memory_percent():
-    values = {}
-    for line in Path("/proc/meminfo").read_text().splitlines():
-        key, value = line.split(":", 1)
-        values[key] = int(value.split()[0])
-    return 100 * (1 - values["MemAvailable"] / values["MemTotal"])
 
 
 def brightness_percent():
@@ -68,16 +54,10 @@ def network_status():
 
 
 def main():
-    previous = cpu_sample()
     while True:
         time.sleep(2)
-        current = cpu_sample()
-        total = current[0] - previous[0]
-        idle = current[1] - previous[1]
-        cpu = max(0, min(100, 100 * (1 - idle / total))) if total > 0 else None
-        previous = current
         network = network_status()
-        print(json.dumps({"cpu": cpu, "memory": memory_percent(), **network, "brightness": brightness_percent()}), flush=True)
+        print(json.dumps({**network, "brightness": brightness_percent()}), flush=True)
 
 
 if __name__ == "__main__":

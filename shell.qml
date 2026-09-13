@@ -13,7 +13,7 @@ Scope {
         onBrightnessReported: value => root.brightness = value
     }
 
-    property var stats: ({ cpu: null, memory: null, network: "…", networkKind: "offline", wifiSignal: 0 })
+    property var stats: ({ network: "…", networkKind: "offline", wifiSignal: 0 })
     readonly property var audio: Pipewire.defaultAudioSink?.audio ?? null
     readonly property var battery: UPower.displayDevice
     readonly property string appName: {
@@ -118,9 +118,6 @@ Scope {
                 anchors.rightMargin: 12
                 anchors.verticalCenter: parent.verticalCenter
                 spacing: 10
-
-                BarText { text: "cpu: " + root.percent(root.stats.cpu) }
-                BarText { text: "mem: " + root.percent(root.stats.memory) }
 
                 VolumeIcon {
                     id: volumeText
