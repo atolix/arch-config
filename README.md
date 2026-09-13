@@ -35,7 +35,7 @@ The bar expects a Wayland session with PipeWire and NetworkManager running.
 ## Run
 
 ```sh
-cd ~/development/quickshell-bar
+cd ~/development/arch-config/quickshell
 ./run.sh
 ```
 
@@ -49,7 +49,7 @@ Quickshell owns the desktop notification service. The setup masks the user `duns
 The Hyprland key bindings are kept in `hyprland-osd.conf` and are already enabled in this setup:
 
 ```ini
-source = /home/atolix/development/quickshell-bar/hyprland-osd.conf
+source = /home/atolix/development/arch-config/quickshell/hyprland-osd.conf
 ```
 
 Volume changes use 2% steps up to 100%; brightness changes use 10% steps. The mute key is supported.
@@ -68,7 +68,7 @@ To preview the OSD without changing a value:
 `~/.config/hypr/hyprland.conf` is configured to start Quickshell automatically:
 
 ```ini
-exec-once = /home/atolix/development/quickshell-bar/run.sh --no-duplicate --daemonize
+exec-once = /home/atolix/development/arch-config/quickshell/run.sh --no-duplicate --daemonize
 ```
 
 For a different user or installation path, update the paths. To switch back to Waybar, replace the line with `exec-once = waybar`.
