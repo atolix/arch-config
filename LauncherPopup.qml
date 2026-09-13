@@ -1,7 +1,6 @@
 import QtQuick
 import QtQuick.Controls
 import Quickshell
-import Quickshell.Hyprland
 
 PopupWindow {
     id: popup
@@ -18,12 +17,6 @@ PopupWindow {
             searchText = "";
             search.forceActiveFocus();
         }
-    }
-
-    HyprlandFocusGrab {
-        active: popup.opened
-        windows: [popup]
-        onCleared: popup.opened = false
     }
 
     Rectangle {
