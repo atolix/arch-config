@@ -136,6 +136,22 @@ Scope {
         onTriggered: metrics.running = true
     }
 
+    // Reserve work area at the top without constraining the visual bar horizontally.
+    Variants {
+        model: Quickshell.screens
+
+        PanelWindow {
+            required property var modelData
+            screen: modelData
+            anchors { top: true; left: true; right: true }
+            implicitHeight: 30
+            exclusiveZone: 30
+            color: "transparent"
+            mask: Region {}
+            WlrLayershell.namespace: "quickshell-top-reservation"
+        }
+    }
+
     Variants {
         model: Quickshell.screens
 
@@ -146,6 +162,7 @@ Scope {
             anchors { top: true; left: true; right: true }
             implicitHeight: 30
             color: Theme.background
+            exclusionMode: ExclusionMode.Ignore
 
             VolumePopup {
                 id: volumePopup
