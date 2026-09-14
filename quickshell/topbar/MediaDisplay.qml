@@ -15,13 +15,13 @@ Item {
     readonly property bool overflowing: trackText.implicitWidth > textViewport.width
 
     onLabelChanged: Qt.callLater(() => {
-        trackText.x = 0;
+        tickerRow.x = 0;
         if (root.visible && root.overflowing)
             marquee.restart();
     })
     onOverflowingChanged: {
         if (!overflowing)
-            trackText.x = 0;
+            tickerRow.x = 0;
     }
 
     function selectPlayer() {
@@ -67,31 +67,36 @@ Item {
         height: 22
         clip: true
 
-        BarText {
-            id: trackText
+        Row {
+            id: tickerRow
             x: 0
-            width: implicitWidth
             height: parent.height
-            text: root.label
-            elide: Text.ElideNone
+            spacing: 40
 
-            SequentialAnimation on x {
+            BarText {
+                id: trackText
+                width: implicitWidth
+                height: parent.height
+                text: root.label
+                elide: Text.ElideNone
+            }
+
+            BarText {
+                visible: root.overflowing
+                width: implicitWidth
+                height: parent.height
+                text: root.label
+                elide: Text.ElideNone
+            }
+
+            NumberAnimation on x {
                 id: marquee
                 running: root.visible && root.overflowing
                 loops: Animation.Infinite
-
-                PauseAnimation { duration: 1600 }
-                NumberAnimation {
-                    to: -(trackText.implicitWidth - textViewport.width)
-                    duration: Math.max(2400, (trackText.implicitWidth - textViewport.width) * 35)
-                    easing.type: Easing.InOutSine
-                }
-                PauseAnimation { duration: 1300 }
-                NumberAnimation {
-                    to: 0
-                    duration: Math.max(1600, (trackText.implicitWidth - textViewport.width) * 24)
-                    easing.type: Easing.InOutSine
-                }
+                from: 0
+                to: -(trackText.implicitWidth + tickerRow.spacing)
+                duration: Math.max(3500, (trackText.implicitWidth + tickerRow.spacing) * 35)
+                easing.type: Easing.Linear
             }
         }
     }

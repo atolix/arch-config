@@ -21,7 +21,7 @@ Hyprland desktop configuration, managed as a Git repository. The Quickshell bar 
 | Network | Wi‑Fi signal, Ethernet, or disconnected icon. The SSID is not shown. |
 | Keyboard | `JP` / `EN`; click or press Ctrl+Space to switch immediately. |
 | Clock | Click for an English calendar with month navigation and a Today button. |
-| Media | Shows the active MPRIS track and playback state. Click to play or pause; long titles scroll within the available space. |
+| Media | Shows the active MPRIS track and playback state. Click to play or pause; long titles continuously scroll left within the available space. |
 | Notifications | Quickshell keeps D-Bus notifications in a center opened from the bell icon. The badge shows the count; notifications can be dismissed individually or cleared together. |
 | OSD | Volume and brightness changes show an English OSD at the bottom center for 1.8 seconds. |
 
