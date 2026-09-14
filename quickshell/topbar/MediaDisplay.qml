@@ -6,6 +6,8 @@ import "../shared"
 Item {
     id: root
 
+    required property var openPopup
+
     readonly property var player: selectPlayer()
     readonly property string title: player?.trackTitle ?? ""
     readonly property string artist: player?.trackArtist ?? ""
@@ -14,11 +16,11 @@ Item {
         : title.length > 0 ? title : artist
     readonly property bool overflowing: trackText.implicitWidth > textViewport.width
 
-    onLabelChanged: Qt.callLater(() => {
+    onLabelChanged: {
         tickerRow.x = 0;
         if (root.visible && root.overflowing)
             marquee.restart();
-    })
+    }
     onOverflowingChanged: {
         if (!overflowing)
             tickerRow.x = 0;
@@ -103,8 +105,8 @@ Item {
 
     MouseArea {
         anchors.fill: parent
-        enabled: root.player?.canTogglePlaying ?? false
-        cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
-        onClicked: root.player.togglePlaying()
+        enabled: root.player !== null
+        cursorShape: Qt.PointingHandCursor
+        onClicked: root.openPopup()
     }
 }

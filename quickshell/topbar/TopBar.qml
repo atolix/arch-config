@@ -22,9 +22,11 @@ Item {
     required property int countdownRemaining
     required property bool countdownRunning
     required property var openCountdown
+    required property var openMedia
 
     readonly property alias statusItem: status
     readonly property alias countdownItem: countdownDisplay
+    readonly property alias mediaItem: mediaDisplay
 
     anchors.top: parent.top
     anchors.left: parent.left
@@ -88,6 +90,7 @@ Item {
         x: areaLeft + Math.max(0, (areaRight - areaLeft - width) / 2)
         anchors.verticalCenter: parent.verticalCenter
         width: Math.min(implicitWidth, Math.max(0, areaRight - areaLeft))
+        openPopup: root.openMedia
     }
 
     StatusIndicators {

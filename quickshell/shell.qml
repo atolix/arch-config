@@ -263,6 +263,14 @@ Scope {
                 anchor.rect.y: bar.height + 6
             }
 
+            MediaPopup {
+                id: mediaPopup
+                player: topBar.mediaItem.player
+                anchor.window: bar
+                anchor.rect.x: Math.max(8, Math.min(bar.width - width - 8, topBar.x + topBar.mediaItem.x + topBar.mediaItem.width / 2 - width / 2))
+                anchor.rect.y: bar.height + 6
+            }
+
             PanelWindow {
                 id: countdownDismissLayer
                 screen: bar.screen
@@ -280,11 +288,29 @@ Scope {
                 }
             }
 
+            PanelWindow {
+                id: mediaDismissLayer
+                screen: bar.screen
+                visible: mediaPopup.visible
+                anchors { top: true; bottom: true; left: true; right: true }
+                color: "transparent"
+                exclusionMode: ExclusionMode.Ignore
+                WlrLayershell.namespace: "quickshell-media-dismiss"
+                WlrLayershell.layer: WlrLayer.Top
+                WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: mediaPopup.visible = false
+                }
+            }
+
             function toggleVolumePopup() {
                 calendarPopup.visible = false;
                 powerPopup.visible = false;
                 notificationPopup.visible = false;
                 countdownPopup.visible = false;
+                mediaPopup.visible = false;
                 volumePopup.visible = !volumePopup.visible;
             }
 
@@ -293,6 +319,7 @@ Scope {
                 powerPopup.visible = false;
                 notificationPopup.visible = false;
                 countdownPopup.visible = false;
+                mediaPopup.visible = false;
                 calendarPopup.visible = !calendarPopup.visible;
             }
 
@@ -301,6 +328,7 @@ Scope {
                 calendarPopup.visible = false;
                 notificationPopup.visible = false;
                 countdownPopup.visible = false;
+                mediaPopup.visible = false;
                 powerPopup.visible = !powerPopup.visible;
             }
 
@@ -309,6 +337,7 @@ Scope {
                 calendarPopup.visible = false;
                 powerPopup.visible = false;
                 countdownPopup.visible = false;
+                mediaPopup.visible = false;
                 notificationPopup.visible = !notificationPopup.visible;
             }
 
@@ -317,7 +346,17 @@ Scope {
                 calendarPopup.visible = false;
                 powerPopup.visible = false;
                 notificationPopup.visible = false;
+                mediaPopup.visible = false;
                 countdownPopup.visible = !countdownPopup.visible;
+            }
+
+            function toggleMediaPopup() {
+                volumePopup.visible = false;
+                calendarPopup.visible = false;
+                powerPopup.visible = false;
+                notificationPopup.visible = false;
+                countdownPopup.visible = false;
+                mediaPopup.visible = !mediaPopup.visible;
             }
 
             TopBar {
@@ -340,6 +379,7 @@ Scope {
                 countdownRemaining: root.countdownRemaining
                 countdownRunning: root.countdownRunning
                 openCountdown: bar.toggleCountdownPopup
+                openMedia: bar.toggleMediaPopup
             }
 
             LeftRail {
