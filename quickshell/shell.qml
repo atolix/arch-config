@@ -33,6 +33,17 @@ Scope {
     readonly property var battery: UPower.displayDevice
     property var notifications: []
 
+    function removeNotification(notification) {
+        root.notifications = root.notifications.filter(item => item !== notification);
+    }
+
+    function clearNotifications() {
+        const pending = root.notifications.slice();
+        root.notifications = [];
+        for (const notification of pending)
+            notification.dismiss();
+    }
+
     NotificationServer {
         id: notificationServer
         bodySupported: true
@@ -131,8 +142,11 @@ Scope {
             }
 
             NotificationPopup {
+                id: notificationPopup
                 server: notificationServer
                 notifications: root.notifications
+                removeNotification: root.removeNotification
+                clearNotifications: root.clearNotifications
                 anchor.window: bar
                 anchor.rect.x: bar.width - width - 8
                 anchor.rect.y: bar.height + 8
@@ -140,20 +154,31 @@ Scope {
 
             function toggleVolumePopup() {
                 calendarPopup.visible = false;
+                powerPopup.visible = false;
+                notificationPopup.visible = false;
                 volumePopup.visible = !volumePopup.visible;
             }
 
             function toggleCalendarPopup() {
                 volumePopup.visible = false;
+                powerPopup.visible = false;
+                notificationPopup.visible = false;
                 calendarPopup.visible = !calendarPopup.visible;
             }
 
             function togglePowerPopup() {
                 volumePopup.visible = false;
                 calendarPopup.visible = false;
+                notificationPopup.visible = false;
                 powerPopup.visible = !powerPopup.visible;
             }
 
+            function toggleNotificationPopup() {
+                volumePopup.visible = false;
+                calendarPopup.visible = false;
+                powerPopup.visible = false;
+                notificationPopup.visible = !notificationPopup.visible;
+            }
 
             TopBar {
                 id: topBar
@@ -168,6 +193,8 @@ Scope {
                 togglePower: bar.togglePowerPopup
                 openCalendar: bar.toggleCalendarPopup
                 openVolume: bar.toggleVolumePopup
+                notificationCount: root.notifications.length
+                openNotifications: bar.toggleNotificationPopup
             }
 
             LeftRail {

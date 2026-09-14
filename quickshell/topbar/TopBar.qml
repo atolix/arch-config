@@ -15,6 +15,8 @@ Item {
     required property var togglePower
     required property var openCalendar
     required property var openVolume
+    required property int notificationCount
+    required property var openNotifications
 
     readonly property alias statusItem: status
 
@@ -68,5 +70,7 @@ Item {
         percent: root.percent
         networkIcon: root.networkIcon
         openVolumePopup: root.openVolume
+        notificationCount: root.notificationCount
+        openNotifications: root.openNotifications
     }
 }

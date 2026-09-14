@@ -1,5 +1,6 @@
 import QtQuick
 import Quickshell
+import "../shared/Theme.js" as Theme
 import "../shared"
 
 Row {
@@ -12,6 +13,8 @@ Row {
     required property var percent
     required property var networkIcon
     required property var openVolumePopup
+    required property int notificationCount
+    required property var openNotifications
 
     readonly property alias volumeItem: volumeText
 
@@ -77,5 +80,50 @@ Row {
         font.family: "JetBrainsMono Nerd Font Mono"
         font.pixelSize: 17
         Accessible.name: "Network"
+    }
+
+    Item {
+        width: root.notificationCount > 0 ? 30 : 22
+        height: 22
+        Accessible.name: root.notificationCount > 0
+            ? "Notifications, " + root.notificationCount + " unread"
+            : "Notifications"
+
+        BarText {
+            anchors.left: parent.left
+            width: 22
+            height: 22
+            horizontalAlignment: Text.AlignHCenter
+            text: "󰂚"
+            font.family: "JetBrainsMono Nerd Font Mono"
+            font.pixelSize: 17
+            color: root.notificationCount > 0 ? Theme.accent : Theme.text
+        }
+
+        Rectangle {
+            visible: root.notificationCount > 0
+            anchors.right: parent.right
+            anchors.top: parent.top
+            anchors.topMargin: -2
+            width: Math.max(14, countText.implicitWidth + 6)
+            height: 14
+            radius: 7
+            color: Theme.danger
+
+            BarText {
+                id: countText
+                anchors.centerIn: parent
+                text: root.notificationCount > 99 ? "99+" : root.notificationCount.toString()
+                color: "#181a22"
+                font.pixelSize: 9
+                font.bold: true
+            }
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            cursorShape: Qt.PointingHandCursor
+            onClicked: root.openNotifications()
+        }
     }
 }

@@ -9,7 +9,7 @@ Hyprland desktop configuration, managed as a Git repository. The Quickshell bar 
 | Left | Power menu, workspace indicators, and focused application names |
 | Center | Local date and time in 24-hour format with seconds |
 | Left rail | Focused application names and `cpu: yy% / mem: xx% / temp: zz°C / fan: n RPM` |
-| Right | Keyboard layout, volume, brightness, battery, and network icons |
+| Right | Keyboard layout, volume, brightness, battery, network, and notification icons |
 
 | Component | Behavior |
 | --- | --- |
@@ -21,7 +21,7 @@ Hyprland desktop configuration, managed as a Git repository. The Quickshell bar 
 | Network | Wi‑Fi signal, Ethernet, or disconnected icon. The SSID is not shown. |
 | Keyboard | `JP` / `EN`; click or press Ctrl+Space to switch immediately. |
 | Clock | Click for an English calendar with month navigation and a Today button. |
-| Notifications | Quickshell receives D-Bus notifications and shows cards below the top-right of the bar. |
+| Notifications | Quickshell keeps D-Bus notifications in a center opened from the bell icon. The badge shows the count; notifications can be dismissed individually or cleared together. |
 | OSD | Volume and brightness changes show an English OSD at the bottom center for 1.8 seconds. |
 
 The bar appears on every monitor. The battery icon and percentage are hidden when no battery is present.
