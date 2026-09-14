@@ -33,6 +33,57 @@ Scope {
     readonly property var battery: UPower.displayDevice
     property bool headphonesConnected: false
     property var notifications: []
+    property int countdownDuration: 0
+    property int countdownRemaining: 0
+    property bool countdownRunning: false
+    property double countdownDeadline: 0
+
+    function setCountdown(minutes) {
+        root.countdownRunning = false;
+        root.countdownDuration = minutes * 60;
+        root.countdownRemaining = root.countdownDuration;
+        root.countdownDeadline = 0;
+    }
+
+    function toggleCountdown() {
+        if (root.countdownDuration === 0)
+            return;
+        if (root.countdownRunning) {
+            root.countdownRemaining = Math.max(0, Math.ceil((root.countdownDeadline - Date.now()) / 1000));
+            root.countdownRunning = false;
+        } else {
+            if (root.countdownRemaining === 0)
+                root.countdownRemaining = root.countdownDuration;
+            root.countdownDeadline = Date.now() + root.countdownRemaining * 1000;
+            root.countdownRunning = true;
+        }
+    }
+
+    function resetCountdown() {
+        root.countdownRunning = false;
+        root.countdownRemaining = root.countdownDuration;
+        root.countdownDeadline = 0;
+    }
+
+    function clearCountdown() {
+        root.countdownRunning = false;
+        root.countdownDuration = 0;
+        root.countdownRemaining = 0;
+        root.countdownDeadline = 0;
+    }
+
+    Timer {
+        interval: 250
+        repeat: true
+        running: root.countdownRunning
+        onTriggered: {
+            root.countdownRemaining = Math.max(0, Math.ceil((root.countdownDeadline - Date.now()) / 1000));
+            if (root.countdownRemaining === 0) {
+                root.countdownRunning = false;
+                Quickshell.execDetached(["notify-send", "Timer", "Time is up"]);
+            }
+        }
+    }
 
     function removeNotification(notification) {
         root.notifications = root.notifications.filter(item => item !== notification);
@@ -198,10 +249,25 @@ Scope {
                 anchor.rect.y: bar.height + 8
             }
 
+            CountdownPopup {
+                id: countdownPopup
+                durationSeconds: root.countdownDuration
+                remainingSeconds: root.countdownRemaining
+                running: root.countdownRunning
+                setDuration: root.setCountdown
+                toggleTimer: root.toggleCountdown
+                resetTimer: root.resetCountdown
+                clearTimer: root.clearCountdown
+                anchor.window: bar
+                anchor.rect.x: Math.max(8, Math.min(bar.width - width - 8, topBar.x + topBar.countdownItem.x + topBar.countdownItem.width / 2 - width / 2))
+                anchor.rect.y: bar.height + 6
+            }
+
             function toggleVolumePopup() {
                 calendarPopup.visible = false;
                 powerPopup.visible = false;
                 notificationPopup.visible = false;
+                countdownPopup.visible = false;
                 volumePopup.visible = !volumePopup.visible;
             }
 
@@ -209,6 +275,7 @@ Scope {
                 volumePopup.visible = false;
                 powerPopup.visible = false;
                 notificationPopup.visible = false;
+                countdownPopup.visible = false;
                 calendarPopup.visible = !calendarPopup.visible;
             }
 
@@ -216,6 +283,7 @@ Scope {
                 volumePopup.visible = false;
                 calendarPopup.visible = false;
                 notificationPopup.visible = false;
+                countdownPopup.visible = false;
                 powerPopup.visible = !powerPopup.visible;
             }
 
@@ -223,7 +291,16 @@ Scope {
                 volumePopup.visible = false;
                 calendarPopup.visible = false;
                 powerPopup.visible = false;
+                countdownPopup.visible = false;
                 notificationPopup.visible = !notificationPopup.visible;
+            }
+
+            function toggleCountdownPopup() {
+                volumePopup.visible = false;
+                calendarPopup.visible = false;
+                powerPopup.visible = false;
+                notificationPopup.visible = false;
+                countdownPopup.visible = !countdownPopup.visible;
             }
 
             TopBar {
@@ -242,6 +319,10 @@ Scope {
                 openVolume: bar.toggleVolumePopup
                 notificationCount: root.notifications.length
                 openNotifications: bar.toggleNotificationPopup
+                countdownDuration: root.countdownDuration
+                countdownRemaining: root.countdownRemaining
+                countdownRunning: root.countdownRunning
+                openCountdown: bar.toggleCountdownPopup
             }
 
             LeftRail {
