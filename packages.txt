@@ -1,5 +1,6 @@
 awww
 brightnessctl
+btop
 cliphist
 fcitx5
 fcitx5-mozc

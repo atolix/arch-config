@@ -25,6 +25,8 @@ render_config "$repo_dir/home/atolix/.config/hypr/hyprlock.conf" "$config_dir/hy
 render_config "$repo_dir/quickshell/hypridle.conf" "$config_dir/hypr/hypridle.conf"
 render_config "$repo_dir/quickshell/hyprland-osd.conf" "$config_dir/hypr/hyprland-osd.conf"
 render_config "$repo_dir/home/atolix/.config/wofi/style.css" "$config_dir/wofi/style.css"
+render_config "$repo_dir/home/atolix/.config/btop/btop.conf" "$config_dir/btop/btop.conf"
+render_config "$repo_dir/home/atolix/.config/btop/themes/arch-config.theme" "$config_dir/btop/themes/arch-config.theme"
 render_config "$repo_dir/home/atolix/.config/gtk-3.0/settings.ini" "$config_dir/gtk-3.0/settings.ini"
 render_config "$repo_dir/home/atolix/.config/gtk-3.0/gtk.css" "$config_dir/gtk-3.0/gtk.css"
 render_config "$repo_dir/home/atolix/.config/mimeapps.list" "$config_dir/mimeapps.list"

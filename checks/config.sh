@@ -13,6 +13,8 @@ for file in \
     "$config_dir/hypr/hypridle.conf" \
     "$config_dir/hypr/hyprland-osd.conf" \
     "$config_dir/wofi/style.css" \
+    "$config_dir/btop/btop.conf" \
+    "$config_dir/btop/themes/arch-config.theme" \
     "$config_dir/gtk-3.0/settings.ini" \
     "$config_dir/gtk-3.0/gtk.css" \
     "$config_dir/mimeapps.list" \
