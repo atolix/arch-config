@@ -4,6 +4,7 @@ import "Theme.js" as Theme
 Item {
     id: icon
     required property var audio
+    required property bool headphones
     readonly property bool available: audio !== null
     readonly property bool muted: available && audio.muted
     readonly property real volume: available ? audio.volume : 0
@@ -14,6 +15,7 @@ Item {
     implicitHeight: 22
 
     onAvailableChanged: canvas.requestPaint()
+    onHeadphonesChanged: canvas.requestPaint()
     onMutedChanged: canvas.requestPaint()
     onWaveCountChanged: canvas.requestPaint()
     onIconColorChanged: canvas.requestPaint()
@@ -29,6 +31,31 @@ Item {
             ctx.lineWidth = 1.5;
             ctx.lineCap = "round";
             ctx.lineJoin = "round";
+
+            if (icon.headphones) {
+                // Headband and ear cups.
+                ctx.beginPath();
+                ctx.arc(12, 11, 7, -Math.PI, 0);
+                ctx.stroke();
+                ctx.lineWidth = 3.5;
+                ctx.beginPath();
+                ctx.moveTo(5, 11);
+                ctx.lineTo(5, 16);
+                ctx.moveTo(19, 11);
+                ctx.lineTo(19, 16);
+                ctx.stroke();
+
+                if (icon.muted) {
+                    ctx.lineWidth = 1.5;
+                    ctx.beginPath();
+                    ctx.moveTo(9, 9);
+                    ctx.lineTo(15, 15);
+                    ctx.moveTo(15, 9);
+                    ctx.lineTo(9, 15);
+                    ctx.stroke();
+                }
+                return;
+            }
 
             // Speaker body.
             ctx.beginPath();

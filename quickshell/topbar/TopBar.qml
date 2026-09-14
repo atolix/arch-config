@@ -5,6 +5,7 @@ Item {
     id: root
 
     required property var audio
+    required property bool headphonesConnected
     required property var brightness
     required property var battery
     required property var stats
@@ -75,6 +76,7 @@ Item {
         anchors.rightMargin: 12
         anchors.verticalCenter: parent.verticalCenter
         audio: root.audio
+        headphonesConnected: root.headphonesConnected
         brightness: root.brightness
         battery: root.battery
         input: root.stats.input

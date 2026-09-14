@@ -31,6 +31,7 @@ Scope {
     }
     readonly property var audio: Pipewire.defaultAudioSink?.audio ?? null
     readonly property var battery: UPower.displayDevice
+    property bool headphonesConnected: false
     property var notifications: []
 
     function removeNotification(notification) {
@@ -77,6 +78,34 @@ Scope {
 
     PwObjectTracker {
         objects: Pipewire.defaultAudioSink ? [Pipewire.defaultAudioSink] : []
+    }
+
+    Process {
+        id: audioOutputQuery
+        command: ["python3", Quickshell.shellPath("scripts/audio-output.py")]
+        running: true
+        stdout: SplitParser {
+            onRead: data => root.headphonesConnected = data.trim() === "headphones"
+        }
+    }
+
+    Process {
+        id: audioEvents
+        command: ["pactl", "subscribe"]
+        running: true
+        stdout: SplitParser {
+            onRead: data => {
+                if (!audioOutputQuery.running)
+                    audioOutputQuery.running = true;
+            }
+        }
+    }
+
+    Timer {
+        interval: 3000
+        running: !audioEvents.running
+        repeat: true
+        onTriggered: audioEvents.running = true
     }
 
     SystemClock {
@@ -183,6 +212,7 @@ Scope {
             TopBar {
                 id: topBar
                 audio: root.audio
+                headphonesConnected: root.headphonesConnected
                 brightness: root.brightness
                 battery: root.battery
                 stats: root.stats

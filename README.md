@@ -15,7 +15,7 @@ Hyprland desktop configuration, managed as a Git repository. The Quickshell bar 
 | --- | --- |
 | Workspaces | Empty spaces use hollow dots, occupied spaces use accent dots, and the current space uses a wider bar. Click a dot or press `Super+1`–`Super+5`. |
 | Power | Lock, suspend, reboot, and shutdown menu. `Super+Ctrl+Q` locks immediately. |
-| Volume | Scroll changes by 5%, right-click mutes, and left-click opens the volume panel. The icon shows 0–3 waves. |
+| Volume | Scroll changes by 5%, right-click mutes, and left-click opens the volume panel. The icon shows 0–3 waves, or headphones when a headphone/headset output is active. |
 | Brightness | The icon changes with brightness; clicking opens the brightness OSD. |
 | Battery | Rounded gauge with percentage; charging is green, low charge is yellow, and critical charge is red. |
 | Network | Wi‑Fi signal, Ethernet, or disconnected icon. The SSID is not shown. |
@@ -46,7 +46,7 @@ Arch Linux packages:
 sudo pacman -S --needed - < packages.txt
 ```
 
-The bar expects a Wayland session with PipeWire and NetworkManager running.
+The bar expects a Wayland session with PipeWire, its PulseAudio compatibility service, and NetworkManager running.
 
 ## Run
 
@@ -149,6 +149,7 @@ arch-config/
 │   ├── run.sh                         # Start Quickshell relative to this directory
 │   └── scripts/
 │       ├── paths.sh                  # Shared screenshot and recording directories
+│       ├── audio-output.py           # Detect the active speaker or headphone output
 │       ├── metrics.py                # Brightness, input, network, CPU, memory, and temperature
 │       ├── osd-control.py             # Apply volume/brightness changes and show the OSD
 │       ├── input-toggle.py            # Toggle Fcitx5 and update the layout label

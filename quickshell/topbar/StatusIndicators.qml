@@ -7,6 +7,7 @@ Row {
     id: root
 
     required property var audio
+    required property bool headphonesConnected
     required property var brightness
     required property var battery
     required property string input
@@ -37,6 +38,7 @@ Row {
     VolumeIcon {
         id: volumeText
         audio: root.audio
+        headphones: root.headphonesConnected
         Accessible.name: "Volume"
         MouseArea {
             anchors.fill: parent

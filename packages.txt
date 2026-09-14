@@ -7,10 +7,12 @@ grim
 hypridle
 hyprland
 hyprlock
+libpulse
 network-manager-applet
 networkmanager
 mpv
 pipewire
+pipewire-pulse
 python
 quickshell
 sddm

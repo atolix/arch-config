@@ -160,11 +160,7 @@ PopupWindow {
                         anchors.fill: parent
                         hoverEnabled: true
                         cursorShape: Qt.PointingHandCursor
-                        onClicked: {
-                            const notification = modelData;
-                            notification.dismiss();
-                            popup.removeNotification(notification);
-                        }
+                        onClicked: modelData.dismiss()
                     }
                 }
 
