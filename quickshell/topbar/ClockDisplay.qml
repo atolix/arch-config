@@ -6,6 +6,7 @@ Item {
 
     required property date value
     required property var openCalendar
+    readonly property real contentRight: timezoneText.x + timezoneText.width
 
     BarText {
         id: clockText
@@ -19,6 +20,7 @@ Item {
     }
 
     BarText {
+        id: timezoneText
         anchors.left: clockText.right
         anchors.leftMargin: 6
         anchors.verticalCenter: parent.verticalCenter

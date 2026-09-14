@@ -53,9 +53,20 @@ Item {
     }
 
     ClockDisplay {
+        id: clockDisplay
         anchors.fill: parent
         value: root.clockValue
         openCalendar: root.openCalendar
+    }
+
+    MediaDisplay {
+        id: mediaDisplay
+        readonly property real areaLeft: clockDisplay.contentRight + 20
+        readonly property real areaRight: status.x - 16
+
+        x: areaLeft + Math.max(0, (areaRight - areaLeft - width) / 2)
+        anchors.verticalCenter: parent.verticalCenter
+        width: Math.min(implicitWidth, Math.max(0, areaRight - areaLeft))
     }
 
     StatusIndicators {
