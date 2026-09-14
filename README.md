@@ -145,6 +145,7 @@ arch-config/
 │   │   ├── BatteryIcon.qml
 │   │   ├── BrightnessIcon.qml
 │   │   ├── VolumeIcon.qml
+│   │   ├── AnimatedPopup.qml         # Shared fade and scale transition
 │   │   ├── Osd.qml
 │   │   ├── Theme.js                   # Shared colors
 │   │   └── HyprlandHelpers.js         # Hyprland data helpers

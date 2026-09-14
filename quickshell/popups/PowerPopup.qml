@@ -5,16 +5,16 @@ import Quickshell.Hyprland
 import "../shared/Theme.js" as Theme
 import "../shared"
 
-PopupWindow {
+AnimatedPopup {
     id: popup
     implicitWidth: 190
     implicitHeight: 218
     color: "transparent"
 
     HyprlandFocusGrab {
-        active: popup.visible
+        active: popup.opened
         windows: [popup]
-        onCleared: popup.visible = false
+        onCleared: popup.opened = false
     }
 
     component ActionButton: Button {
@@ -23,7 +23,7 @@ PopupWindow {
         width: 158
         height: 34
         onClicked: {
-            popup.visible = false;
+            popup.opened = false;
             Quickshell.execDetached(command);
         }
         contentItem: BarText {
@@ -37,6 +37,7 @@ PopupWindow {
     }
 
     Rectangle {
+        id: popupBody
         anchors.fill: parent
         color: Theme.surface
         radius: 10
@@ -59,4 +60,6 @@ PopupWindow {
             ActionButton { label: "Shutdown"; command: ["systemctl", "poweroff"] }
         }
     }
+
+    animatedItem: popupBody
 }

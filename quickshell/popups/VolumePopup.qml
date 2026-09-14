@@ -5,7 +5,7 @@ import Quickshell.Hyprland
 import "../shared/Theme.js" as Theme
 import "../shared"
 
-PopupWindow {
+AnimatedPopup {
     id: popup
     required property var audio
     implicitWidth: 280
@@ -13,12 +13,13 @@ PopupWindow {
     color: "transparent"
 
     HyprlandFocusGrab {
-        active: popup.visible
+        active: popup.opened
         windows: [popup]
-        onCleared: popup.visible = false
+        onCleared: popup.opened = false
     }
 
     Rectangle {
+        id: popupBody
         anchors.fill: parent
         color: Theme.surface
         radius: 10
@@ -96,9 +97,11 @@ PopupWindow {
             y: 78
             width: 60
             height: 28
-            onClicked: popup.visible = false
+            onClicked: popup.opened = false
             contentItem: BarText { text: "Close"; horizontalAlignment: Text.AlignHCenter }
             background: Rectangle { radius: 5; color: parent.down ? Theme.buttonHover : Theme.button }
         }
     }
+
+    animatedItem: popupBody
 }

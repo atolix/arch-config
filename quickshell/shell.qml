@@ -274,7 +274,7 @@ Scope {
             PanelWindow {
                 id: countdownDismissLayer
                 screen: bar.screen
-                visible: countdownPopup.visible
+                visible: countdownPopup.opened
                 anchors { top: true; bottom: true; left: true; right: true }
                 color: "transparent"
                 exclusionMode: ExclusionMode.Ignore
@@ -284,14 +284,14 @@ Scope {
 
                 MouseArea {
                     anchors.fill: parent
-                    onClicked: countdownPopup.visible = false
+                    onClicked: countdownPopup.opened = false
                 }
             }
 
             PanelWindow {
                 id: mediaDismissLayer
                 screen: bar.screen
-                visible: mediaPopup.visible
+                visible: mediaPopup.opened
                 anchors { top: true; bottom: true; left: true; right: true }
                 color: "transparent"
                 exclusionMode: ExclusionMode.Ignore
@@ -301,62 +301,62 @@ Scope {
 
                 MouseArea {
                     anchors.fill: parent
-                    onClicked: mediaPopup.visible = false
+                    onClicked: mediaPopup.opened = false
                 }
             }
 
             function toggleVolumePopup() {
-                calendarPopup.visible = false;
-                powerPopup.visible = false;
-                notificationPopup.visible = false;
-                countdownPopup.visible = false;
-                mediaPopup.visible = false;
-                volumePopup.visible = !volumePopup.visible;
+                calendarPopup.opened = false;
+                powerPopup.opened = false;
+                notificationPopup.opened = false;
+                countdownPopup.opened = false;
+                mediaPopup.opened = false;
+                volumePopup.opened = !volumePopup.opened;
             }
 
             function toggleCalendarPopup() {
-                volumePopup.visible = false;
-                powerPopup.visible = false;
-                notificationPopup.visible = false;
-                countdownPopup.visible = false;
-                mediaPopup.visible = false;
-                calendarPopup.visible = !calendarPopup.visible;
+                volumePopup.opened = false;
+                powerPopup.opened = false;
+                notificationPopup.opened = false;
+                countdownPopup.opened = false;
+                mediaPopup.opened = false;
+                calendarPopup.opened = !calendarPopup.opened;
             }
 
             function togglePowerPopup() {
-                volumePopup.visible = false;
-                calendarPopup.visible = false;
-                notificationPopup.visible = false;
-                countdownPopup.visible = false;
-                mediaPopup.visible = false;
-                powerPopup.visible = !powerPopup.visible;
+                volumePopup.opened = false;
+                calendarPopup.opened = false;
+                notificationPopup.opened = false;
+                countdownPopup.opened = false;
+                mediaPopup.opened = false;
+                powerPopup.opened = !powerPopup.opened;
             }
 
             function toggleNotificationPopup() {
-                volumePopup.visible = false;
-                calendarPopup.visible = false;
-                powerPopup.visible = false;
-                countdownPopup.visible = false;
-                mediaPopup.visible = false;
-                notificationPopup.visible = !notificationPopup.visible;
+                volumePopup.opened = false;
+                calendarPopup.opened = false;
+                powerPopup.opened = false;
+                countdownPopup.opened = false;
+                mediaPopup.opened = false;
+                notificationPopup.opened = !notificationPopup.opened;
             }
 
             function toggleCountdownPopup() {
-                volumePopup.visible = false;
-                calendarPopup.visible = false;
-                powerPopup.visible = false;
-                notificationPopup.visible = false;
-                mediaPopup.visible = false;
-                countdownPopup.visible = !countdownPopup.visible;
+                volumePopup.opened = false;
+                calendarPopup.opened = false;
+                powerPopup.opened = false;
+                notificationPopup.opened = false;
+                mediaPopup.opened = false;
+                countdownPopup.opened = !countdownPopup.opened;
             }
 
             function toggleMediaPopup() {
-                volumePopup.visible = false;
-                calendarPopup.visible = false;
-                powerPopup.visible = false;
-                notificationPopup.visible = false;
-                countdownPopup.visible = false;
-                mediaPopup.visible = !mediaPopup.visible;
+                volumePopup.opened = false;
+                calendarPopup.opened = false;
+                powerPopup.opened = false;
+                notificationPopup.opened = false;
+                countdownPopup.opened = false;
+                mediaPopup.opened = !mediaPopup.opened;
             }
 
             TopBar {

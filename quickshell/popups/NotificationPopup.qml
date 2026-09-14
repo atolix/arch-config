@@ -5,7 +5,7 @@ import Quickshell.Hyprland
 import "../shared/Theme.js" as Theme
 import "../shared"
 
-PopupWindow {
+AnimatedPopup {
     id: popup
     property var server
     property var notifications: []
@@ -17,12 +17,13 @@ PopupWindow {
     color: "transparent"
 
     HyprlandFocusGrab {
-        active: popup.visible
+        active: popup.opened
         windows: [popup]
-        onCleared: popup.visible = false
+        onCleared: popup.opened = false
     }
 
     Rectangle {
+        id: popupBody
         anchors.fill: parent
         color: Theme.surface
         radius: 10
@@ -173,4 +174,6 @@ PopupWindow {
             }
         }
     }
+
+    animatedItem: popupBody
 }

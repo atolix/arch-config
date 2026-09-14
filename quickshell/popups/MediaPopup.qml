@@ -5,7 +5,7 @@ import Quickshell.Hyprland
 import "../shared/Theme.js" as Theme
 import "../shared"
 
-PopupWindow {
+AnimatedPopup {
     id: popup
 
     required property var player
@@ -19,23 +19,23 @@ PopupWindow {
         return minutes + ":" + seconds.toString().padStart(2, "0");
     }
 
-    onPlayerChanged: if (player === null) visible = false
-    onVisibleChanged: if (visible && player?.positionSupported) player.positionChanged()
+    onPlayerChanged: if (player === null) opened = false
+    onOpenedChanged: if (opened && player?.positionSupported) player.positionChanged()
 
     implicitWidth: 410
     implicitHeight: 190
     color: "transparent"
 
     HyprlandFocusGrab {
-        active: popup.visible
+        active: popup.opened
         windows: [popup]
-        onCleared: popup.visible = false
+        onCleared: popup.opened = false
     }
 
     Timer {
         interval: 1000
         repeat: true
-        running: popup.visible && (popup.player?.isPlaying ?? false)
+        running: popup.opened && (popup.player?.isPlaying ?? false)
         onTriggered: if (popup.player?.positionSupported) popup.player.positionChanged()
     }
 
@@ -57,6 +57,7 @@ PopupWindow {
     }
 
     Rectangle {
+        id: popupBody
         anchors.fill: parent
         color: Theme.surface
         radius: 10
@@ -200,4 +201,6 @@ PopupWindow {
             font.pixelSize: 10
         }
     }
+
+    animatedItem: popupBody
 }

@@ -5,7 +5,7 @@ import Quickshell.Hyprland
 import "../shared/Theme.js" as Theme
 import "../shared"
 
-PopupWindow {
+AnimatedPopup {
     id: popup
     required property date today
     property date month: new Date(today.getFullYear(), today.getMonth(), 1, 12)
@@ -22,12 +22,12 @@ PopupWindow {
         month = new Date(month.getFullYear(), month.getMonth() + offset, 1, 12);
     }
 
-    onVisibleChanged: if (visible) showToday()
+    onOpenedChanged: if (opened) showToday()
 
     HyprlandFocusGrab {
-        active: popup.visible
+        active: popup.opened
         windows: [popup]
-        onCleared: popup.visible = false
+        onCleared: popup.opened = false
     }
 
     component CalendarButton: Button {
@@ -44,6 +44,7 @@ PopupWindow {
     }
 
     Rectangle {
+        id: popupBody
         anchors.fill: parent
         color: Theme.surface
         radius: 10
@@ -123,7 +124,9 @@ PopupWindow {
             y: 300
             width: 70
             text: "Close"
-            onClicked: popup.visible = false
+            onClicked: popup.opened = false
         }
     }
+
+    animatedItem: popupBody
 }
