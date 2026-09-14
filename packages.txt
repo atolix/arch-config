@@ -4,6 +4,7 @@ btop
 cliphist
 fcitx5
 fcitx5-mozc
+fastfetch
 grim
 hypridle
 hyprland

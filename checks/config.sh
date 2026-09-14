@@ -15,6 +15,7 @@ for file in \
     "$config_dir/wofi/style.css" \
     "$config_dir/btop/btop.conf" \
     "$config_dir/btop/themes/arch-config.theme" \
+    "$config_dir/fastfetch/config.jsonc" \
     "$config_dir/gtk-3.0/settings.ini" \
     "$config_dir/gtk-3.0/gtk.css" \
     "$config_dir/mimeapps.list" \

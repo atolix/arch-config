@@ -36,6 +36,7 @@ The bar appears on every monitor. The battery icon and percentage are hidden whe
 - Screen recording: press `Super+Shift+5` to select an area and start or stop recording under `~/Videos/Recordings/`.
 - Window switcher: press `Ctrl+S` for a wide Wofi list with application icons and window titles.
 - btop: custom colors match Quickshell, while the terminal supplies the transparent background.
+- fastfetch: the Arch logo, labels, and values use the Quickshell palette while preserving terminal transparency.
 - Thunar: dark GTK colors, compact controls, and matching selection accents.
 - Video playback: mpv is the default player for common video formats.
 - Idle power saving: locks after 5 minutes, suspends 5 seconds later, and turns the display off after 10 minutes as a fallback.
@@ -116,6 +117,8 @@ arch-config/
 │   ├── btop/
 │   │   ├── btop.conf                  # Custom theme selection and transparent background
 │   │   └── themes/arch-config.theme   # Colors shared with Quickshell
+│   ├── fastfetch/
+│   │   └── config.jsonc                # Quickshell-matched logo and text colors
 │   ├── gtk-3.0/
 │   │   ├── settings.ini             # Shared GTK theme settings
 │   │   └── gtk.css                  # Shared GTK colors and selection styling
