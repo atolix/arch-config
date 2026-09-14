@@ -263,6 +263,23 @@ Scope {
                 anchor.rect.y: bar.height + 6
             }
 
+            PanelWindow {
+                id: countdownDismissLayer
+                screen: bar.screen
+                visible: countdownPopup.visible
+                anchors { top: true; bottom: true; left: true; right: true }
+                color: "transparent"
+                exclusionMode: ExclusionMode.Ignore
+                WlrLayershell.namespace: "quickshell-countdown-dismiss"
+                WlrLayershell.layer: WlrLayer.Top
+                WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: countdownPopup.visible = false
+                }
+            }
+
             function toggleVolumePopup() {
                 calendarPopup.visible = false;
                 powerPopup.visible = false;
