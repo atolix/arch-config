@@ -12,9 +12,10 @@ function networkIcon(networkType, signal) {
     if (networkType === "ethernet") return "󰈀"
     if (networkType !== "wifi") return "󰤭"
     var level = Number(signal ?? 0)
-    if (level >= 70) return "󰤨"
-    if (level >= 40) return "󰤥"
-    return "󰤢"
+    if (level <= 0) return "󰢿"
+    if (level >= 50) return "󰢾"
+    if (level >= 25) return "󰢽"
+    return "󰢼"
 }
 
 function workspaceFor(workspaces, id) {
