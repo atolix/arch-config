@@ -16,6 +16,7 @@ Item {
     required property var togglePower
     required property var openCalendar
     required property var openVolume
+    required property var openBrightness
     required property int notificationCount
     required property var openNotifications
     required property int countdownDuration
@@ -106,6 +107,7 @@ Item {
         percent: root.percent
         networkIcon: root.networkIcon
         openVolumePopup: root.openVolume
+        openBrightnessPopup: root.openBrightness
         notificationCount: root.notificationCount
         openNotifications: root.openNotifications
     }

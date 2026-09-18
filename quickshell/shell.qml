@@ -223,6 +223,14 @@ Scope {
                 anchor.rect.y: bar.height + 6
             }
 
+            BrightnessPopup {
+                id: brightnessPopup
+                brightness: root.brightness
+                anchor.window: bar
+                anchor.rect.x: Math.max(8, Math.min(bar.width - width - 8, topBar.x + topBar.statusItem.x + topBar.statusItem.brightnessItem.x + topBar.statusItem.brightnessItem.width / 2 - width / 2))
+                anchor.rect.y: bar.height + 6
+            }
+
             CalendarPopup {
                 id: calendarPopup
                 today: clock.date
@@ -306,6 +314,7 @@ Scope {
             }
 
             function toggleVolumePopup() {
+                brightnessPopup.opened = false;
                 calendarPopup.opened = false;
                 powerPopup.opened = false;
                 notificationPopup.opened = false;
@@ -314,8 +323,19 @@ Scope {
                 volumePopup.opened = !volumePopup.opened;
             }
 
+            function toggleBrightnessPopup() {
+                volumePopup.opened = false;
+                calendarPopup.opened = false;
+                powerPopup.opened = false;
+                notificationPopup.opened = false;
+                countdownPopup.opened = false;
+                mediaPopup.opened = false;
+                brightnessPopup.opened = !brightnessPopup.opened;
+            }
+
             function toggleCalendarPopup() {
                 volumePopup.opened = false;
+                brightnessPopup.opened = false;
                 powerPopup.opened = false;
                 notificationPopup.opened = false;
                 countdownPopup.opened = false;
@@ -326,6 +346,7 @@ Scope {
             function togglePowerPopup() {
                 volumePopup.opened = false;
                 calendarPopup.opened = false;
+                brightnessPopup.opened = false;
                 notificationPopup.opened = false;
                 countdownPopup.opened = false;
                 mediaPopup.opened = false;
@@ -336,6 +357,7 @@ Scope {
                 volumePopup.opened = false;
                 calendarPopup.opened = false;
                 powerPopup.opened = false;
+                brightnessPopup.opened = false;
                 countdownPopup.opened = false;
                 mediaPopup.opened = false;
                 notificationPopup.opened = !notificationPopup.opened;
@@ -346,6 +368,7 @@ Scope {
                 calendarPopup.opened = false;
                 powerPopup.opened = false;
                 notificationPopup.opened = false;
+                brightnessPopup.opened = false;
                 mediaPopup.opened = false;
                 countdownPopup.opened = !countdownPopup.opened;
             }
@@ -356,6 +379,7 @@ Scope {
                 powerPopup.opened = false;
                 notificationPopup.opened = false;
                 countdownPopup.opened = false;
+                brightnessPopup.opened = false;
                 mediaPopup.opened = !mediaPopup.opened;
             }
 
@@ -373,6 +397,7 @@ Scope {
                 togglePower: bar.togglePowerPopup
                 openCalendar: bar.toggleCalendarPopup
                 openVolume: bar.toggleVolumePopup
+                openBrightness: bar.toggleBrightnessPopup
                 notificationCount: root.notifications.length
                 openNotifications: bar.toggleNotificationPopup
                 countdownDuration: root.countdownDuration

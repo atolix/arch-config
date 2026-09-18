@@ -16,10 +16,13 @@ def run(*command):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("kind", choices=("volume", "brightness"))
-    parser.add_argument("action", choices=("up", "down", "mute", "show"))
+    parser.add_argument("action", choices=("up", "down", "mute", "show", "set"))
+    parser.add_argument("value", nargs="?")
     args = parser.parse_args()
     if args.kind == "brightness" and args.action == "mute":
         parser.error("brightness does not support mute")
+    if args.action == "set" and (args.kind != "brightness" or args.value is None):
+        parser.error("set requires brightness and a percentage")
 
     muted = False
     if args.kind == "volume":
@@ -35,7 +38,13 @@ def main():
         percent = round(float(match[1]) * 100)
         muted = "[MUTED]" in result
     else:
-        if args.action in ("up", "down"):
+        if args.action == "set":
+            try:
+                value = max(0, min(100, int(args.value)))
+            except ValueError:
+                parser.error("brightness percentage must be an integer")
+            run("brightnessctl", "--class=backlight", "--min-value=1", "set", f"{value}%")
+        elif args.action in ("up", "down"):
             run("brightnessctl", "--class=backlight", "--min-value=1", "set",
                 "10%+" if args.action == "up" else "10%-")
         current = int(run("brightnessctl", "--class=backlight", "get"))

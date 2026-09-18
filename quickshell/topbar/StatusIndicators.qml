@@ -14,10 +14,12 @@ Row {
     required property var percent
     required property var networkIcon
     required property var openVolumePopup
+    required property var openBrightnessPopup
     required property int notificationCount
     required property var openNotifications
 
     readonly property alias volumeItem: volumeText
+    readonly property alias brightnessItem: brightnessIcon
 
     spacing: 10
 
@@ -59,12 +61,13 @@ Row {
     }
 
     BrightnessIcon {
+        id: brightnessIcon
         brightness: root.brightness
         Accessible.name: "Brightness"
         MouseArea {
             anchors.fill: parent
             cursorShape: Qt.PointingHandCursor
-            onClicked: Quickshell.execDetached(["python3", Quickshell.shellPath("scripts/osd-control.py"), "brightness", "show"])
+            onClicked: root.openBrightnessPopup()
         }
     }
 
