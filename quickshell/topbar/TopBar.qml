@@ -20,21 +20,15 @@ Item {
     required property var openBrightness
     required property int notificationCount
     required property var openNotifications
-    required property int countdownDuration
-    required property int countdownRemaining
-    required property bool countdownRunning
-    required property var openCountdown
     required property var openMedia
     required property bool powerPopupOpen
     required property bool calendarPopupOpen
     required property bool volumePopupOpen
     required property bool brightnessPopupOpen
     required property bool notificationPopupOpen
-    required property bool countdownPopupOpen
     required property bool mediaPopupOpen
 
     readonly property alias statusItem: status
-    readonly property alias countdownItem: countdownDisplay
     readonly property alias mediaItem: mediaDisplay
 
     anchors.top: parent.top
@@ -77,21 +71,6 @@ Item {
         value: root.clockValue
         openCalendar: root.openCalendar
         popupOpen: root.calendarPopupOpen
-    }
-
-    CountdownDisplay {
-        id: countdownDisplay
-        readonly property real areaLeft: workspaceSwitcher.x + workspaceSwitcher.width + 16
-        readonly property real areaRight: clockDisplay.contentLeft - 20
-
-        x: areaLeft + Math.max(0, (areaRight - areaLeft - width) / 2)
-        anchors.verticalCenter: parent.verticalCenter
-        width: Math.min(implicitWidth, Math.max(0, areaRight - areaLeft))
-        durationSeconds: root.countdownDuration
-        remainingSeconds: root.countdownRemaining
-        running: root.countdownRunning
-        openPopup: root.openCountdown
-        popupOpen: root.countdownPopupOpen
     }
 
     MediaDisplay {

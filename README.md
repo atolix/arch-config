@@ -6,7 +6,7 @@ Hyprland desktop configuration, managed as a Git repository. The Quickshell bar 
 
 | Position | Display |
 | --- | --- |
-| Left | Power menu, workspace indicators, countdown meter, and focused application names |
+| Left | Power menu, workspace indicators, and focused application names |
 | Center | Local date and time in 24-hour format with seconds; active media appears between the clock and status icons |
 | Left rail | Focused application names and `cpu: yy% / mem: xx% / temp: zz°C / fan: n RPM` |
 | Right | Keyboard layout, volume, brightness, battery, network, and notification icons |
@@ -21,7 +21,6 @@ Hyprland desktop configuration, managed as a Git repository. The Quickshell bar 
 | Network | Wi‑Fi signal, Ethernet, or disconnected icon. The SSID is not shown. |
 | Keyboard | `JP` / `EN`; click or press Ctrl+Space to switch immediately. |
 | Clock | Click for an English calendar with month navigation and a Today button. |
-| Timer | An empty horizontal meter sits between workspaces and the clock. Choose 5, 15, 25, or 45 minutes; the bar shrinks as the countdown runs. |
 | Media | Shows the active MPRIS track and playback state; long titles continuously scroll left. Click for artwork, track details, playback controls, and seeking. |
 | Notifications | Quickshell keeps D-Bus notifications in a center opened from the bell icon. The badge shows the count; notifications can be dismissed individually or cleared together. |
 | OSD | Volume and brightness changes show an English OSD at the bottom center for 1.8 seconds. |
@@ -132,7 +131,6 @@ arch-config/
 │   │   ├── TopBar.qml                # Top bar layout
 │   │   ├── StatusIndicators.qml      # Keyboard, volume, brightness, battery, and network
 │   │   ├── MediaDisplay.qml          # Active MPRIS track with play/pause control
-│   │   ├── CountdownDisplay.qml      # Horizontal countdown meter
 │   │   ├── WorkspaceSwitcher.qml     # Workspace indicators and switching
 │   │   ├── ClockDisplay.qml          # Date, time, seconds, and timezone
 │   │   └── BatteryStatus.qml          # Battery percentage and icon
@@ -144,7 +142,6 @@ arch-config/
 │   │   ├── CalendarPopup.qml
 │   │   ├── VolumePopup.qml
 │   │   ├── PowerPopup.qml
-│   │   ├── CountdownPopup.qml
 │   │   ├── MediaPopup.qml
 │   │   └── NotificationPopup.qml
 │   ├── shared/

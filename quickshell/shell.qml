@@ -33,57 +33,6 @@ Scope {
     readonly property var battery: UPower.displayDevice
     property bool headphonesConnected: false
     property var notifications: []
-    property int countdownDuration: 0
-    property int countdownRemaining: 0
-    property bool countdownRunning: false
-    property double countdownDeadline: 0
-
-    function setCountdown(minutes) {
-        root.countdownRunning = false;
-        root.countdownDuration = minutes * 60;
-        root.countdownRemaining = root.countdownDuration;
-        root.countdownDeadline = 0;
-    }
-
-    function toggleCountdown() {
-        if (root.countdownDuration === 0)
-            return;
-        if (root.countdownRunning) {
-            root.countdownRemaining = Math.max(0, Math.ceil((root.countdownDeadline - Date.now()) / 1000));
-            root.countdownRunning = false;
-        } else {
-            if (root.countdownRemaining === 0)
-                root.countdownRemaining = root.countdownDuration;
-            root.countdownDeadline = Date.now() + root.countdownRemaining * 1000;
-            root.countdownRunning = true;
-        }
-    }
-
-    function resetCountdown() {
-        root.countdownRunning = false;
-        root.countdownRemaining = root.countdownDuration;
-        root.countdownDeadline = 0;
-    }
-
-    function clearCountdown() {
-        root.countdownRunning = false;
-        root.countdownDuration = 0;
-        root.countdownRemaining = 0;
-        root.countdownDeadline = 0;
-    }
-
-    Timer {
-        interval: 250
-        repeat: true
-        running: root.countdownRunning
-        onTriggered: {
-            root.countdownRemaining = Math.max(0, Math.ceil((root.countdownDeadline - Date.now()) / 1000));
-            if (root.countdownRemaining === 0) {
-                root.countdownRunning = false;
-                Quickshell.execDetached(["notify-send", "Timer", "Time is up"]);
-            }
-        }
-    }
 
     function removeNotification(notification) {
         root.notifications = root.notifications.filter(item => item !== notification);
@@ -257,43 +206,12 @@ Scope {
                 anchor.rect.y: bar.height + 8
             }
 
-            CountdownPopup {
-                id: countdownPopup
-                durationSeconds: root.countdownDuration
-                remainingSeconds: root.countdownRemaining
-                running: root.countdownRunning
-                setDuration: root.setCountdown
-                toggleTimer: root.toggleCountdown
-                resetTimer: root.resetCountdown
-                clearTimer: root.clearCountdown
-                anchor.window: bar
-                anchor.rect.x: Math.max(8, Math.min(bar.width - width - 8, topBar.x + topBar.countdownItem.x + topBar.countdownItem.width / 2 - width / 2))
-                anchor.rect.y: bar.height + 6
-            }
-
             MediaPopup {
                 id: mediaPopup
                 player: topBar.mediaItem.player
                 anchor.window: bar
                 anchor.rect.x: Math.max(8, Math.min(bar.width - width - 8, topBar.x + topBar.mediaItem.x + topBar.mediaItem.width / 2 - width / 2))
                 anchor.rect.y: bar.height + 6
-            }
-
-            PanelWindow {
-                id: countdownDismissLayer
-                screen: bar.screen
-                visible: countdownPopup.opened
-                anchors { top: true; bottom: true; left: true; right: true }
-                color: "transparent"
-                exclusionMode: ExclusionMode.Ignore
-                WlrLayershell.namespace: "quickshell-countdown-dismiss"
-                WlrLayershell.layer: WlrLayer.Top
-                WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: countdownPopup.opened = false
-                }
             }
 
             PanelWindow {
@@ -318,7 +236,6 @@ Scope {
                 calendarPopup.opened = false;
                 powerPopup.opened = false;
                 notificationPopup.opened = false;
-                countdownPopup.opened = false;
                 mediaPopup.opened = false;
                 volumePopup.opened = !volumePopup.opened;
             }
@@ -328,7 +245,6 @@ Scope {
                 calendarPopup.opened = false;
                 powerPopup.opened = false;
                 notificationPopup.opened = false;
-                countdownPopup.opened = false;
                 mediaPopup.opened = false;
                 brightnessPopup.opened = !brightnessPopup.opened;
             }
@@ -338,7 +254,6 @@ Scope {
                 brightnessPopup.opened = false;
                 powerPopup.opened = false;
                 notificationPopup.opened = false;
-                countdownPopup.opened = false;
                 mediaPopup.opened = false;
                 calendarPopup.opened = !calendarPopup.opened;
             }
@@ -348,7 +263,6 @@ Scope {
                 calendarPopup.opened = false;
                 brightnessPopup.opened = false;
                 notificationPopup.opened = false;
-                countdownPopup.opened = false;
                 mediaPopup.opened = false;
                 powerPopup.opened = !powerPopup.opened;
             }
@@ -358,19 +272,8 @@ Scope {
                 calendarPopup.opened = false;
                 powerPopup.opened = false;
                 brightnessPopup.opened = false;
-                countdownPopup.opened = false;
                 mediaPopup.opened = false;
                 notificationPopup.opened = !notificationPopup.opened;
-            }
-
-            function toggleCountdownPopup() {
-                volumePopup.opened = false;
-                calendarPopup.opened = false;
-                powerPopup.opened = false;
-                notificationPopup.opened = false;
-                brightnessPopup.opened = false;
-                mediaPopup.opened = false;
-                countdownPopup.opened = !countdownPopup.opened;
             }
 
             function toggleMediaPopup() {
@@ -378,7 +281,6 @@ Scope {
                 calendarPopup.opened = false;
                 powerPopup.opened = false;
                 notificationPopup.opened = false;
-                countdownPopup.opened = false;
                 brightnessPopup.opened = false;
                 mediaPopup.opened = !mediaPopup.opened;
             }
@@ -405,11 +307,6 @@ Scope {
                 notificationCount: root.notifications.length
                 openNotifications: bar.toggleNotificationPopup
                 notificationPopupOpen: notificationPopup.opened
-                countdownDuration: root.countdownDuration
-                countdownRemaining: root.countdownRemaining
-                countdownRunning: root.countdownRunning
-                openCountdown: bar.toggleCountdownPopup
-                countdownPopupOpen: countdownPopup.opened
                 openMedia: bar.toggleMediaPopup
                 mediaPopupOpen: mediaPopup.opened
             }
