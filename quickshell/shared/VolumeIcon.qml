@@ -5,11 +5,12 @@ Item {
     id: icon
     required property var audio
     required property bool headphones
+    property bool active: false
     readonly property bool available: audio !== null
     readonly property bool muted: available && audio.muted
     readonly property real volume: available ? audio.volume : 0
     readonly property int waveCount: muted || volume <= 0 ? 0 : Math.min(3, Math.ceil(volume * 3))
-    readonly property color iconColor: available ? Theme.text : Theme.muted
+    readonly property color iconColor: active ? Theme.accent : available ? Theme.text : Theme.muted
 
     implicitWidth: 24
     implicitHeight: 22

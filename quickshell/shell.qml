@@ -398,13 +398,20 @@ Scope {
                 openCalendar: bar.toggleCalendarPopup
                 openVolume: bar.toggleVolumePopup
                 openBrightness: bar.toggleBrightnessPopup
+                powerPopupOpen: powerPopup.opened
+                calendarPopupOpen: calendarPopup.opened
+                volumePopupOpen: volumePopup.opened
+                brightnessPopupOpen: brightnessPopup.opened
                 notificationCount: root.notifications.length
                 openNotifications: bar.toggleNotificationPopup
+                notificationPopupOpen: notificationPopup.opened
                 countdownDuration: root.countdownDuration
                 countdownRemaining: root.countdownRemaining
                 countdownRunning: root.countdownRunning
                 openCountdown: bar.toggleCountdownPopup
+                countdownPopupOpen: countdownPopup.opened
                 openMedia: bar.toggleMediaPopup
+                mediaPopupOpen: mediaPopup.opened
             }
 
             LeftRail {

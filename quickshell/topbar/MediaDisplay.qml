@@ -7,6 +7,7 @@ Item {
     id: root
 
     required property var openPopup
+    required property bool popupOpen
 
     readonly property var player: selectPlayer()
     readonly property string title: player?.trackTitle ?? ""
@@ -80,6 +81,7 @@ Item {
                 width: implicitWidth
                 height: parent.height
                 text: root.label
+                color: root.popupOpen ? Theme.accent : Theme.text
                 elide: Text.ElideNone
             }
 
@@ -88,6 +90,7 @@ Item {
                 width: implicitWidth
                 height: parent.height
                 text: root.label
+                color: root.popupOpen ? Theme.accent : Theme.text
                 elide: Text.ElideNone
             }
 

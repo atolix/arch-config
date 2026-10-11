@@ -9,6 +9,7 @@ Item {
     required property int remainingSeconds
     required property bool running
     required property var openPopup
+    required property bool popupOpen
 
     readonly property real progress: durationSeconds > 0
         ? Math.max(0, Math.min(1, remainingSeconds / durationSeconds))
@@ -39,7 +40,7 @@ Item {
             width: parent.width * root.progress
             height: parent.height
             radius: parent.radius
-            color: root.running ? Theme.accent : Theme.muted
+            color: root.popupOpen ? Theme.accent : root.running ? Theme.accent : Theme.muted
 
             Behavior on width {
                 NumberAnimation { duration: 180; easing.type: Easing.OutCubic }
@@ -55,7 +56,7 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         height: 22
         text: root.formattedTime()
-        color: root.running ? Theme.text : Theme.muted
+        color: root.popupOpen ? Theme.accent : root.running ? Theme.text : Theme.muted
         font.bold: root.running
     }
 

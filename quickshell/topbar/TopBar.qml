@@ -1,5 +1,6 @@
 import QtQuick
 import "../shared"
+import "../shared/Theme.js" as Theme
 
 Item {
     id: root
@@ -24,6 +25,13 @@ Item {
     required property bool countdownRunning
     required property var openCountdown
     required property var openMedia
+    required property bool powerPopupOpen
+    required property bool calendarPopupOpen
+    required property bool volumePopupOpen
+    required property bool brightnessPopupOpen
+    required property bool notificationPopupOpen
+    required property bool countdownPopupOpen
+    required property bool mediaPopupOpen
 
     readonly property alias statusItem: status
     readonly property alias countdownItem: countdownDisplay
@@ -46,6 +54,7 @@ Item {
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         text: "󰐥"
+        color: root.powerPopupOpen ? Theme.accent : Theme.text
         Accessible.name: "Power"
         MouseArea {
             anchors.fill: parent
@@ -67,6 +76,7 @@ Item {
         anchors.fill: parent
         value: root.clockValue
         openCalendar: root.openCalendar
+        popupOpen: root.calendarPopupOpen
     }
 
     CountdownDisplay {
@@ -81,6 +91,7 @@ Item {
         remainingSeconds: root.countdownRemaining
         running: root.countdownRunning
         openPopup: root.openCountdown
+        popupOpen: root.countdownPopupOpen
     }
 
     MediaDisplay {
@@ -92,6 +103,7 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         width: Math.min(implicitWidth, Math.max(0, areaRight - areaLeft))
         openPopup: root.openMedia
+        popupOpen: root.mediaPopupOpen
     }
 
     StatusIndicators {
@@ -108,7 +120,10 @@ Item {
         networkIcon: root.networkIcon
         openVolumePopup: root.openVolume
         openBrightnessPopup: root.openBrightness
+        volumePopupOpen: root.volumePopupOpen
+        brightnessPopupOpen: root.brightnessPopupOpen
         notificationCount: root.notificationCount
         openNotifications: root.openNotifications
+        notificationPopupOpen: root.notificationPopupOpen
     }
 }

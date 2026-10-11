@@ -15,8 +15,11 @@ Row {
     required property var networkIcon
     required property var openVolumePopup
     required property var openBrightnessPopup
+    required property bool volumePopupOpen
+    required property bool brightnessPopupOpen
     required property int notificationCount
     required property var openNotifications
+    required property bool notificationPopupOpen
 
     readonly property alias volumeItem: volumeText
     readonly property alias brightnessItem: brightnessIcon
@@ -41,6 +44,7 @@ Row {
         id: volumeText
         audio: root.audio
         headphones: root.headphonesConnected
+        active: root.volumePopupOpen
         Accessible.name: "Volume"
         MouseArea {
             anchors.fill: parent
@@ -63,6 +67,7 @@ Row {
     BrightnessIcon {
         id: brightnessIcon
         brightness: root.brightness
+        active: root.brightnessPopupOpen
         Accessible.name: "Brightness"
         MouseArea {
             anchors.fill: parent
@@ -102,7 +107,7 @@ Row {
             text: "󰂚"
             font.family: "JetBrainsMono Nerd Font Mono"
             font.pixelSize: 17
-            color: root.notificationCount > 0 ? Theme.accent : Theme.text
+            color: root.notificationCount > 0 || root.notificationPopupOpen ? Theme.accent : Theme.text
         }
 
         Rectangle {

@@ -4,6 +4,7 @@ import "Theme.js" as Theme
 Item {
     id: icon
     property var brightness: null
+    property bool active: false
     readonly property real level: brightness === null ? 0 : Math.max(0, Math.min(1, brightness / 100))
 
     implicitWidth: 24
@@ -22,7 +23,7 @@ Item {
             radius: height / 2
             rotation: angle
             transformOrigin: Item.Left
-            color: Theme.text
+            color: icon.active ? Theme.accent : Theme.text
             opacity: icon.brightness === null ? 0 : 0.2 + icon.level * 0.8
 
             Behavior on width { NumberAnimation { duration: 120 } }
@@ -33,7 +34,7 @@ Item {
     Text {
         anchors.centerIn: parent
         text: "󰌵"
-        color: icon.brightness === null ? Theme.muted : Theme.text
+        color: icon.brightness === null ? Theme.muted : icon.active ? Theme.accent : Theme.text
         font.family: "JetBrainsMono Nerd Font Mono"
         font.pixelSize: 13
         verticalAlignment: Text.AlignVCenter
