@@ -11,7 +11,7 @@ PanelWindow {
 
     screen: screenRef
     anchors { left: true; top: true; bottom: true }
-    implicitWidth: 38
+    implicitWidth: 30
     color: Theme.background
 
     Column {
