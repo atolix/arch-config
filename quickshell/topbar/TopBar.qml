@@ -39,7 +39,7 @@ Item {
     BarText {
         id: powerIcon
         anchors.left: parent.left
-        anchors.leftMargin: 8
+        anchors.leftMargin: 4
         anchors.verticalCenter: parent.verticalCenter
         width: 22
         height: 22
