@@ -10,7 +10,7 @@ let
 in
 {
   linuxConfig.desktop.enable = true;
-  linuxConfig.home.username = userName;
+  # linuxConfig.home.username = userName;
 
   boot.loader = {
     systemd-boot.enable = true;
@@ -29,24 +29,24 @@ in
     permittedInsecurePackages = [ "broadcom-sta-6.30.223.271-63-6.18.56" ];
   };
   boot = {
-    blacklistedKernelModules = [
-      "b43"
-      "b43legacy"
-      "bcm43xx"
-      "bcma"
-      "brcm80211"
-      "brcmfmac"
-      "brcmsmac"
-      "ssb"
-    ];
-    kernelModules = [ "wl" ];
-    extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
+    # blacklistedKernelModules = [
+    #  "b43"
+    #  "b43legacy"
+    #  "bcm43xx"
+    #  "bcma"
+    #  "brcm80211"
+    #  "brcmfmac"
+    #  "brcmsmac"
+    #  "ssb"
+    # ];
+    # kernelModules = [ "wl" ];
+    # extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
   };
 
   networking.hostName = "nixos";
   time.timeZone = "Asia/Tokyo";
   zramSwap = {
-    enable = true;
+    enable = false;
     algorithm = "zstd";
     memoryPercent = 50;
   };
