@@ -241,6 +241,28 @@ in
       ];
     };
     fonts.fontconfig.enable = true;
+    gtk = {
+      enable = true;
+      theme.name = "Adwaita-dark";
+      iconTheme.name = "Adwaita";
+      font = {
+        name = "JetBrainsMono Nerd Font Mono";
+        size = 10;
+      };
+      gtk3 = {
+        extraConfig = {
+          gtk-application-prefer-dark-theme = true;
+          gtk-toolbar-style = "GTK_TOOLBAR_ICONS";
+          gtk-toolbar-icon-size = "GTK_ICON_SIZE_SMALL_TOOLBAR";
+          gtk-button-images = false;
+          gtk-menu-images = false;
+          gtk-enable-animations = false;
+          gtk-decoration-layout = "menu:close";
+          gtk-primary-button-warps-slider = false;
+        };
+        extraCss = builtins.readFile ../../home/atolix/.config/gtk-3.0/gtk.css;
+      };
+    };
     xdg.mimeApps = {
       enable = true;
       defaultApplications = {
@@ -295,8 +317,6 @@ in
       "wofi/style.css".text = render ../../home/atolix/.config/wofi/style.css;
       "btop/btop.conf".text = render ../../home/atolix/.config/btop/btop.conf;
       "btop/themes/arch-config.theme".text = btopTheme;
-      "gtk-3.0/settings.ini".text = render ../../home/atolix/.config/gtk-3.0/settings.ini;
-      "gtk-3.0/gtk.css".text = render ../../home/atolix/.config/gtk-3.0/gtk.css;
 
       "fcitx5/config".text = render ../../home/atolix/.config/fcitx5/config;
       "fcitx5/profile".text = render ../../home/atolix/.config/fcitx5/profile;
