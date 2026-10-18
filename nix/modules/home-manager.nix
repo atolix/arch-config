@@ -67,13 +67,18 @@ in
       brightnessctl
       btop
       cliphist
+      eza
       fastfetch
+      fzf
       ghostty
+      glslviewer
       grim
       hypridle
       hyprlock
       lm_sensors
+      mise
       mpv
+      neovim
       networkmanagerapplet
       nerd-fonts.jetbrains-mono
       noto-fonts
@@ -81,6 +86,7 @@ in
       pulseaudio
       python3
       quickshell
+      ripgrep
       slurp
       thunar
       upower
