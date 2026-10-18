@@ -73,6 +73,7 @@ in
       enable = true;
       enableZshIntegration = true;
     };
+    programs.ripgrep.enable = true;
     programs.zsh = {
       enable = true;
       enableCompletion = true;
@@ -124,7 +125,6 @@ in
       pulseaudio
       python3
       quickshell
-      ripgrep
       slurp
       thunar
       upower
