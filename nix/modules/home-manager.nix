@@ -28,6 +28,7 @@ in
 
   config = lib.mkIf cfg.enable {
     programs.home-manager.enable = true;
+    fonts.fontconfig.enable = true;
 
     home.packages = with pkgs; [
       awww
@@ -42,6 +43,8 @@ in
       lm_sensors
       mpv
       networkmanagerapplet
+      nerd-fonts.jetbrains-mono
+      noto-fonts
       procps
       pulseaudio
       python3
