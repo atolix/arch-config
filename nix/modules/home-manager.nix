@@ -73,7 +73,10 @@ in
       enable = true;
       enableZshIntegration = true;
     };
-    programs.neovim.enable = true;
+    programs.neovim = {
+      enable = true;
+      initLua = builtins.readFile ../../home/atolix/.config/nvim/init.lua;
+    };
     programs.ripgrep.enable = true;
     programs.zsh = {
       enable = true;
@@ -150,6 +153,10 @@ in
       "gtk-3.0/gtk.css".text = render ../../home/atolix/.config/gtk-3.0/gtk.css;
       "mimeapps.list".text = render ../../home/atolix/.config/mimeapps.list;
       "mpv/mpv.conf".text = render ../../home/atolix/.config/mpv/mpv.conf;
+      "nvim/lua" = {
+        source = ../../home/atolix/.config/nvim/lua;
+        recursive = true;
+      };
 
       "fcitx5/config".text = render ../../home/atolix/.config/fcitx5/config;
       "fcitx5/profile".text = render ../../home/atolix/.config/fcitx5/profile;
