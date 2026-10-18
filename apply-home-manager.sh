@@ -19,7 +19,7 @@ fi
 
 generation="$(nix build "path:$repo_dir#homeConfigurations.atolix.activationPackage" \
     --no-link --print-out-paths)"
-backup_extension="arch-config-before-home-manager-$(date +%Y%m%d-%H%M%S)"
+backup_extension="linux-config-before-home-manager-$(date +%Y%m%d-%H%M%S)"
 
 if [ "$mode" = '--dry-run' ]; then
     DRY_RUN=1 HOME_MANAGER_BACKUP_EXT="$backup_extension" \
