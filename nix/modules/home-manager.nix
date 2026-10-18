@@ -60,6 +60,36 @@ in
         email = "82761106+atolix@users.noreply.github.com";
       };
     };
+    programs.zsh = {
+      enable = true;
+      enableCompletion = true;
+      shellAliases = {
+        nv = "nvim";
+        ":q" = "exit";
+        ls = "eza -l -a --no-user";
+        gco = "git checkout";
+        canv = "glslViewer -l";
+      };
+      initContent = lib.mkMerge [
+        (lib.mkBefore ''
+          if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
+            source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
+          fi
+        '')
+        ''
+          eval "$(mise activate zsh)"
+
+          fpath=(~/.zsh $fpath)
+
+          export FZF_DEFAULT_COMMAND='rg --files'
+
+          [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
+
+          source ~/powerlevel10k/powerlevel10k.zsh-theme
+          [[ ! -f ~/dotfiles/p10k.zsh ]] || source ~/dotfiles/p10k.zsh
+        ''
+      ];
+    };
     fonts.fontconfig.enable = true;
 
     home.packages = with pkgs; [
