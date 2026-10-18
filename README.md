@@ -161,6 +161,23 @@ Ghostty colors, the Neovim executable and language servers, desktop fonts, and
 the CLI tools referenced by those configurations. Neovim's Lua configuration
 and plugins remain in the separate dotfiles repository.
 
+Quickshell components remain native QML so that editor support and hot reload
+continue to work. Nix generates `shared/Theme.js` inside the packaged copy from
+Home Manager options. For example:
+
+```nix
+archConfig.home.quickshell.theme = {
+  background = "#cc141414";
+  accent = "#a5b4fc";
+  danger = "#f38ba8";
+};
+```
+
+The available keys are `background`, `surface`, `text`, `accent`, `muted`,
+`border`, `danger`, `warning`, `success`, `button`, `buttonHover`, and `white`.
+Running Quickshell directly from the repository continues to use the tracked
+`quickshell/shared/Theme.js` defaults.
+
 Preview activation without replacing the current files:
 
 ```sh
