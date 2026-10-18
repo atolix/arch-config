@@ -134,6 +134,20 @@ nix build path:.#homeConfigurations.atolix.activationPackage --no-link
 
 This build validates every managed dotfile and desktop package. The activation step remains separate so the existing Arch configuration is not replaced during validation.
 
+Preview activation without replacing the current files:
+
+```sh
+./apply-home-manager.sh
+```
+
+After reviewing the dry-run output, activate the profile explicitly:
+
+```sh
+./apply-home-manager.sh --switch
+```
+
+Existing managed files are backed up beside the originals with a timestamped `arch-config-before-home-manager-*` extension. The default mode is always `--dry-run`.
+
 The Nix modules do not replace the Arch workflow. On Arch Linux, continue to use `packages.txt` and `install.sh`; on NixOS, the modules render the placeholders to immutable Nix store paths.
 
 ## Run
@@ -191,6 +205,7 @@ Restart Thunar after applying the settings to load the new GTK theme.
 ```text
 arch-config/
 ├── flake.nix                         # Export NixOS/Home Manager modules and checks
+├── apply-home-manager.sh             # Preview or activate the Home Manager profile
 ├── bootstrap-nix.sh                  # Install and initialize Nix on Arch Linux
 ├── check.sh                         # Run all validation checks
 ├── checks/
