@@ -196,6 +196,13 @@ consumers can select an absolute executable path with
 `archConfig.home.quickshell.executable` while keeping the packaged QML and user
 service under Nix management.
 
+The packaged SDDM theme also derives its colors from Nix while keeping the QML
+layout intact. NixOS consumers can override individual values, for example:
+
+```nix
+archConfig.desktop.sddm.theme.accent = "#a5b4fc";
+```
+
 Preview activation without replacing the current files:
 
 ```sh
