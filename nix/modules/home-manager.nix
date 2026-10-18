@@ -343,6 +343,7 @@ in
       slurp
       solargraph
       thunar
+      tig
       typescript
       typescript-language-server
       upower
