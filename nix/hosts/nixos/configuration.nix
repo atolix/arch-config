@@ -73,5 +73,10 @@ in
     };
   };
 
+  environment.systemPackages = with pkgs; [
+    google-chrome
+  ];
+  nixpkgs.config.allowUnfree = true;
+
   system.stateVersion = "26.05";
 }
