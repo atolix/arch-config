@@ -88,14 +88,14 @@ in
       settings = {
         "$schema" = "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json";
         logo.color = {
-          "1" = "#a5b4fc";
-          "2" = "#eaeaea";
+          "1" = cfg.quickshell.theme.accent;
+          "2" = cfg.quickshell.theme.text;
         };
         display.color = {
-          keys = "#a5b4fc";
-          title = "#a5b4fc";
-          output = "#eaeaea";
-          separator = "#646978";
+          keys = cfg.quickshell.theme.accent;
+          title = cfg.quickshell.theme.accent;
+          output = cfg.quickshell.theme.text;
+          separator = cfg.quickshell.theme.muted;
         };
         modules = [
           "title"
