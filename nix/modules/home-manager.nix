@@ -54,6 +54,11 @@ in
 {
   options.archConfig.home = {
     enable = lib.mkEnableOption "the arch-config Home Manager profile";
+    quickshell.executable = lib.mkOption {
+      type = lib.types.strMatching "/.+";
+      default = "${pkgs.quickshell}/bin/quickshell";
+      description = "Absolute path to the Quickshell executable";
+    };
     quickshell.theme = lib.mapAttrs (
       name: default:
       lib.mkOption {
@@ -139,7 +144,6 @@ in
       procps
       pulseaudio
       python3
-      quickshell
       slurp
       solargraph
       thunar
@@ -185,7 +189,8 @@ in
         PartOf = [ "arch-config-session.target" ];
       };
       Service = {
-        ExecStart = "${quickshellRoot}/run.sh --no-duplicate";
+        Environment = "ARCH_CONFIG_QUICKSHELL_BIN=${cfg.quickshell.executable}";
+        ExecStart = "${cfg.quickshell.executable} --path ${quickshellRoot} --no-duplicate";
         Restart = "on-failure";
         RestartSec = 2;
       };
@@ -275,5 +280,6 @@ in
       "arch-config graphical session services";
 
     home.sessionVariables.ARCH_CONFIG_QUICKSHELL = quickshellRoot;
+    home.sessionVariables.ARCH_CONFIG_QUICKSHELL_BIN = cfg.quickshell.executable;
   };
 }

@@ -53,8 +53,9 @@ def main():
 
     # Hardware keys still work when Quickshell is not running (e.g. using Waybar).
     project = str(Path(__file__).resolve().parent.parent)
+    quickshell = os.environ.get("ARCH_CONFIG_QUICKSHELL_BIN", "quickshell")
     try:
-        run("quickshell", "ipc", "--path", project, "call", "osd", "display",
+        run(quickshell, "ipc", "--path", project, "call", "osd", "display",
             args.kind, str(percent), str(muted).lower())
     except (OSError, subprocess.SubprocessError):
         pass

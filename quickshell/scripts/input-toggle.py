@@ -24,7 +24,8 @@ def main():
     run("fcitx5-remote", "-t")
     layout = layout_name(run("fcitx5-remote", "-n"))
     project = str(Path(__file__).resolve().parent.parent)
-    run("quickshell", "ipc", "--path", project, "call", "input", "setLayout", layout)
+    quickshell = os.environ.get("ARCH_CONFIG_QUICKSHELL_BIN", "quickshell")
+    run(quickshell, "ipc", "--path", project, "call", "input", "setLayout", layout)
 
 
 if __name__ == "__main__":
