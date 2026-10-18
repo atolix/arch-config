@@ -157,8 +157,9 @@ This build validates every managed dotfile and desktop package. The activation s
 
 The standalone profile currently manages the Hyprland desktop files and user
 services, Git identity, Zsh aliases and completion, Mise, Fzf, Powerlevel10k,
-Ghostty colors, Neovim and its Lua configuration, desktop fonts, and the CLI
-tools referenced by those configurations.
+Ghostty colors, the Neovim executable and language servers, desktop fonts, and
+the CLI tools referenced by those configurations. Neovim's Lua configuration
+and plugins remain in the separate dotfiles repository.
 
 Preview activation without replacing the current files:
 
