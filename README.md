@@ -126,6 +126,14 @@ sudo nixos-rebuild switch --flake .#my-host
 
 The repository itself can be checked with `nix flake check`. Its default package is the tracked SDDM theme, so `nix build` also verifies that the theme can be installed into the Nix store.
 
+The flake also exports a standalone `homeConfigurations.atolix` profile. On Arch, build the complete Home Manager generation without changing the active user configuration:
+
+```sh
+nix build path:.#homeConfigurations.atolix.activationPackage --no-link
+```
+
+This build validates every managed dotfile and desktop package. The activation step remains separate so the existing Arch configuration is not replaced during validation.
+
 The Nix modules do not replace the Arch workflow. On Arch Linux, continue to use `packages.txt` and `install.sh`; on NixOS, the modules render the placeholders to immutable Nix store paths.
 
 ## Run
