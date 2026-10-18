@@ -7,8 +7,8 @@
 
 let
   cfg = config.archConfig.home;
-  repoRoot = ../..;
-  quickshellRoot = "${repoRoot}/quickshell";
+  quickshellConfig = pkgs.callPackage ../packages/quickshell-config.nix { };
+  quickshellRoot = "${quickshellConfig}/quickshell";
 
   render =
     source:
@@ -18,7 +18,7 @@ let
         "@HOME@"
       ]
       [
-        (toString repoRoot)
+        (toString quickshellConfig)
         config.home.homeDirectory
       ]
       (builtins.readFile source);

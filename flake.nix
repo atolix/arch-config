@@ -67,6 +67,7 @@
           pkgs = nixpkgs.legacyPackages.${system};
         in
         rec {
+          quickshell-config = pkgs.callPackage ./nix/packages/quickshell-config.nix { };
           sddm-theme = pkgs.callPackage ./nix/packages/sddm-theme.nix { };
           default = sddm-theme;
         }
