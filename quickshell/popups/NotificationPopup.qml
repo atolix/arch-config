@@ -128,7 +128,7 @@ AnimatedPopup {
                         height: 38
                         visible: text.length > 0
                         text: modelData.body
-                        color: "#c6c9d4"
+                        color: Theme.secondaryText
                         wrapMode: Text.WordWrap
                         maximumLineCount: 2
                         elide: Text.ElideRight
@@ -143,7 +143,7 @@ AnimatedPopup {
                     width: 24
                     height: 24
                     text: "×"
-                    color: closeArea.containsMouse ? Theme.white : "#9da3b8"
+                    color: closeArea.containsMouse ? Theme.white : Theme.closeIcon
                     font.pixelSize: 18
                     horizontalAlignment: Text.AlignHCenter
                     MouseArea {

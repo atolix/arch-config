@@ -178,7 +178,8 @@ archConfig.home.quickshell.theme = {
 ```
 
 The available keys are `background`, `surface`, `text`, `accent`, `muted`,
-`border`, `danger`, `warning`, `success`, `button`, `buttonHover`, and `white`.
+`border`, `danger`, `warning`, `success`, `button`, `buttonHover`, `white`,
+`onAccent`, `disabled`, `secondaryText`, `calendarWeekday`, and `closeIcon`.
 Running Quickshell directly from the repository continues to use the tracked
 `quickshell/shared/Theme.js` defaults.
 

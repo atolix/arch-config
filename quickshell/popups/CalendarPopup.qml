@@ -63,7 +63,7 @@ AnimatedPopup {
                     height: 26
                     text: modelData
                     horizontalAlignment: Text.AlignHCenter
-                    color: index === 0 ? Theme.danger : index === 6 ? Theme.accent : "#aeb3c2"
+                    color: index === 0 ? Theme.danger : index === 6 ? Theme.accent : Theme.calendarWeekday
                 }
             }
         }
@@ -87,7 +87,7 @@ AnimatedPopup {
                         anchors.fill: parent
                         horizontalAlignment: Text.AlignHCenter
                         text: dayCell.day.getDate()
-                        color: dayCell.isToday ? "#181a22" : !dayCell.inMonth ? Theme.muted : dayCell.index % 7 === 0 ? Theme.danger : dayCell.index % 7 === 6 ? Theme.accent : Theme.text
+                        color: dayCell.isToday ? Theme.onAccent : !dayCell.inMonth ? Theme.muted : dayCell.index % 7 === 0 ? Theme.danger : dayCell.index % 7 === 6 ? Theme.accent : Theme.text
                     }
                 }
             }

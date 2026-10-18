@@ -11,4 +11,9 @@
   button = "#363b49";
   buttonHover = "#50566a";
   white = "#ffffff";
+  onAccent = "#181a22";
+  disabled = "#666666";
+  secondaryText = "#c6c9d4";
+  calendarWeekday = "#aeb3c2";
+  closeIcon = "#9da3b8";
 }

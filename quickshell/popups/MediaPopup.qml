@@ -94,7 +94,7 @@ AnimatedPopup {
                 width: parent.width
                 height: 20
                 text: popup.player?.trackArtist || popup.player?.identity || "Unknown artist"
-                color: "#c6c9d4"
+                color: Theme.secondaryText
                 elide: Text.ElideRight
             }
 

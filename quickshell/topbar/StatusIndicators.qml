@@ -124,7 +124,7 @@ Row {
                 id: countText
                 anchors.centerIn: parent
                 text: root.notificationCount > 99 ? "99+" : root.notificationCount.toString()
-                color: "#181a22"
+                color: Theme.onAccent
                 font.pixelSize: 9
                 font.bold: true
             }

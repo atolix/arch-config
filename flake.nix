@@ -136,10 +136,13 @@
             let
               themedQuickshell = pkgs.callPackage ./nix/packages/quickshell-config.nix {
                 theme.accent = "#123456";
+                theme.onAccent = "#654321";
               };
             in
             pkgs.runCommand "arch-config-quickshell-theme-check" { } ''
               grep -F 'var accent = "#123456"' \
+                ${themedQuickshell}/quickshell/shared/Theme.js
+              grep -F 'var onAccent = "#654321"' \
                 ${themedQuickshell}/quickshell/shared/Theme.js
               touch "$out"
             '';

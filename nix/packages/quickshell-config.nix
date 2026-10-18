@@ -45,6 +45,11 @@ let
     var button = ${builtins.toJSON resolvedTheme.button}
     var buttonHover = ${builtins.toJSON resolvedTheme.buttonHover}
     var white = ${builtins.toJSON resolvedTheme.white}
+    var onAccent = ${builtins.toJSON resolvedTheme.onAccent}
+    var disabled = ${builtins.toJSON resolvedTheme.disabled}
+    var secondaryText = ${builtins.toJSON resolvedTheme.secondaryText}
+    var calendarWeekday = ${builtins.toJSON resolvedTheme.calendarWeekday}
+    var closeIcon = ${builtins.toJSON resolvedTheme.closeIcon}
   '';
   runtimePath = lib.makeBinPath [
     awww

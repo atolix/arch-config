@@ -7,7 +7,7 @@ Slider {
 
     property real trackHeight: 4
     property real handleSize: 14
-    property color disabledFillColor: "#666666"
+    property color disabledFillColor: Theme.disabled
 
     background: Rectangle {
         x: control.leftPadding
