@@ -1,4 +1,4 @@
-# Arch and NixOS configuration
+# Linux desktop configuration
 
 Hyprland desktop configuration, managed as a Git repository. The Quickshell bar lives in `quickshell/`.
 The existing Arch installer and an additive Nix flake share the same configuration sources.
@@ -78,20 +78,20 @@ Import both modules from a host flake and enable them as follows:
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    arch-config = {
-      url = "path:/home/atolix/development/arch-config";
+    linux-config = {
+      url = "github:atolix/linux-config";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
   outputs =
-    { nixpkgs, home-manager, arch-config, ... }:
+    { nixpkgs, home-manager, linux-config, ... }:
     {
       nixosConfigurations.my-host = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           ./hardware-configuration.nix
-          arch-config.nixosModules.default
+          linux-config.nixosModules.default
           home-manager.nixosModules.home-manager
           {
             archConfig.desktop.enable = true;
@@ -104,7 +104,7 @@ Import both modules from a host flake and enable them as follows:
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.atolix = {
-              imports = [ arch-config.homeManagerModules.default ];
+              imports = [ linux-config.homeManagerModules.default ];
               archConfig.home.enable = true;
               home.stateVersion = "26.05";
             };
@@ -240,7 +240,7 @@ The Nix modules do not replace the Arch workflow. On Arch Linux, continue to use
 ## Run
 
 ```sh
-cd ~/development/arch-config/quickshell
+cd ~/development/linux-config/quickshell
 ./run.sh
 ```
 
@@ -299,7 +299,7 @@ nix run .#check
 ## Files
 
 ```text
-arch-config/
+linux-config/
 ├── flake.nix                         # Export NixOS/Home Manager modules and checks
 ├── apply-home-manager.sh             # Preview or activate the Home Manager profile
 ├── bootstrap-nix.sh                  # Install and initialize Nix on Arch Linux
