@@ -143,6 +143,16 @@ in
       ];
     };
     fonts.fontconfig.enable = true;
+    xdg.mimeApps = {
+      enable = true;
+      defaultApplications = {
+        "video/mp4" = [ "mpv.desktop" ];
+        "video/webm" = [ "mpv.desktop" ];
+        "video/x-matroska" = [ "mpv.desktop" ];
+        "video/quicktime" = [ "mpv.desktop" ];
+        "video/mpeg" = [ "mpv.desktop" ];
+      };
+    };
 
     home.packages = with pkgs; [
       awww
@@ -192,7 +202,6 @@ in
       "fastfetch/config.jsonc".text = render ../../home/atolix/.config/fastfetch/config.jsonc;
       "gtk-3.0/settings.ini".text = render ../../home/atolix/.config/gtk-3.0/settings.ini;
       "gtk-3.0/gtk.css".text = render ../../home/atolix/.config/gtk-3.0/gtk.css;
-      "mimeapps.list".text = render ../../home/atolix/.config/mimeapps.list;
 
       "fcitx5/config".text = render ../../home/atolix/.config/fcitx5/config;
       "fcitx5/profile".text = render ../../home/atolix/.config/fcitx5/profile;
