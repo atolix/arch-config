@@ -103,6 +103,17 @@ in
         selection-foreground = "cbd5e1";
       };
     };
+    programs.mpv = {
+      enable = true;
+      config = {
+        vo = "gpu-next";
+        hwdec = "auto-safe";
+        save-position-on-quit = true;
+        keep-open = true;
+        osd-font = "JetBrainsMono Nerd Font Mono";
+        osd-font-size = 24;
+      };
+    };
     programs.zsh = {
       enable = true;
       enableCompletion = true;
@@ -147,7 +158,6 @@ in
       lm_sensors
       lua-language-server
       gopls
-      mpv
       neovim
       networkmanagerapplet
       nerd-fonts.jetbrains-mono
@@ -183,7 +193,6 @@ in
       "gtk-3.0/settings.ini".text = render ../../home/atolix/.config/gtk-3.0/settings.ini;
       "gtk-3.0/gtk.css".text = render ../../home/atolix/.config/gtk-3.0/gtk.css;
       "mimeapps.list".text = render ../../home/atolix/.config/mimeapps.list;
-      "mpv/mpv.conf".text = render ../../home/atolix/.config/mpv/mpv.conf;
 
       "fcitx5/config".text = render ../../home/atolix/.config/fcitx5/config;
       "fcitx5/profile".text = render ../../home/atolix/.config/fcitx5/profile;
