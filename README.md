@@ -148,6 +148,19 @@ After reviewing the dry-run output, activate the profile explicitly:
 
 Existing managed files are backed up beside the originals with a timestamped `arch-config-before-home-manager-*` extension. The default mode is always `--dry-run`.
 
+Start a new login shell or sign in again after the first activation so that
+`~/.nix-profile/bin` is added to `PATH`. Home Manager keeps each activated
+generation, which can be inspected and rolled back:
+
+```sh
+home-manager generations
+home-manager -n switch --rollback # preview
+home-manager switch --rollback    # activate the previous generation
+```
+
+The timestamped files remain available as a separate fallback for the original
+pre-Home-Manager configuration.
+
 The Nix modules do not replace the Arch workflow. On Arch Linux, continue to use `packages.txt` and `install.sh`; on NixOS, the modules render the placeholders to immutable Nix store paths.
 
 ## Run
