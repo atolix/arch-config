@@ -183,6 +183,12 @@ The available keys are `background`, `surface`, `text`, `accent`, `muted`,
 Running Quickshell directly from the repository continues to use the tracked
 `quickshell/shared/Theme.js` defaults.
 
+The standalone Arch profile runs `/usr/bin/quickshell` so it can use the host
+graphics stack. NixOS uses the Quickshell executable from nixpkgs. Other module
+consumers can select an absolute executable path with
+`archConfig.home.quickshell.executable` while keeping the packaged QML and user
+service under Nix management.
+
 Preview activation without replacing the current files:
 
 ```sh
