@@ -53,6 +53,13 @@ in
 
   config = lib.mkIf cfg.enable {
     programs.home-manager.enable = true;
+    programs.git = {
+      enable = true;
+      settings.user = {
+        name = "atolix";
+        email = "82761106+atolix@users.noreply.github.com";
+      };
+    };
     fonts.fontconfig.enable = true;
 
     home.packages = with pkgs; [
