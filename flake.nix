@@ -131,6 +131,18 @@
 
                 touch "$out"
               '';
+
+          quickshell-theme =
+            let
+              themedQuickshell = pkgs.callPackage ./nix/packages/quickshell-config.nix {
+                theme.accent = "#123456";
+              };
+            in
+            pkgs.runCommand "arch-config-quickshell-theme-check" { } ''
+              grep -F 'var accent = "#123456"' \
+                ${themedQuickshell}/quickshell/shared/Theme.js
+              touch "$out"
+            '';
         }
         // nixpkgs.lib.optionalAttrs (system == "x86_64-linux") {
           home-manager = self.homeConfigurations.atolix.activationPackage;

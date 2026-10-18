@@ -7,7 +7,10 @@
 
 let
   cfg = config.archConfig.home;
-  quickshellConfig = pkgs.callPackage ../packages/quickshell-config.nix { };
+  themeDefaults = import ../quickshell-theme.nix;
+  quickshellConfig = pkgs.callPackage ../packages/quickshell-config.nix {
+    theme = cfg.quickshell.theme;
+  };
   quickshellRoot = "${quickshellConfig}/quickshell";
 
   renderText =
@@ -49,7 +52,17 @@ let
     );
 in
 {
-  options.archConfig.home.enable = lib.mkEnableOption "the arch-config Home Manager profile";
+  options.archConfig.home = {
+    enable = lib.mkEnableOption "the arch-config Home Manager profile";
+    quickshell.theme = lib.mapAttrs (
+      name: default:
+      lib.mkOption {
+        inherit default;
+        type = lib.types.strMatching "#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?";
+        description = "Quickshell ${name} theme color";
+      }
+    ) themeDefaults;
+  };
 
   config = lib.mkIf cfg.enable {
     programs.home-manager.enable = true;
