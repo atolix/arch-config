@@ -155,6 +155,11 @@ nix build path:.#homeConfigurations.atolix.activationPackage --no-link
 
 This build validates every managed dotfile and desktop package. The activation step remains separate so the existing Arch configuration is not replaced during validation.
 
+The standalone profile currently manages the Hyprland desktop files and user
+services, Git identity, Zsh aliases and completion, Mise, Fzf, Powerlevel10k,
+Ghostty colors, Neovim and its Lua configuration, desktop fonts, and the CLI
+tools referenced by those configurations.
+
 Preview activation without replacing the current files:
 
 ```sh
@@ -168,6 +173,11 @@ After reviewing the dry-run output, activate the profile explicitly:
 ```
 
 Existing managed files are backed up beside the originals with a timestamped `arch-config-before-home-manager-*` extension. The default mode is always `--dry-run`.
+
+Home Manager deliberately refuses to replace symbolic links owned by another
+dotfiles setup. If the dry-run reports that such a link would be clobbered,
+move that link to a backup name and run the dry-run again. The link target is
+left untouched, so it remains available as a pre-Nix fallback.
 
 Start a new login shell or sign in again after the first activation so that
 `~/.nix-profile/bin` is added to `PATH`. Home Manager keeps each activated
