@@ -1,7 +1,8 @@
-# Linux desktop configuration
+# NixOS desktop configuration
 
-Hyprland desktop configuration, managed as a Git repository. The Quickshell bar lives in `quickshell/`.
-The existing Arch installer and an additive Nix flake share the same configuration sources.
+Hyprland desktop configuration for NixOS, managed as a Git repository. The
+Quickshell bar lives in `quickshell/` and the system is applied through the
+flake's NixOS configuration.
 
 ## Quickshell bar
 
@@ -36,39 +37,24 @@ The bar appears on every monitor. The battery icon and percentage are hidden whe
 - Screen recording: press `Super+Shift+5` to select an area and start or stop recording under `~/Videos/Recordings/`.
 - Window switcher: press `Ctrl+S` for a wide Wofi list with application icons and window titles.
 - btop: custom colors match Quickshell, while the terminal supplies the transparent background.
-- fastfetch: the Arch logo, labels, and values use the Quickshell palette while preserving terminal transparency.
+- fastfetch: the NixOS logo, labels, and values use the Quickshell palette while preserving terminal transparency.
 - Thunar: dark GTK colors, compact controls, and matching selection accents.
 - Video playback: mpv is the default player for common video formats.
 - Idle power saving: locks after 5 minutes, suspends 5 seconds later, and turns the display off after 10 minutes as a fallback.
 
-## Requirements
+## NixOS
 
-Arch Linux packages:
+The flake exports a NixOS module and a Home Manager module. The NixOS module
+enables Hyprland with UWSM, SDDM and the tracked theme, NetworkManager,
+PipeWire, UPower, and Fcitx5 with Mozc. Home Manager installs the desktop
+applications and renders the tracked configuration files.
 
-```sh
-sudo pacman -S --needed - < packages.txt
-```
+The included host is a complete NixOS configuration for the current machine.
 
-The bar expects a Wayland session with PipeWire, its PulseAudio compatibility service, and NetworkManager running.
+- `nixosModules.default` provides the system services.
+- `homeManagerModules.default` provides the user environment.
 
-## Install Nix on Arch Linux
-
-The bootstrap script installs the Arch `nix` package when necessary, initializes `/nix/store`, enables the Nix daemon, enables flakes for the current user, and checks this repository:
-
-```sh
-./bootstrap-nix.sh
-```
-
-It is safe to run the script again. Existing Nix configuration is preserved, and the required flake features are appended only when missing.
-
-## NixOS and Home Manager
-
-The flake exports two opt-in modules:
-
-- `nixosModules.default` enables Hyprland with UWSM, SDDM and the tracked theme, NetworkManager, PipeWire, UPower, and Fcitx5 with Mozc.
-- `homeManagerModules.default` installs the desktop applications and renders the same user configuration files used by `install.sh`.
-
-Import both modules from a host flake and enable them as follows:
+Apply the included host as follows:
 
 ```nix
 {
@@ -94,7 +80,7 @@ Import both modules from a host flake and enable them as follows:
           linux-config.nixosModules.default
           home-manager.nixosModules.home-manager
           {
-            archConfig.desktop.enable = true;
+            linuxConfig.desktop.enable = true;
 
             users.users.atolix = {
               isNormalUser = true;
@@ -105,7 +91,7 @@ Import both modules from a host flake and enable them as follows:
             home-manager.useUserPackages = true;
             home-manager.users.atolix = {
               imports = [ linux-config.homeManagerModules.default ];
-              archConfig.home.enable = true;
+              linuxConfig.home.enable = true;
               home.stateVersion = "26.05";
             };
 
@@ -117,11 +103,11 @@ Import both modules from a host flake and enable them as follows:
 }
 ```
 
-Replace the host name, hardware configuration, user, and state versions for the target machine. Then evaluate and apply it from the host flake:
+The included host can be evaluated and applied directly:
 
 ```sh
 nix flake check
-sudo nixos-rebuild switch --flake .#my-host
+sudo nixos-rebuild switch --flake .#nixos
 ```
 
 The repository itself can be checked with `nix flake check`. This validates the
@@ -139,32 +125,34 @@ nix develop
 
 ### Current machine host
 
-`nixosConfigurations.archlinux` is the migration target generated for the
+`nixosConfigurations.nixos` is the host configuration for the
 current MacBookAir7,1. It includes the detected NVMe filesystems, systemd-boot,
 Intel microcode, the Broadcom BCM4360 `wl` driver, and a zstd zram swap device.
-Build the complete system without applying it to the running Arch installation:
+Build the complete system without applying it:
 
 ```sh
-nix build path:.#nixosConfigurations.archlinux.config.system.build.toplevel --no-link
+nix build path:.#nixosConfigurations.nixos.config.system.build.toplevel --no-link
 ```
 
-Do not run `nixos-rebuild switch` against the current Arch installation. Before
-installing from NixOS installation media:
+Before installing from NixOS installation media:
 
 - confirm that the root and boot UUIDs in
-  `nix/hosts/archlinux/hardware-configuration.nix` still match the target disk;
+  `nix/hosts/nixos/hardware-configuration.nix` still match the target disk;
 - review the version-pinned `broadcom-sta` insecure-package exception—the
   unmaintained driver has known CVE-2019-9501 and CVE-2019-9502 issues;
 - set a password for `atolix` during installation because no password or secret
   is committed to this repository.
 
-The flake also exports a standalone `homeConfigurations.atolix` profile. On Arch, build the complete Home Manager generation without changing the active user configuration:
+The flake also exports a standalone `homeConfigurations.atolix` profile for
+validating the user configuration without changing the active system:
 
 ```sh
 nix build path:.#homeConfigurations.atolix.activationPackage --no-link
 ```
 
-This build validates every managed dotfile and desktop package. The activation step remains separate so the existing Arch configuration is not replaced during validation.
+This build validates every managed dotfile and desktop package. On NixOS,
+Home Manager is activated by `nixos-rebuild`; the standalone profile is useful
+for checks and development.
 
 The standalone profile currently manages the Hyprland desktop files and user
 services, Git identity, Zsh aliases and completion, Mise, Fzf, Powerlevel10k,
@@ -177,7 +165,7 @@ continue to work. Nix generates `shared/Theme.js` inside the packaged copy from
 Home Manager options. For example:
 
 ```nix
-archConfig.home.quickshell.theme = {
+linuxConfig.home.quickshell.theme = {
   background = "#cc141414";
   accent = "#a5b4fc";
   danger = "#f38ba8";
@@ -190,17 +178,14 @@ The available keys are `background`, `surface`, `text`, `accent`, `muted`,
 Running Quickshell directly from the repository continues to use the tracked
 `quickshell/shared/Theme.js` defaults.
 
-The standalone Arch profile runs `/usr/bin/quickshell` so it can use the host
-graphics stack. NixOS uses the Quickshell executable from nixpkgs. Other module
-consumers can select an absolute executable path with
-`archConfig.home.quickshell.executable` while keeping the packaged QML and user
-service under Nix management.
+The profile uses the Quickshell executable from nixpkgs, so the packaged QML
+and user service are managed entirely by Nix.
 
 The packaged SDDM theme also derives its colors from Nix while keeping the QML
 layout intact. NixOS consumers can override individual values, for example:
 
 ```nix
-archConfig.desktop.sddm.theme.accent = "#a5b4fc";
+linuxConfig.desktop.sddm.theme.accent = "#a5b4fc";
 ```
 
 Preview activation without replacing the current files:
@@ -215,7 +200,9 @@ After reviewing the dry-run output, activate the profile explicitly:
 ./apply-home-manager.sh --switch
 ```
 
-Existing managed files are backed up beside the originals with a timestamped `arch-config-before-home-manager-*` extension. The default mode is always `--dry-run`.
+Existing managed files are backed up beside the originals with a timestamped
+`linux-config-before-home-manager-*` extension. The default mode is always
+`--dry-run`.
 
 Home Manager deliberately refuses to replace symbolic links owned by another
 dotfiles setup. If the dry-run reports that such a link would be clobbered,
@@ -235,7 +222,10 @@ home-manager switch --rollback    # activate the previous generation
 The timestamped files remain available as a separate fallback for the original
 pre-Home-Manager configuration.
 
-The Nix modules do not replace the Arch workflow. On Arch Linux, continue to use `packages.txt` and `install.sh`; on NixOS, the modules render the placeholders to immutable Nix store paths.
+All system packages, services, themes, and user configuration are managed by
+NixOS and Home Manager. `packages.txt`, `install.sh`, and `bootstrap-nix.sh`
+are retained only as legacy Arch migration references and are not part of the
+NixOS workflow.
 
 ## Run
 
@@ -276,21 +266,20 @@ exec-once = <repo>/quickshell/run.sh --no-duplicate --daemonize
 
 `install.sh` renders the repository path into the active Hyprland configuration.
 
-## Install and apply
+## Apply on NixOS
 
 ```sh
-sudo pacman -S --needed - < packages.txt
-./install.sh
-./check.sh
+nix flake check
+sudo nixos-rebuild switch --flake .#nixos
 ```
 
-The installer renders user configuration files into `~/.config` and applies the tracked SDDM theme and system configuration with sudo. Existing files are backed up under `~/.local/state/arch-config/backups/` before they are replaced.
-Restart Thunar after applying the settings to load the new GTK theme.
+Home Manager renders the user configuration and NixOS installs the SDDM theme
+and system packages declaratively. Restart the graphical session after the
+first activation so that all user services are started.
 
-`./check.sh` checks the currently installed Arch packages, deployed
-configuration files, and running Hyprland/Quickshell session. Use
-`nix flake check` separately for source and Nix build validation. The same live
-checks can be launched through the flake with:
+`./check.sh` checks deployed configuration files and the running
+Hyprland/Quickshell session. Use `nix flake check` for source and Nix build
+validation. The same live checks can be launched through the flake with:
 
 ```sh
 nix run .#check
@@ -302,23 +291,23 @@ nix run .#check
 linux-config/
 ├── flake.nix                         # Export NixOS/Home Manager modules and checks
 ├── apply-home-manager.sh             # Preview or activate the Home Manager profile
-├── bootstrap-nix.sh                  # Install and initialize Nix on Arch Linux
-├── check.sh                         # Check the installed and running Arch environment
+├── bootstrap-nix.sh                  # Legacy Arch migration helper
+├── check.sh                          # Check the installed NixOS desktop session
 ├── checks/
 │   ├── commands.sh                  # Check commands and installed packages
 │   ├── config.sh                    # Check rendered user configuration
 │   └── session.sh                   # Check the running Hyprland and Quickshell session
-├── install.sh                       # Render user configs and apply the SDDM theme
+├── install.sh                        # Legacy Arch installer
 ├── nix/
 │   ├── modules/
 │   │   ├── nixos.nix                # System services and SDDM integration
 │   │   └── home-manager.nix          # User packages and rendered dotfiles
-│   ├── hosts/archlinux/
-│   │   ├── configuration.nix          # MacBookAir7,1 system and user settings
+│   ├── hosts/nixos/
+│   │   ├── configuration.nix          # NixOS system and user settings
 │   │   └── hardware-configuration.nix # Detected filesystems and boot hardware
 │   └── packages/
 │       └── sddm-theme.nix            # Package the tracked theme for the Nix store
-├── packages.txt                     # Required Arch packages
+├── packages.txt                     # Legacy Arch package list
 ├── home/atolix/.config/
 │   ├── btop/
 │   │   ├── btop.conf                  # Custom theme selection and transparent background
