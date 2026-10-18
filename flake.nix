@@ -146,6 +146,7 @@
                 nativeBuildInputs = [
                   pkgs.bash
                   pkgs.python3
+                  pkgs.shellcheck
                 ];
                 src = self;
               }
@@ -155,6 +156,14 @@
                 cd source
 
                 bash -n \
+                  install.sh \
+                  bootstrap-nix.sh \
+                  apply-home-manager.sh \
+                  check.sh \
+                  checks/*.sh \
+                  quickshell/run.sh \
+                  quickshell/scripts/*.sh
+                shellcheck -x -P quickshell/scripts \
                   install.sh \
                   bootstrap-nix.sh \
                   apply-home-manager.sh \
