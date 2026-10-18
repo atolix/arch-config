@@ -30,9 +30,11 @@ let
         [
           "exec-once = @ARCH_CONFIG_DIR@/quickshell/run.sh --no-duplicate --daemonize"
           "exec-once = hypridle"
+          "exec-once = awww-daemon & awww img @ARCH_CONFIG_DIR@/sddm/mysddm/pictures/wallpapers/v1.jpg"
         ]
         [
           "exec-once = ${pkgs.dbus}/bin/dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP HYPRLAND_INSTANCE_SIGNATURE && ${pkgs.systemd}/bin/systemctl --user start arch-config-session.target"
+          ""
           ""
         ]
         (builtins.readFile source)
@@ -115,6 +117,20 @@ in
       };
       Service = {
         ExecStart = "${pkgs.hypridle}/bin/hypridle";
+        Restart = "on-failure";
+        RestartSec = 2;
+      };
+      Install.WantedBy = [ "arch-config-session.target" ];
+    };
+
+    systemd.user.services.arch-config-wallpaper = {
+      Unit = {
+        Description = "arch-config wallpaper daemon";
+        PartOf = [ "arch-config-session.target" ];
+      };
+      Service = {
+        ExecStart = "${pkgs.awww}/bin/awww-daemon";
+        ExecStartPost = "${pkgs.awww}/bin/awww img ${quickshellConfig}/sddm/mysddm/pictures/wallpapers/v1.jpg";
         Restart = "on-failure";
         RestartSec = 2;
       };
