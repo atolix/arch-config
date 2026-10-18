@@ -23,9 +23,42 @@
   wireplumber,
   wl-clipboard,
   wofi,
+  writeText,
+  theme ? { },
 }:
 
 let
+  themeDefaults = {
+    background = "#cc141414";
+    surface = "#f222242b";
+    text = "#eaeaea";
+    accent = "#a5b4fc";
+    muted = "#646978";
+    border = "#414552";
+    danger = "#f38ba8";
+    warning = "#f9e2af";
+    success = "#a6e3a1";
+    button = "#363b49";
+    buttonHover = "#50566a";
+    white = "#ffffff";
+  };
+  resolvedTheme = themeDefaults // theme;
+  themeJs = writeText "arch-config-quickshell-theme.js" ''
+    .pragma library
+
+    var background = ${builtins.toJSON resolvedTheme.background}
+    var surface = ${builtins.toJSON resolvedTheme.surface}
+    var text = ${builtins.toJSON resolvedTheme.text}
+    var accent = ${builtins.toJSON resolvedTheme.accent}
+    var muted = ${builtins.toJSON resolvedTheme.muted}
+    var border = ${builtins.toJSON resolvedTheme.border}
+    var danger = ${builtins.toJSON resolvedTheme.danger}
+    var warning = ${builtins.toJSON resolvedTheme.warning}
+    var success = ${builtins.toJSON resolvedTheme.success}
+    var button = ${builtins.toJSON resolvedTheme.button}
+    var buttonHover = ${builtins.toJSON resolvedTheme.buttonHover}
+    var white = ${builtins.toJSON resolvedTheme.white}
+  '';
   runtimePath = lib.makeBinPath [
     awww
     bash
@@ -62,9 +95,10 @@ stdenvNoCC.mkDerivation {
 
     mkdir -p "$out/sddm/mysddm/pictures/wallpapers"
     cp -r ${../../quickshell} "$out/quickshell"
+    chmod -R u+w "$out/quickshell"
+    cp ${themeJs} "$out/quickshell/shared/Theme.js"
     cp ${../../sddm/mysddm/pictures/wallpapers/v1.jpg} \
       "$out/sddm/mysddm/pictures/wallpapers/v1.jpg"
-    chmod -R u+w "$out/quickshell"
 
     for program in \
       "$out/quickshell/run.sh" \
