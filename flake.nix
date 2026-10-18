@@ -64,8 +64,33 @@
         let
           pkgs = nixpkgs.legacyPackages.${system};
           homeProfile = self.homeConfigurations.atolix.config.home.path;
+          nixosTest = nixpkgs.lib.nixosSystem {
+            inherit system;
+            modules = [
+              self.nixosModules.default
+              {
+                archConfig.desktop.enable = true;
+                boot.loader.grub.enable = false;
+                fileSystems."/".device = "/dev/null";
+                system.stateVersion = "26.05";
+              }
+            ];
+          };
         in
         {
+          nixos-module =
+            assert nixosTest.config.programs.hyprland.enable;
+            assert nixosTest.config.programs.hyprland.withUWSM;
+            assert nixosTest.config.services.displayManager.sddm.enable;
+            assert nixosTest.config.services.displayManager.sddm.wayland.enable;
+            assert nixosTest.config.networking.networkmanager.enable;
+            assert nixosTest.config.services.pipewire.enable;
+            assert nixosTest.config.services.upower.enable;
+            assert nixosTest.config.i18n.inputMethod.type == "fcitx5";
+            pkgs.runCommand "arch-config-nixos-module-check" { } ''
+              touch "$out"
+            '';
+
           source =
             pkgs.runCommand "arch-config-source-check"
               {
