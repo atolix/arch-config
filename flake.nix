@@ -83,6 +83,7 @@
                 bash -n \
                   install.sh \
                   bootstrap-nix.sh \
+                  apply-home-manager.sh \
                   check.sh \
                   checks/*.sh \
                   quickshell/run.sh \
