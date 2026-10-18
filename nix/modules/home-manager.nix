@@ -12,6 +12,58 @@ let
     theme = cfg.quickshell.theme;
   };
   quickshellRoot = "${quickshellConfig}/quickshell";
+  opaqueColor =
+    color: if builtins.stringLength color == 9 then "#${builtins.substring 3 6 color}" else color;
+  btopTheme = ''
+    # btop theme matching quickshell/shared/Theme.js
+
+    theme[main_bg]="${opaqueColor cfg.quickshell.theme.background}"
+    theme[main_fg]="${cfg.quickshell.theme.text}"
+    theme[title]="${cfg.quickshell.theme.accent}"
+    theme[hi_fg]="${cfg.quickshell.theme.warning}"
+    theme[selected_bg]="${cfg.quickshell.theme.buttonHover}"
+    theme[selected_fg]="${cfg.quickshell.theme.white}"
+    theme[inactive_fg]="${cfg.quickshell.theme.muted}"
+    theme[proc_misc]="${cfg.quickshell.theme.accent}"
+
+    theme[cpu_box]="${cfg.quickshell.theme.border}"
+    theme[mem_box]="${cfg.quickshell.theme.border}"
+    theme[net_box]="${cfg.quickshell.theme.border}"
+    theme[proc_box]="${cfg.quickshell.theme.border}"
+    theme[div_line]="${cfg.quickshell.theme.border}"
+
+    theme[temp_start]="${cfg.quickshell.theme.success}"
+    theme[temp_mid]="${cfg.quickshell.theme.warning}"
+    theme[temp_end]="${cfg.quickshell.theme.danger}"
+
+    theme[cpu_start]="${cfg.quickshell.theme.success}"
+    theme[cpu_mid]="${cfg.quickshell.theme.accent}"
+    theme[cpu_end]="${cfg.quickshell.theme.danger}"
+
+    theme[free_start]="${cfg.quickshell.theme.success}"
+    theme[free_mid]="${cfg.quickshell.theme.accent}"
+    theme[free_end]="${cfg.quickshell.theme.danger}"
+
+    theme[cached_start]="${cfg.quickshell.theme.muted}"
+    theme[cached_mid]="${cfg.quickshell.theme.accent}"
+    theme[cached_end]="${cfg.quickshell.theme.warning}"
+
+    theme[available_start]="${cfg.quickshell.theme.success}"
+    theme[available_mid]="${cfg.quickshell.theme.accent}"
+    theme[available_end]="${cfg.quickshell.theme.warning}"
+
+    theme[used_start]="${cfg.quickshell.theme.accent}"
+    theme[used_mid]="${cfg.quickshell.theme.warning}"
+    theme[used_end]="${cfg.quickshell.theme.danger}"
+
+    theme[download_start]="${cfg.quickshell.theme.muted}"
+    theme[download_mid]="${cfg.quickshell.theme.accent}"
+    theme[download_end]="${cfg.quickshell.theme.white}"
+
+    theme[upload_start]="${cfg.quickshell.theme.muted}"
+    theme[upload_mid]="${cfg.quickshell.theme.success}"
+    theme[upload_end]="${cfg.quickshell.theme.white}"
+  '';
 
   renderText =
     text:
@@ -242,8 +294,7 @@ in
 
       "wofi/style.css".text = render ../../home/atolix/.config/wofi/style.css;
       "btop/btop.conf".text = render ../../home/atolix/.config/btop/btop.conf;
-      "btop/themes/arch-config.theme".text =
-        render ../../home/atolix/.config/btop/themes/arch-config.theme;
+      "btop/themes/arch-config.theme".text = btopTheme;
       "gtk-3.0/settings.ini".text = render ../../home/atolix/.config/gtk-3.0/settings.ini;
       "gtk-3.0/gtk.css".text = render ../../home/atolix/.config/gtk-3.0/gtk.css;
 
