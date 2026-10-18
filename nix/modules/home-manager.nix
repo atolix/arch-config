@@ -142,6 +142,7 @@ in
       "btop/themes/arch-config.theme".text =
         render ../../home/atolix/.config/btop/themes/arch-config.theme;
       "fastfetch/config.jsonc".text = render ../../home/atolix/.config/fastfetch/config.jsonc;
+      "ghostty/config".source = ../../home/atolix/.config/ghostty/config;
       "gtk-3.0/settings.ini".text = render ../../home/atolix/.config/gtk-3.0/settings.ini;
       "gtk-3.0/gtk.css".text = render ../../home/atolix/.config/gtk-3.0/gtk.css;
       "mimeapps.list".text = render ../../home/atolix/.config/mimeapps.list;
