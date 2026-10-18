@@ -48,17 +48,15 @@ Item {
         ? (player.isPlaying ? "Now playing " : "Paused ") + label
         : ""
 
-    BarText {
+    BarIcon {
         id: playbackIcon
         anchors.left: parent.left
         anchors.verticalCenter: parent.verticalCenter
         width: 22
         height: 22
         text: root.player?.isPlaying ? "󰏤" : "󰐊"
-        font.family: "JetBrainsMono Nerd Font Mono"
         font.pixelSize: 15
         color: Theme.accent
-        horizontalAlignment: Text.AlignHCenter
     }
 
     Item {

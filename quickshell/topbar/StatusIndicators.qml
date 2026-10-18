@@ -81,14 +81,11 @@ Row {
         percent: root.percent
     }
 
-    BarText {
+    BarIcon {
         height: 22
         verticalAlignment: Text.AlignVCenter
         width: 22
-        horizontalAlignment: Text.AlignHCenter
         text: root.networkIcon()
-        font.family: "JetBrainsMono Nerd Font Mono"
-        font.pixelSize: 17
         Accessible.name: "Network"
     }
 
@@ -99,14 +96,11 @@ Row {
             ? "Notifications, " + root.notificationCount + " unread"
             : "Notifications"
 
-        BarText {
+        BarIcon {
             anchors.left: parent.left
             width: 22
             height: 22
-            horizontalAlignment: Text.AlignHCenter
             text: "󰂚"
-            font.family: "JetBrainsMono Nerd Font Mono"
-            font.pixelSize: 17
             color: root.notificationCount > 0 || root.notificationPopupOpen ? Theme.accent : Theme.text
         }
 

@@ -72,10 +72,9 @@ AnimatedPopup {
         anchors.centerIn: parent
         spacing: 8
 
-        BarText {
+        BarIcon {
             anchors.horizontalCenter: parent.horizontalCenter
             text: "󰂛"
-            font.family: "JetBrainsMono Nerd Font Mono"
             font.pixelSize: 28
             color: Theme.muted
         }

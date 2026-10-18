@@ -36,16 +36,13 @@ Item {
     anchors.right: parent.right
     height: parent.height
 
-    BarText {
+    BarIcon {
         id: powerIcon
         anchors.left: parent.left
         anchors.leftMargin: 4
         anchors.verticalCenter: parent.verticalCenter
         width: 22
         height: 22
-        font.family: "JetBrainsMono Nerd Font Mono"
-        font.pixelSize: 17
-        horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         text: "󰐥"
         color: root.powerPopupOpen ? Theme.accent : Theme.text

@@ -51,11 +51,10 @@ AnimatedPopup {
             color: Theme.button
             clip: true
 
-            BarText {
+            BarIcon {
                 anchors.centerIn: parent
                 visible: albumArt.status !== Image.Ready
                 text: "󰎆"
-                font.family: "JetBrainsMono Nerd Font Mono"
                 font.pixelSize: 34
                 color: Theme.muted
             }

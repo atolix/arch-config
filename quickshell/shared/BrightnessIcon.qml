@@ -31,13 +31,10 @@ Item {
         }
     }
 
-    Text {
+    BarIcon {
         anchors.centerIn: parent
         text: "󰌵"
         color: icon.brightness === null ? Theme.muted : icon.active ? Theme.accent : Theme.text
-        font.family: "JetBrainsMono Nerd Font Mono"
         font.pixelSize: 13
-        verticalAlignment: Text.AlignVCenter
-        horizontalAlignment: Text.AlignHCenter
     }
 }
