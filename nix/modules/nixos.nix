@@ -6,13 +6,13 @@
 }:
 
 let
-  cfg = config.archConfig.desktop;
+  cfg = config.linuxConfig.desktop;
   themeDefaults = import ../sddm-theme.nix;
   sddmTheme = pkgs.callPackage ../packages/sddm-theme.nix { theme = cfg.sddm.theme; };
 in
 {
-  options.archConfig.desktop = {
-    enable = lib.mkEnableOption "the arch-config NixOS desktop services";
+  options.linuxConfig.desktop = {
+    enable = lib.mkEnableOption "the Linux desktop services";
     sddm.theme = lib.mapAttrs (
       name: default:
       lib.mkOption {

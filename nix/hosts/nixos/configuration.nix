@@ -6,7 +6,7 @@
 }:
 
 {
-  archConfig.desktop.enable = true;
+  linuxConfig.desktop.enable = true;
 
   boot.loader = {
     systemd-boot.enable = true;
@@ -16,8 +16,8 @@
   hardware.enableRedistributableFirmware = true;
   nixpkgs.config = {
     allowUnfreePredicate = pkg: lib.getName pkg == "broadcom-sta";
-    # BCM4360 requires the unmaintained wl driver. Keep this version-pinned so
-    # a nixpkgs update requires an explicit review of its security status.
+    # BCM4360 requires the unmaintained wl driver. Review this exception when
+    # updating nixpkgs because the driver has known security issues.
     permittedInsecurePackages = [ "broadcom-sta-6.30.223.271-63-6.18.56" ];
   };
   boot = {
@@ -35,7 +35,7 @@
     extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
   };
 
-  networking.hostName = "archlinux";
+  networking.hostName = "nixos";
   time.timeZone = "Asia/Tokyo";
   zramSwap = {
     enable = true;
@@ -56,9 +56,9 @@
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    backupFileExtension = "arch-config-before-home-manager";
+    backupFileExtension = "linux-config-before-home-manager";
     users.atolix = {
-      archConfig.home.enable = true;
+      linuxConfig.home.enable = true;
       home.stateVersion = "26.05";
     };
   };

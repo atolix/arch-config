@@ -1,5 +1,5 @@
 {
-  description = "Reproducible Arch config modules for NixOS and Home Manager";
+  description = "Reproducible NixOS desktop configuration";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -24,15 +24,15 @@
     in
     {
       nixosModules = {
-        arch-config = import ./nix/modules/nixos.nix;
-        default = self.nixosModules.arch-config;
+        linux-config = import ./nix/modules/nixos.nix;
+        default = self.nixosModules.linux-config;
       };
 
-      nixosConfigurations.archlinux = nixpkgs.lib.nixosSystem {
+      nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          ./nix/hosts/archlinux/hardware-configuration.nix
-          ./nix/hosts/archlinux/configuration.nix
+          ./nix/hosts/nixos/hardware-configuration.nix
+          ./nix/hosts/nixos/configuration.nix
           self.nixosModules.default
           home-manager.nixosModules.home-manager
           {
@@ -42,8 +42,8 @@
       };
 
       homeManagerModules = {
-        arch-config = import ./nix/modules/home-manager.nix;
-        default = self.homeManagerModules.arch-config;
+        linux-config = import ./nix/modules/home-manager.nix;
+        default = self.homeManagerModules.linux-config;
       };
 
       homeConfigurations.atolix = home-manager.lib.homeManagerConfiguration {
@@ -51,8 +51,7 @@
         modules = [
           self.homeManagerModules.default
           {
-            archConfig.home.enable = true;
-            archConfig.home.quickshell.executable = "/usr/bin/quickshell";
+            linuxConfig.home.enable = true;
             home = {
               username = "atolix";
               homeDirectory = "/home/atolix";
@@ -71,7 +70,7 @@
           quickshell-config = pkgs.callPackage ./nix/packages/quickshell-config.nix { };
           sddm-theme = pkgs.callPackage ./nix/packages/sddm-theme.nix { };
           live-check = pkgs.writeShellApplication {
-            name = "arch-config-check";
+            name = "linux-config-check";
             runtimeInputs = [ pkgs.bash ];
             text = ''
               exec ${pkgs.bash}/bin/bash ${self}/check.sh
@@ -84,8 +83,8 @@
       apps = forAllSystems (system: {
         check = {
           type = "app";
-          program = "${self.packages.${system}.live-check}/bin/arch-config-check";
-          meta.description = "Check the installed arch-config environment and session";
+          program = "${self.packages.${system}.live-check}/bin/linux-config-check";
+          meta.description = "Check the installed linux-config environment and session";
         };
       });
 
@@ -118,7 +117,7 @@
             modules = [
               self.nixosModules.default
               {
-                archConfig.desktop.enable = true;
+                linuxConfig.desktop.enable = true;
                 boot.loader.grub.enable = false;
                 fileSystems."/".device = "/dev/null";
                 system.stateVersion = "26.05";
@@ -136,12 +135,12 @@
             assert nixosTest.config.services.pipewire.enable;
             assert nixosTest.config.services.upower.enable;
             assert nixosTest.config.i18n.inputMethod.type == "fcitx5";
-            pkgs.runCommand "arch-config-nixos-module-check" { } ''
+            pkgs.runCommand "linux-config-nixos-module-check" { } ''
               touch "$out"
             '';
 
           source =
-            pkgs.runCommand "arch-config-source-check"
+            pkgs.runCommand "linux-config-source-check"
               {
                 nativeBuildInputs = [
                   pkgs.bash
@@ -183,7 +182,7 @@
                 theme.onAccent = "#654321";
               };
             in
-            pkgs.runCommand "arch-config-quickshell-theme-check" { } ''
+            pkgs.runCommand "linux-config-quickshell-theme-check" { } ''
               grep -F 'var accent = "#123456"' \
                 ${themedQuickshell}/quickshell/shared/Theme.js
               grep -F 'var onAccent = "#654321"' \
@@ -197,7 +196,7 @@
                 theme.accent = "#123456";
               };
             in
-            pkgs.runCommand "arch-config-sddm-theme-check" { } ''
+            pkgs.runCommand "linux-config-sddm-theme-check" { } ''
               grep -F 'border.color: username.activeFocus ? "#123456"' \
                 ${themedSddm}/share/sddm/themes/mysddm/Main.qml
               touch "$out"
@@ -206,7 +205,7 @@
         // nixpkgs.lib.optionalAttrs (system == "x86_64-linux") {
           home-manager = self.homeConfigurations.atolix.activationPackage;
 
-          home-commands = pkgs.runCommand "arch-config-home-command-check" { } ''
+          home-commands = pkgs.runCommand "linux-config-home-command-check" { } ''
             for command_name in \
               awww awww-daemon brightnessctl btop cliphist eza fastfetch fzf ghostty git \
               glslViewer gopls grim home-manager hypridle hyprlock lua-language-server \

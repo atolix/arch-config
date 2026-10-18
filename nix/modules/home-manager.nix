@@ -6,7 +6,7 @@
 }:
 
 let
-  cfg = config.archConfig.home;
+  cfg = config.linuxConfig.home;
   themeDefaults = import ../quickshell-theme.nix;
   quickshellConfig = pkgs.callPackage ../packages/quickshell-config.nix {
     theme = cfg.quickshell.theme;
@@ -145,8 +145,8 @@ let
     );
 in
 {
-  options.archConfig.home = {
-    enable = lib.mkEnableOption "the arch-config Home Manager profile";
+  options.linuxConfig.home = {
+    enable = lib.mkEnableOption "the Linux desktop Home Manager profile";
     quickshell.executable = lib.mkOption {
       type = lib.types.strMatching "/.+";
       default = "${pkgs.quickshell}/bin/quickshell";
