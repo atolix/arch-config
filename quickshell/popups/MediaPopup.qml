@@ -1,5 +1,4 @@
 import QtQuick
-import QtQuick.Controls
 import Quickshell
 import "../shared/Theme.js" as Theme
 import "../shared"
@@ -131,7 +130,7 @@ AnimatedPopup {
             }
         }
 
-        Slider {
+        StyledSlider {
             id: positionSlider
             x: 16
             y: 142
@@ -143,29 +142,8 @@ AnimatedPopup {
             enabled: (popup.player?.canSeek ?? false) && (popup.player?.positionSupported ?? false)
                 && (popup.player?.lengthSupported ?? false)
             onMoved: popup.player.position = value
-
-            background: Rectangle {
-                x: positionSlider.leftPadding
-                y: positionSlider.topPadding + positionSlider.availableHeight / 2 - height / 2
-                width: positionSlider.availableWidth
-                height: 4
-                radius: 2
-                color: Theme.border
-                Rectangle {
-                    width: positionSlider.visualPosition * parent.width
-                    height: parent.height
-                    radius: 2
-                    color: Theme.accent
-                }
-            }
-            handle: Rectangle {
-                x: positionSlider.leftPadding + positionSlider.visualPosition * (positionSlider.availableWidth - width)
-                y: positionSlider.topPadding + positionSlider.availableHeight / 2 - height / 2
-                width: 12
-                height: 12
-                radius: 6
-                color: positionSlider.pressed ? Theme.white : Theme.accent
-            }
+            handleSize: 12
+            disabledFillColor: Theme.accent
         }
 
         BarText {

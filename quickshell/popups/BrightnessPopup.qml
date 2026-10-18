@@ -1,5 +1,4 @@
 import QtQuick
-import QtQuick.Controls
 import Quickshell
 import "../shared/Theme.js" as Theme
 import "../shared"
@@ -28,7 +27,7 @@ AnimatedPopup {
             text: popup.brightness === null ? "Unavailable" : Math.round(slider.value) + "%"
         }
 
-        Slider {
+        StyledSlider {
             id: slider
             x: 16
             y: 40
@@ -46,28 +45,6 @@ AnimatedPopup {
                 "set",
                 Math.round(value).toString()
             ])
-            background: Rectangle {
-                x: slider.leftPadding
-                y: slider.topPadding + slider.availableHeight / 2 - height / 2
-                width: slider.availableWidth
-                height: 4
-                radius: 2
-                color: Theme.border
-                Rectangle {
-                    width: slider.visualPosition * parent.width
-                    height: parent.height
-                    radius: 2
-                    color: slider.enabled ? Theme.accent : "#666666"
-                }
-            }
-            handle: Rectangle {
-                x: slider.leftPadding + slider.visualPosition * (slider.availableWidth - width)
-                y: slider.topPadding + slider.availableHeight / 2 - height / 2
-                width: 14
-                height: 14
-                radius: 7
-                color: slider.pressed ? Theme.white : Theme.accent
-            }
         }
 
         PopupButton {
