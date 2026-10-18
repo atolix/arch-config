@@ -74,6 +74,25 @@
         }
       );
 
+      devShells = forAllSystems (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        {
+          default = pkgs.mkShell {
+            packages = [
+              pkgs.bash
+              pkgs.kdePackages.qtdeclarative
+              pkgs.nixfmt-tree
+              pkgs.python3
+              pkgs.shellcheck
+              pkgs.shfmt
+            ];
+          };
+        }
+      );
+
       checks = forAllSystems (
         system:
         let
