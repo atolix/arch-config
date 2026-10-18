@@ -351,6 +351,7 @@ in
       lua-language-server
       gopls
       neovim
+      networkmanager
       networkmanagerapplet
       nerd-fonts.jetbrains-mono
       noto-fonts

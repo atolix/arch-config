@@ -206,7 +206,7 @@
             for command_name in \
               awww awww-daemon brightnessctl btop cliphist codex eza fastfetch fzf ghostty git \
               glslViewer gopls grim home-manager hypridle hyprlock lua-language-server \
-              mise mpv nvim nm-applet pactl python3 rg rust-analyzer sensors \
+              mise mpv nvim nm-applet nmcli pactl python3 rg rust-analyzer sensors \
               slurp solargraph tsc typescript-language-server thunar upower \
               wf-recorder wpctl wl-copy wl-paste wofi zls; do
               test -x "${homeProfile}/bin/$command_name"
