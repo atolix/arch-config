@@ -72,6 +72,13 @@ in
     programs.zsh = {
       enable = true;
       enableCompletion = true;
+      plugins = [
+        {
+          name = "powerlevel10k";
+          src = pkgs.zsh-powerlevel10k;
+          file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+        }
+      ];
       shellAliases = {
         nv = "nvim";
         ":q" = "exit";
@@ -88,8 +95,7 @@ in
         ''
           fpath=(~/.zsh $fpath)
 
-          source ~/powerlevel10k/powerlevel10k.zsh-theme
-          [[ ! -f ~/dotfiles/p10k.zsh ]] || source ~/dotfiles/p10k.zsh
+          [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
         ''
       ];
     };
@@ -148,6 +154,8 @@ in
       "fcitx5/conf/notifications.conf".text =
         render ../../home/atolix/.config/fcitx5/conf/notifications.conf;
     };
+
+    home.file.".p10k.zsh".source = ../../home/atolix/.p10k.zsh;
 
     systemd.user.services.arch-config-quickshell = {
       Unit = {
