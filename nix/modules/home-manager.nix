@@ -120,6 +120,8 @@ in
       hypridle
       hyprlock
       lm_sensors
+      lua-language-server
+      gopls
       mpv
       networkmanagerapplet
       nerd-fonts.jetbrains-mono
@@ -129,12 +131,17 @@ in
       python3
       quickshell
       slurp
+      solargraph
       thunar
+      typescript
+      typescript-language-server
       upower
       wf-recorder
       wireplumber
       wl-clipboard
       wofi
+      rust-analyzer
+      zls
     ];
 
     xdg.configFile = {

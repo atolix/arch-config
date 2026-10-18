@@ -138,9 +138,10 @@
           home-commands = pkgs.runCommand "arch-config-home-command-check" { } ''
             for command_name in \
               awww awww-daemon brightnessctl btop cliphist eza fastfetch fzf ghostty git \
-              glslViewer grim home-manager hypridle hyprlock mise mpv nvim nm-applet \
-              pactl python3 quickshell rg sensors slurp thunar upower wf-recorder wpctl \
-              wl-copy wl-paste wofi; do
+              glslViewer gopls grim home-manager hypridle hyprlock lua-language-server \
+              mise mpv nvim nm-applet pactl python3 quickshell rg rust-analyzer sensors \
+              slurp solargraph tsc typescript-language-server thunar upower \
+              wf-recorder wpctl wl-copy wl-paste wofi zls; do
               test -x "${homeProfile}/bin/$command_name"
             done
             touch "$out"
