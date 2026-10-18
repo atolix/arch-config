@@ -1,5 +1,4 @@
 import QtQuick
-import QtQuick.Controls
 import Quickshell
 import "../shared/Theme.js" as Theme
 import "../shared"
@@ -23,17 +22,9 @@ AnimatedPopup {
 
     onOpenedChanged: if (opened) showToday()
 
-    component CalendarButton: Button {
+    component CalendarButton: PopupButton {
         implicitWidth: 32
         implicitHeight: 28
-        contentItem: BarText {
-            text: parent.text
-            horizontalAlignment: Text.AlignHCenter
-        }
-        background: Rectangle {
-            radius: 5
-            color: parent.down ? Theme.buttonHover : parent.hovered ? Theme.border : Theme.button
-        }
     }
 
     PopupFrame {

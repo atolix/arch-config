@@ -70,15 +70,15 @@ AnimatedPopup {
             }
         }
 
-        Button {
+        PopupButton {
             anchors.right: parent.right
             anchors.rightMargin: 16
             y: 78
             width: 60
             height: 28
             onClicked: popup.opened = false
-            contentItem: BarText { text: "Close"; horizontalAlignment: Text.AlignHCenter }
-            background: Rectangle { radius: 5; color: parent.down ? Theme.buttonHover : Theme.button }
+            text: "Close"
+            hoverColor: Theme.button
         }
     }
 

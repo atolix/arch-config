@@ -32,21 +32,15 @@ AnimatedPopup {
         onTriggered: if (popup.player?.positionSupported) popup.player.positionChanged()
     }
 
-    component ControlButton: Button {
+    component ControlButton: PopupButton {
         required property string iconText
         width: 38
         height: 32
-        contentItem: BarText {
-            text: parent.iconText
-            color: parent.enabled ? Theme.text : Theme.muted
-            font.family: "JetBrainsMono Nerd Font Mono"
-            font.pixelSize: 17
-            horizontalAlignment: Text.AlignHCenter
-        }
-        background: Rectangle {
-            radius: 7
-            color: !parent.enabled ? "transparent" : parent.down ? Theme.buttonHover : parent.hovered ? Theme.border : Theme.button
-        }
+        text: iconText
+        cornerRadius: 7
+        disabledColor: "transparent"
+        labelFontFamily: "JetBrainsMono Nerd Font Mono"
+        labelPixelSize: 17
     }
 
     PopupFrame {

@@ -68,28 +68,25 @@ AnimatedPopup {
             }
         }
 
-        Button {
+        PopupButton {
             x: 16
             y: 78
             width: 110
             height: 28
             enabled: popup.audio !== null
             onClicked: popup.audio.muted = !popup.audio.muted
-            contentItem: BarText {
-                text: popup.audio?.muted ? "Unmute" : "Mute"
-                horizontalAlignment: Text.AlignHCenter
-            }
-            background: Rectangle { radius: 5; color: parent.down ? Theme.buttonHover : Theme.button }
+            text: popup.audio?.muted ? "Unmute" : "Mute"
+            hoverColor: Theme.button
         }
-        Button {
+        PopupButton {
             anchors.right: parent.right
             anchors.rightMargin: 16
             y: 78
             width: 60
             height: 28
             onClicked: popup.opened = false
-            contentItem: BarText { text: "Close"; horizontalAlignment: Text.AlignHCenter }
-            background: Rectangle { radius: 5; color: parent.down ? Theme.buttonHover : Theme.button }
+            text: "Close"
+            hoverColor: Theme.button
         }
     }
 

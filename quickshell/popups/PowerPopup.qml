@@ -1,7 +1,5 @@
 import QtQuick
-import QtQuick.Controls
 import Quickshell
-import "../shared/Theme.js" as Theme
 import "../shared"
 
 AnimatedPopup {
@@ -10,22 +8,14 @@ AnimatedPopup {
     implicitHeight: 218
     color: "transparent"
 
-    component ActionButton: Button {
-        required property string label
+    component ActionButton: PopupButton {
         required property var command
         width: 158
         height: 34
+        cornerRadius: 6
         onClicked: {
             popup.opened = false;
             Quickshell.execDetached(command);
-        }
-        contentItem: BarText {
-            text: label
-            horizontalAlignment: Text.AlignHCenter
-        }
-        background: Rectangle {
-            radius: 6
-            color: parent.down ? Theme.buttonHover : parent.hovered ? Theme.border : Theme.button
         }
     }
 
@@ -44,10 +34,10 @@ AnimatedPopup {
             y: 45
             spacing: 6
 
-            ActionButton { label: "Lock"; command: ["hyprlock"] }
-            ActionButton { label: "Suspend"; command: ["systemctl", "suspend"] }
-            ActionButton { label: "Reboot"; command: ["systemctl", "reboot"] }
-            ActionButton { label: "Shutdown"; command: ["systemctl", "poweroff"] }
+            ActionButton { text: "Lock"; command: ["hyprlock"] }
+            ActionButton { text: "Suspend"; command: ["systemctl", "suspend"] }
+            ActionButton { text: "Reboot"; command: ["systemctl", "reboot"] }
+            ActionButton { text: "Shutdown"; command: ["systemctl", "poweroff"] }
         }
     }
 
