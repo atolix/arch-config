@@ -1,7 +1,6 @@
 import QtQuick
 import QtQuick.Controls
 import Quickshell
-import Quickshell.Hyprland
 import "../shared/Theme.js" as Theme
 import "../shared"
 
@@ -11,12 +10,6 @@ AnimatedPopup {
     implicitWidth: 280
     implicitHeight: 120
     color: "transparent"
-
-    HyprlandFocusGrab {
-        active: popup.opened
-        windows: [popup]
-        onCleared: popup.opened = false
-    }
 
     Rectangle {
         id: popupBody

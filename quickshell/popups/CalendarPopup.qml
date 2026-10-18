@@ -1,7 +1,6 @@
 import QtQuick
 import QtQuick.Controls
 import Quickshell
-import Quickshell.Hyprland
 import "../shared/Theme.js" as Theme
 import "../shared"
 
@@ -23,12 +22,6 @@ AnimatedPopup {
     }
 
     onOpenedChanged: if (opened) showToday()
-
-    HyprlandFocusGrab {
-        active: popup.opened
-        windows: [popup]
-        onCleared: popup.opened = false
-    }
 
     component CalendarButton: Button {
         implicitWidth: 32

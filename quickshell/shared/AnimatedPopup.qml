@@ -1,5 +1,6 @@
 import QtQuick
 import Quickshell
+import Quickshell.Hyprland
 
 PopupWindow {
     id: root
@@ -9,6 +10,12 @@ PopupWindow {
     property bool animationVisible: false
 
     visible: animationVisible
+
+    HyprlandFocusGrab {
+        active: root.opened
+        windows: [root]
+        onCleared: root.opened = false
+    }
 
     onOpenedChanged: {
         if (opened) {
