@@ -15,12 +15,9 @@ AnimatedPopup {
     implicitHeight: 460
     color: "transparent"
 
-    Rectangle {
+    PopupFrame {
         id: popupBody
         anchors.fill: parent
-        color: Theme.surface
-        radius: 10
-        border.color: Theme.border
 
         BarText {
             x: 16

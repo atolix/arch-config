@@ -36,12 +36,9 @@ AnimatedPopup {
         }
     }
 
-    Rectangle {
+    PopupFrame {
         id: popupBody
         anchors.fill: parent
-        color: Theme.surface
-        radius: 10
-        border.color: Theme.border
 
         CalendarButton {
             x: 16; y: 16
