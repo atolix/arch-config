@@ -2,3 +2,5 @@ __pycache__/
 *.pyc
 .qmlls.ini
 *.log
+result
+result-*
