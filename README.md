@@ -130,6 +130,13 @@ and packaged Quickshell configuration. Its default package is the tracked SDDM
 theme, so `nix build` also verifies that the theme can be installed into the
 Nix store.
 
+Enter the reproducible development environment for `qmllint`, `qmlformat`,
+`nixfmt`, `shellcheck`, `shfmt`, and Python:
+
+```sh
+nix develop
+```
+
 ### Current machine host
 
 `nixosConfigurations.archlinux` is the migration target generated for the
