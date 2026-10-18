@@ -282,7 +282,12 @@ Restart Thunar after applying the settings to load the new GTK theme.
 
 `./check.sh` checks the currently installed Arch packages, deployed
 configuration files, and running Hyprland/Quickshell session. Use
-`nix flake check` separately for source and Nix build validation.
+`nix flake check` separately for source and Nix build validation. The same live
+checks can be launched through the flake with:
+
+```sh
+nix run .#check
+```
 
 ## Files
 
