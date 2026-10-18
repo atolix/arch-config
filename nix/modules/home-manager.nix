@@ -32,9 +32,11 @@ let
           "exec-once = hypridle"
           "exec-once = nm-applet --indicator"
           "exec-once = awww-daemon & awww img @ARCH_CONFIG_DIR@/sddm/mysddm/pictures/wallpapers/v1.jpg"
+          "exec-once = fcitx5"
         ]
         [
           "exec-once = ${pkgs.dbus}/bin/dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP HYPRLAND_INSTANCE_SIGNATURE && ${pkgs.systemd}/bin/systemctl --user start arch-config-session.target"
+          ""
           ""
           ""
           ""
@@ -146,6 +148,19 @@ in
       };
       Service = {
         ExecStart = "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator";
+        Restart = "on-failure";
+        RestartSec = 2;
+      };
+      Install.WantedBy = [ "arch-config-session.target" ];
+    };
+
+    systemd.user.services.arch-config-fcitx5 = {
+      Unit = {
+        Description = "arch-config Fcitx5 input method";
+        PartOf = [ "arch-config-session.target" ];
+      };
+      Service = {
+        ExecStart = "${pkgs.fcitx5}/bin/fcitx5";
         Restart = "on-failure";
         RestartSec = 2;
       };
