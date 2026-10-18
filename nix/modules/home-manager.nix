@@ -33,9 +33,13 @@ let
           "exec-once = nm-applet --indicator"
           "exec-once = awww-daemon & awww img @ARCH_CONFIG_DIR@/sddm/mysddm/pictures/wallpapers/v1.jpg"
           "exec-once = fcitx5"
+          "exec-once = wl-paste --type text --watch cliphist store"
+          "exec-once = wl-paste --type image --watch cliphist store"
         ]
         [
           "exec-once = ${pkgs.dbus}/bin/dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP HYPRLAND_INSTANCE_SIGNATURE && ${pkgs.systemd}/bin/systemctl --user start arch-config-session.target"
+          ""
+          ""
           ""
           ""
           ""
@@ -161,6 +165,32 @@ in
       };
       Service = {
         ExecStart = "${pkgs.fcitx5}/bin/fcitx5";
+        Restart = "on-failure";
+        RestartSec = 2;
+      };
+      Install.WantedBy = [ "arch-config-session.target" ];
+    };
+
+    systemd.user.services.arch-config-clipboard-text = {
+      Unit = {
+        Description = "arch-config text clipboard history";
+        PartOf = [ "arch-config-session.target" ];
+      };
+      Service = {
+        ExecStart = "${pkgs.wl-clipboard}/bin/wl-paste --type text --watch ${pkgs.cliphist}/bin/cliphist store";
+        Restart = "on-failure";
+        RestartSec = 2;
+      };
+      Install.WantedBy = [ "arch-config-session.target" ];
+    };
+
+    systemd.user.services.arch-config-clipboard-image = {
+      Unit = {
+        Description = "arch-config image clipboard history";
+        PartOf = [ "arch-config-session.target" ];
+      };
+      Service = {
+        ExecStart = "${pkgs.wl-clipboard}/bin/wl-paste --type image --watch ${pkgs.cliphist}/bin/cliphist store";
         Restart = "on-failure";
         RestartSec = 2;
       };
