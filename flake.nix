@@ -1,10 +1,20 @@
 {
   description = "Reproducible Arch config modules for NixOS and Home Manager";
 
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
 
   outputs =
-    { self, nixpkgs }:
+    {
+      self,
+      nixpkgs,
+      home-manager,
+    }:
     let
       supportedSystems = [
         "x86_64-linux"
@@ -23,6 +33,21 @@
         default = self.homeManagerModules.arch-config;
       };
 
+      homeConfigurations.atolix = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        modules = [
+          self.homeManagerModules.default
+          {
+            archConfig.home.enable = true;
+            home = {
+              username = "atolix";
+              homeDirectory = "/home/atolix";
+              stateVersion = "26.05";
+            };
+          }
+        ];
+      };
+
       packages = forAllSystems (
         system:
         let
@@ -38,28 +63,45 @@
         system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
+          homeProfile = self.homeConfigurations.atolix.config.home.path;
         in
         {
-          source = pkgs.runCommand "arch-config-source-check" {
-            nativeBuildInputs = [
-              pkgs.bash
-              pkgs.python3
-            ];
-            src = self;
-          } ''
-            cp -r "$src" source
-            chmod -R u+w source
-            cd source
+          source =
+            pkgs.runCommand "arch-config-source-check"
+              {
+                nativeBuildInputs = [
+                  pkgs.bash
+                  pkgs.python3
+                ];
+                src = self;
+              }
+              ''
+                cp -r "$src" source
+                chmod -R u+w source
+                cd source
 
-            bash -n \
-              install.sh \
-              bootstrap-nix.sh \
-              check.sh \
-              checks/*.sh \
-              quickshell/run.sh \
-              quickshell/scripts/*.sh
-            python3 -m py_compile quickshell/scripts/*.py
+                bash -n \
+                  install.sh \
+                  bootstrap-nix.sh \
+                  check.sh \
+                  checks/*.sh \
+                  quickshell/run.sh \
+                  quickshell/scripts/*.sh
+                python3 -m py_compile quickshell/scripts/*.py
 
+                touch "$out"
+              '';
+        }
+        // nixpkgs.lib.optionalAttrs (system == "x86_64-linux") {
+          home-manager = self.homeConfigurations.atolix.activationPackage;
+
+          home-commands = pkgs.runCommand "arch-config-home-command-check" { } ''
+            for command_name in \
+              awww awww-daemon brightnessctl btop cliphist fastfetch ghostty \
+              grim hypridle hyprlock mpv nm-applet pactl python3 quickshell \
+              sensors slurp thunar upower wf-recorder wpctl wl-copy wl-paste wofi; do
+              test -x "${homeProfile}/bin/$command_name"
+            done
             touch "$out"
           '';
         }

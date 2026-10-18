@@ -1,11 +1,17 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.archConfig.home;
   repoRoot = ../..;
   quickshellRoot = "${repoRoot}/quickshell";
 
-  render = source:
+  render =
+    source:
     builtins.replaceStrings
       [
         "@ARCH_CONFIG_DIR@"
@@ -55,7 +61,8 @@ in
 
       "wofi/style.css".text = render ../../home/atolix/.config/wofi/style.css;
       "btop/btop.conf".text = render ../../home/atolix/.config/btop/btop.conf;
-      "btop/themes/arch-config.theme".text = render ../../home/atolix/.config/btop/themes/arch-config.theme;
+      "btop/themes/arch-config.theme".text =
+        render ../../home/atolix/.config/btop/themes/arch-config.theme;
       "fastfetch/config.jsonc".text = render ../../home/atolix/.config/fastfetch/config.jsonc;
       "gtk-3.0/settings.ini".text = render ../../home/atolix/.config/gtk-3.0/settings.ini;
       "gtk-3.0/gtk.css".text = render ../../home/atolix/.config/gtk-3.0/gtk.css;
