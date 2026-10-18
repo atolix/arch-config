@@ -28,6 +28,19 @@
         default = self.nixosModules.arch-config;
       };
 
+      nixosConfigurations.archlinux = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./nix/hosts/archlinux/hardware-configuration.nix
+          ./nix/hosts/archlinux/configuration.nix
+          self.nixosModules.default
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.sharedModules = [ self.homeManagerModules.default ];
+          }
+        ];
+      };
+
       homeManagerModules = {
         arch-config = import ./nix/modules/home-manager.nix;
         default = self.homeManagerModules.arch-config;
