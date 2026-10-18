@@ -85,6 +85,7 @@
         check = {
           type = "app";
           program = "${self.packages.${system}.live-check}/bin/arch-config-check";
+          meta.description = "Check the installed arch-config environment and session";
         };
       });
 
