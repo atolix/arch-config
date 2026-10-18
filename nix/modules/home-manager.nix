@@ -7,6 +7,9 @@
 
 let
   cfg = config.linuxConfig.home;
+  fcitx5WithMozc = pkgs.qt6Packages.fcitx5-with-addons.override {
+    addons = [ pkgs.fcitx5-mozc ];
+  };
   themeDefaults = import ../quickshell-theme.nix;
   quickshellConfig = pkgs.callPackage ../packages/quickshell-config.nix {
     theme = cfg.quickshell.theme;
@@ -335,7 +338,7 @@ in
       brightnessctl
       btop
       cliphist
-      fcitx5-mozc
+      fcitx5WithMozc
       glslviewer
       grim
       hypridle
@@ -442,7 +445,7 @@ in
         PartOf = [ "linux-config-session.target" ];
       };
       Service = {
-        ExecStart = "${pkgs.fcitx5}/bin/fcitx5";
+        ExecStart = "${fcitx5WithMozc}/bin/fcitx5";
         Restart = "on-failure";
         RestartSec = 2;
       };
