@@ -341,6 +341,7 @@ in
       brightnessctl
       btop
       cliphist
+      codex
       fcitx5WithMozc
       glslviewer
       grim
