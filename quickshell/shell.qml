@@ -231,58 +231,12 @@ Scope {
                 }
             }
 
-            function toggleVolumePopup() {
-                brightnessPopup.opened = false;
-                calendarPopup.opened = false;
-                powerPopup.opened = false;
-                notificationPopup.opened = false;
-                mediaPopup.opened = false;
-                volumePopup.opened = !volumePopup.opened;
-            }
-
-            function toggleBrightnessPopup() {
-                volumePopup.opened = false;
-                calendarPopup.opened = false;
-                powerPopup.opened = false;
-                notificationPopup.opened = false;
-                mediaPopup.opened = false;
-                brightnessPopup.opened = !brightnessPopup.opened;
-            }
-
-            function toggleCalendarPopup() {
-                volumePopup.opened = false;
-                brightnessPopup.opened = false;
-                powerPopup.opened = false;
-                notificationPopup.opened = false;
-                mediaPopup.opened = false;
-                calendarPopup.opened = !calendarPopup.opened;
-            }
-
-            function togglePowerPopup() {
-                volumePopup.opened = false;
-                calendarPopup.opened = false;
-                brightnessPopup.opened = false;
-                notificationPopup.opened = false;
-                mediaPopup.opened = false;
-                powerPopup.opened = !powerPopup.opened;
-            }
-
-            function toggleNotificationPopup() {
-                volumePopup.opened = false;
-                calendarPopup.opened = false;
-                powerPopup.opened = false;
-                brightnessPopup.opened = false;
-                mediaPopup.opened = false;
-                notificationPopup.opened = !notificationPopup.opened;
-            }
-
-            function toggleMediaPopup() {
-                volumePopup.opened = false;
-                calendarPopup.opened = false;
-                powerPopup.opened = false;
-                notificationPopup.opened = false;
-                brightnessPopup.opened = false;
-                mediaPopup.opened = !mediaPopup.opened;
+            function togglePopup(target) {
+                const shouldOpen = !target.opened;
+                const popups = [volumePopup, brightnessPopup, calendarPopup, powerPopup, notificationPopup, mediaPopup];
+                for (const candidate of popups)
+                    candidate.opened = false;
+                target.opened = shouldOpen;
             }
 
             TopBar {
@@ -296,18 +250,18 @@ Scope {
                 percent: root.percent
                 networkIcon: root.networkIcon
                 workspaceOccupied: root.workspaceOccupied
-                togglePower: bar.togglePowerPopup
-                openCalendar: bar.toggleCalendarPopup
-                openVolume: bar.toggleVolumePopup
-                openBrightness: bar.toggleBrightnessPopup
+                togglePower: () => bar.togglePopup(powerPopup)
+                openCalendar: () => bar.togglePopup(calendarPopup)
+                openVolume: () => bar.togglePopup(volumePopup)
+                openBrightness: () => bar.togglePopup(brightnessPopup)
                 powerPopupOpen: powerPopup.opened
                 calendarPopupOpen: calendarPopup.opened
                 volumePopupOpen: volumePopup.opened
                 brightnessPopupOpen: brightnessPopup.opened
                 notificationCount: root.notifications.length
-                openNotifications: bar.toggleNotificationPopup
+                openNotifications: () => bar.togglePopup(notificationPopup)
                 notificationPopupOpen: notificationPopup.opened
-                openMedia: bar.toggleMediaPopup
+                openMedia: () => bar.togglePopup(mediaPopup)
                 mediaPopupOpen: mediaPopup.opened
             }
 
