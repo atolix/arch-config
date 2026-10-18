@@ -60,6 +60,10 @@ in
         email = "82761106+atolix@users.noreply.github.com";
       };
     };
+    programs.mise = {
+      enable = true;
+      enableZshIntegration = true;
+    };
     programs.zsh = {
       enable = true;
       enableCompletion = true;
@@ -77,8 +81,6 @@ in
           fi
         '')
         ''
-          eval "$(mise activate zsh)"
-
           fpath=(~/.zsh $fpath)
 
           export FZF_DEFAULT_COMMAND='rg --files'
@@ -106,7 +108,6 @@ in
       hypridle
       hyprlock
       lm_sensors
-      mise
       mpv
       neovim
       networkmanagerapplet
