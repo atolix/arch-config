@@ -64,6 +64,47 @@ let
     theme[upload_mid]="${cfg.quickshell.theme.success}"
     theme[upload_end]="${cfg.quickshell.theme.white}"
   '';
+  wofiStyle = ''
+    window {
+      background-color: rgba(20, 20, 20, 0.96);
+      border-radius: 12px;
+      border: 1px solid ${cfg.quickshell.theme.border};
+      padding: 8px;
+    }
+
+    #input {
+      background-color: rgba(255, 255, 255, 0.07);
+      color: white;
+      border-radius: 8px;
+      border: none;
+      padding: 6px 10px;
+      font-size: 14px;
+    }
+
+    #input:focus {
+      color: ${cfg.quickshell.theme.white};
+      border: 1px solid #5f73d9;
+      box-shadow: 0 0 6px rgba(95, 115, 217, 0.35);
+      background-color: rgba(255, 255, 255, 0.12);
+    }
+
+    #entry {
+      border-radius: 6px;
+      padding: 6px 10px;
+      margin: 2px 0;
+    }
+
+    #entry:selected {
+      background-color: ${cfg.quickshell.theme.border};
+      color: ${cfg.quickshell.theme.accent};
+    }
+
+    #text {
+      font-family: "JetBrainsMono Nerd Font";
+      font-size: 14px;
+      color: white;
+    }
+  '';
 
   renderText =
     text:
@@ -314,7 +355,7 @@ in
       "hypr/hypridle.conf".text = render ../../quickshell/hypridle.conf;
       "hypr/hyprland-osd.conf".text = render ../../quickshell/hyprland-osd.conf;
 
-      "wofi/style.css".text = render ../../home/atolix/.config/wofi/style.css;
+      "wofi/style.css".text = wofiStyle;
       "btop/btop.conf".text = render ../../home/atolix/.config/btop/btop.conf;
       "btop/themes/arch-config.theme".text = btopTheme;
 
