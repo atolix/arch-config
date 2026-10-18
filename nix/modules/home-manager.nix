@@ -65,6 +65,10 @@ in
       enableZshIntegration = true;
       defaultCommand = "rg --files";
     };
+    programs.eza = {
+      enable = true;
+      enableZshIntegration = false;
+    };
     programs.mise = {
       enable = true;
       enableZshIntegration = true;
@@ -104,7 +108,6 @@ in
       brightnessctl
       btop
       cliphist
-      eza
       fastfetch
       ghostty
       glslviewer
