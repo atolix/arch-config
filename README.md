@@ -124,7 +124,11 @@ nix flake check
 sudo nixos-rebuild switch --flake .#my-host
 ```
 
-The repository itself can be checked with `nix flake check`. Its default package is the tracked SDDM theme, so `nix build` also verifies that the theme can be installed into the Nix store.
+The repository itself can be checked with `nix flake check`. This validates the
+Shell and Python sources, Nix configuration, generated Home Manager profile,
+and packaged Quickshell configuration. Its default package is the tracked SDDM
+theme, so `nix build` also verifies that the theme can be installed into the
+Nix store.
 
 ### Current machine host
 
@@ -262,6 +266,10 @@ sudo pacman -S --needed - < packages.txt
 The installer renders user configuration files into `~/.config` and applies the tracked SDDM theme and system configuration with sudo. Existing files are backed up under `~/.local/state/arch-config/backups/` before they are replaced.
 Restart Thunar after applying the settings to load the new GTK theme.
 
+`./check.sh` checks the currently installed Arch packages, deployed
+configuration files, and running Hyprland/Quickshell session. Use
+`nix flake check` separately for source and Nix build validation.
+
 ## Files
 
 ```text
@@ -269,11 +277,10 @@ arch-config/
 ├── flake.nix                         # Export NixOS/Home Manager modules and checks
 ├── apply-home-manager.sh             # Preview or activate the Home Manager profile
 ├── bootstrap-nix.sh                  # Install and initialize Nix on Arch Linux
-├── check.sh                         # Run all validation checks
+├── check.sh                         # Check the installed and running Arch environment
 ├── checks/
 │   ├── commands.sh                  # Check commands and installed packages
 │   ├── config.sh                    # Check rendered user configuration
-│   ├── syntax.sh                    # Check shell, Python, and Git syntax
 │   └── session.sh                   # Check the running Hyprland and Quickshell session
 ├── install.sh                       # Render user configs and apply the SDDM theme
 ├── nix/
