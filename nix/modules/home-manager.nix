@@ -60,6 +60,11 @@ in
         email = "82761106+atolix@users.noreply.github.com";
       };
     };
+    programs.fzf = {
+      enable = true;
+      enableZshIntegration = true;
+      defaultCommand = "rg --files";
+    };
     programs.mise = {
       enable = true;
       enableZshIntegration = true;
@@ -83,10 +88,6 @@ in
         ''
           fpath=(~/.zsh $fpath)
 
-          export FZF_DEFAULT_COMMAND='rg --files'
-
-          [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
-
           source ~/powerlevel10k/powerlevel10k.zsh-theme
           [[ ! -f ~/dotfiles/p10k.zsh ]] || source ~/dotfiles/p10k.zsh
         ''
@@ -101,7 +102,6 @@ in
       cliphist
       eza
       fastfetch
-      fzf
       ghostty
       glslviewer
       grim
