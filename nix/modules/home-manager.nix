@@ -27,8 +27,14 @@ let
     source:
     renderText (
       builtins.replaceStrings
-        [ "exec-once = @ARCH_CONFIG_DIR@/quickshell/run.sh --no-duplicate --daemonize" ]
-        [ "exec-once = ${pkgs.systemd}/bin/systemctl --user start arch-config-quickshell.service" ]
+        [
+          "exec-once = @ARCH_CONFIG_DIR@/quickshell/run.sh --no-duplicate --daemonize"
+          "exec-once = hypridle"
+        ]
+        [
+          "exec-once = ${pkgs.systemd}/bin/systemctl --user start arch-config-quickshell.service"
+          "exec-once = ${pkgs.systemd}/bin/systemctl --user start arch-config-hypridle.service"
+        ]
         (builtins.readFile source)
     );
 in
@@ -96,6 +102,19 @@ in
       };
       Service = {
         ExecStart = "${quickshellRoot}/run.sh --no-duplicate";
+        Restart = "on-failure";
+        RestartSec = 2;
+      };
+      Install.WantedBy = [ "graphical-session.target" ];
+    };
+
+    systemd.user.services.arch-config-hypridle = {
+      Unit = {
+        Description = "arch-config Hypridle daemon";
+        PartOf = [ "graphical-session.target" ];
+      };
+      Service = {
+        ExecStart = "${pkgs.hypridle}/bin/hypridle";
         Restart = "on-failure";
         RestartSec = 2;
       };
