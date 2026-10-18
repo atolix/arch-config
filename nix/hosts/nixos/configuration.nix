@@ -29,18 +29,16 @@ in
     permittedInsecurePackages = [ "broadcom-sta-6.30.223.271-63-6.18.56" ];
   };
   boot = {
-    # blacklistedKernelModules = [
-    #  "b43"
-    #  "b43legacy"
-    #  "bcm43xx"
-    #  "bcma"
-    #  "brcm80211"
-    #  "brcmfmac"
-    #  "brcmsmac"
-    #  "ssb"
-    # ];
-    # kernelModules = [ "wl" ];
-    # extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
+    blacklistedKernelModules = [
+      "b43"
+      "b43legacy"
+      "bcma"
+      "brcmfmac"
+      "brcmsmac"
+      "ssb"
+    ];
+    kernelModules = [ "wl" ];
+    extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
   };
 
   networking.hostName = "nixos";
