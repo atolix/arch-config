@@ -7,10 +7,21 @@
 
 let
   cfg = config.archConfig.desktop;
-  sddmTheme = pkgs.callPackage ../packages/sddm-theme.nix { };
+  themeDefaults = import ../sddm-theme.nix;
+  sddmTheme = pkgs.callPackage ../packages/sddm-theme.nix { theme = cfg.sddm.theme; };
 in
 {
-  options.archConfig.desktop.enable = lib.mkEnableOption "the arch-config NixOS desktop services";
+  options.archConfig.desktop = {
+    enable = lib.mkEnableOption "the arch-config NixOS desktop services";
+    sddm.theme = lib.mapAttrs (
+      name: default:
+      lib.mkOption {
+        inherit default;
+        type = lib.types.strMatching "#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?";
+        description = "SDDM ${name} theme color";
+      }
+    ) themeDefaults;
+  };
 
   config = lib.mkIf cfg.enable {
     programs.hyprland = {

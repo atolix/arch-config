@@ -181,6 +181,18 @@
                 ${themedQuickshell}/quickshell/shared/Theme.js
               touch "$out"
             '';
+
+          sddm-theme =
+            let
+              themedSddm = pkgs.callPackage ./nix/packages/sddm-theme.nix {
+                theme.accent = "#123456";
+              };
+            in
+            pkgs.runCommand "arch-config-sddm-theme-check" { } ''
+              grep -F 'border.color: username.activeFocus ? "#123456"' \
+                ${themedSddm}/share/sddm/themes/mysddm/Main.qml
+              touch "$out"
+            '';
         }
         // nixpkgs.lib.optionalAttrs (system == "x86_64-linux") {
           home-manager = self.homeConfigurations.atolix.activationPackage;
