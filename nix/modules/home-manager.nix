@@ -83,6 +83,52 @@ in
       enableZshIntegration = true;
       defaultCommand = "rg --files";
     };
+    programs.fastfetch = {
+      enable = true;
+      settings = {
+        "$schema" = "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json";
+        logo.color = {
+          "1" = "#a5b4fc";
+          "2" = "#eaeaea";
+        };
+        display.color = {
+          keys = "#a5b4fc";
+          title = "#a5b4fc";
+          output = "#eaeaea";
+          separator = "#646978";
+        };
+        modules = [
+          "title"
+          "separator"
+          "os"
+          "host"
+          "kernel"
+          "uptime"
+          "packages"
+          "shell"
+          "display"
+          "de"
+          "wm"
+          "wmtheme"
+          "theme"
+          "icons"
+          "font"
+          "cursor"
+          "terminal"
+          "terminalfont"
+          "cpu"
+          "gpu"
+          "memory"
+          "swap"
+          "disk"
+          "battery"
+          "poweradapter"
+          "locale"
+          "break"
+          "colors"
+        ];
+      };
+    };
     programs.eza = {
       enable = true;
       enableZshIntegration = false;
@@ -159,7 +205,6 @@ in
       brightnessctl
       btop
       cliphist
-      fastfetch
       fcitx5-mozc
       glslviewer
       grim
@@ -199,7 +244,6 @@ in
       "btop/btop.conf".text = render ../../home/atolix/.config/btop/btop.conf;
       "btop/themes/arch-config.theme".text =
         render ../../home/atolix/.config/btop/themes/arch-config.theme;
-      "fastfetch/config.jsonc".text = render ../../home/atolix/.config/fastfetch/config.jsonc;
       "gtk-3.0/settings.ini".text = render ../../home/atolix/.config/gtk-3.0/settings.ini;
       "gtk-3.0/gtk.css".text = render ../../home/atolix/.config/gtk-3.0/gtk.css;
 
