@@ -3,25 +3,34 @@
 
 import configparser
 import json
+import os
 import subprocess
 from pathlib import Path
 
 
+def data_roots():
+    data_home = Path(os.environ.get("XDG_DATA_HOME", Path.home() / ".local/share"))
+    data_dirs = os.environ.get("XDG_DATA_DIRS", "/usr/local/share:/usr/share")
+    roots = [data_home, *(Path(entry) for entry in data_dirs.split(":") if entry)]
+    return list(dict.fromkeys(roots))
+
+
 def desktop_entries():
     entries = {}
-    for desktop in Path("/usr/share/applications").glob("*.desktop"):
-        parser = configparser.ConfigParser(interpolation=None, strict=False)
-        try:
-            parser.read(desktop, encoding="utf-8")
-            entry = parser["Desktop Entry"]
-            icon = entry.get("Icon", "")
-            name = entry.get("Name", desktop.stem)
-            keys = {desktop.stem.lower(), entry.get("StartupWMClass", "").lower()}
-            for key in keys:
-                if key:
-                    entries.setdefault(key, (name, icon))
-        except (OSError, KeyError, configparser.Error):
-            continue
+    for root in data_roots():
+        for desktop in (root / "applications").glob("*.desktop"):
+            parser = configparser.ConfigParser(interpolation=None, strict=False)
+            try:
+                parser.read(desktop, encoding="utf-8")
+                entry = parser["Desktop Entry"]
+                icon = entry.get("Icon", "")
+                name = entry.get("Name", desktop.stem)
+                keys = {desktop.stem.lower(), entry.get("StartupWMClass", "").lower()}
+                for key in keys:
+                    if key:
+                        entries.setdefault(key, (name, icon))
+            except (OSError, KeyError, configparser.Error):
+                continue
     return entries
 
 
@@ -31,11 +40,12 @@ def icon_path(icon):
     path = Path(icon)
     if path.is_absolute() and path.exists():
         return str(path)
-    for root in (Path("/usr/share/icons"), Path("/usr/share/pixmaps")):
-        for suffix in (".svg", ".png", ".xpm"):
-            matches = list(root.rglob(icon + suffix))
-            if matches:
-                return str(matches[0])
+    for data_root in data_roots():
+        for root in (data_root / "icons", data_root / "pixmaps"):
+            for suffix in (".svg", ".png", ".xpm"):
+                match = next(root.rglob(icon + suffix), None)
+                if match is not None:
+                    return str(match)
     return icon
 
 
