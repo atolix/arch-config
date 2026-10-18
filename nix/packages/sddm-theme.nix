@@ -10,7 +10,7 @@ let
 in
 
 stdenvNoCC.mkDerivation {
-  pname = "arch-config-sddm-theme";
+  pname = "linux-config-sddm-theme";
   version = "1.0.0";
 
   src = ../../sddm/mysddm;

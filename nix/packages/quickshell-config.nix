@@ -30,7 +30,7 @@
 let
   themeDefaults = import ../quickshell-theme.nix;
   resolvedTheme = themeDefaults // theme;
-  themeJs = writeText "arch-config-quickshell-theme.js" ''
+  themeJs = writeText "linux-config-quickshell-theme.js" ''
     .pragma library
 
     var background = ${builtins.toJSON resolvedTheme.background}
@@ -76,7 +76,7 @@ let
   ];
 in
 stdenvNoCC.mkDerivation {
-  pname = "arch-config-quickshell";
+  pname = "linux-config-quickshell";
   version = "1.0.0";
 
   dontUnpack = true;

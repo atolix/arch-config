@@ -14,7 +14,7 @@ for file in \
     "$config_dir/hypr/hyprland-osd.conf" \
     "$config_dir/wofi/style.css" \
     "$config_dir/btop/btop.conf" \
-    "$config_dir/btop/themes/arch-config.theme" \
+    "$config_dir/btop/themes/linux-config.theme" \
     "$config_dir/fastfetch/config.jsonc" \
     "$config_dir/gtk-3.0/settings.ini" \
     "$config_dir/gtk-3.0/gtk.css" \
@@ -23,7 +23,7 @@ for file in \
     if [ -f "$file" ]; then ok "$file"; else fail "$file is missing"; fi
 done
 
-if rg -q '@(ARCH_CONFIG_DIR|HOME)@' "$config_dir/hypr" 2>/dev/null; then
+if rg -q '@(LINUX_CONFIG_DIR|HOME)@' "$config_dir/hypr" 2>/dev/null; then
     fail 'unrendered config placeholders remain'
 else
     ok 'config paths rendered'
