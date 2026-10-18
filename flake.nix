@@ -70,9 +70,23 @@
         rec {
           quickshell-config = pkgs.callPackage ./nix/packages/quickshell-config.nix { };
           sddm-theme = pkgs.callPackage ./nix/packages/sddm-theme.nix { };
+          live-check = pkgs.writeShellApplication {
+            name = "arch-config-check";
+            runtimeInputs = [ pkgs.bash ];
+            text = ''
+              exec ${pkgs.bash}/bin/bash ${self}/check.sh
+            '';
+          };
           default = sddm-theme;
         }
       );
+
+      apps = forAllSystems (system: {
+        check = {
+          type = "app";
+          program = "${self.packages.${system}.live-check}/bin/arch-config-check";
+        };
+      });
 
       devShells = forAllSystems (
         system:
