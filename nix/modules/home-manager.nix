@@ -92,6 +92,17 @@ in
       enableZshIntegration = true;
     };
     programs.ripgrep.enable = true;
+    programs.ghostty = {
+      enable = true;
+      settings = {
+        background = "111827";
+        foreground = "d8dee9";
+        cursor-color = "88c0d0";
+        cursor-text = "111827";
+        selection-background = "1e293b";
+        selection-foreground = "cbd5e1";
+      };
+    };
     programs.zsh = {
       enable = true;
       enableCompletion = true;
@@ -129,7 +140,6 @@ in
       cliphist
       fastfetch
       fcitx5-mozc
-      ghostty
       glslviewer
       grim
       hypridle
@@ -170,7 +180,6 @@ in
       "btop/themes/arch-config.theme".text =
         render ../../home/atolix/.config/btop/themes/arch-config.theme;
       "fastfetch/config.jsonc".text = render ../../home/atolix/.config/fastfetch/config.jsonc;
-      "ghostty/config".source = ../../home/atolix/.config/ghostty/config;
       "gtk-3.0/settings.ini".text = render ../../home/atolix/.config/gtk-3.0/settings.ini;
       "gtk-3.0/gtk.css".text = render ../../home/atolix/.config/gtk-3.0/gtk.css;
       "mimeapps.list".text = render ../../home/atolix/.config/mimeapps.list;
