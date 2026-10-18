@@ -5,11 +5,13 @@ cliphist
 fcitx5
 fcitx5-mozc
 fastfetch
+ghostty
 grim
 hypridle
 hyprland
 hyprlock
 libpulse
+lm_sensors
 network-manager-applet
 networkmanager
 mpv
@@ -23,4 +25,5 @@ thunar
 upower
 wf-recorder
 wireplumber
+wl-clipboard
 wofi
