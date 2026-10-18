@@ -252,12 +252,7 @@ in
     programs.ghostty = {
       enable = true;
       settings = {
-        background = "111827";
-        foreground = "d8dee9";
-        cursor-color = "88c0d0";
-        cursor-text = "111827";
-        selection-background = "1e293b";
-        selection-foreground = "cbd5e1";
+        config-file = "${config.home.homeDirectory}/dotfiles/ghostty/config";
       };
     };
     programs.mpv = {
@@ -376,6 +371,9 @@ in
     ];
 
     xdg.configFile = {
+      "nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/nvim";
+      "herdr/config.toml".source =
+        config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/herdr/config.toml";
       "hypr/hyprland.conf".text = renderHyprland ../../home/atolix/.config/hypr/hyprland.conf;
       "hypr/hyprlock.conf".text = render ../../home/atolix/.config/hypr/hyprlock.conf;
       "hypr/hypridle.conf".text = render ../../quickshell/hypridle.conf;
@@ -391,7 +389,8 @@ in
         render ../../home/atolix/.config/fcitx5/conf/notifications.conf;
     };
 
-    home.file.".p10k.zsh".source = ../../home/atolix/.p10k.zsh;
+    home.file.".p10k.zsh".source =
+      config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/p10k.zsh";
 
     systemd.user.services.linux-config-quickshell = {
       Unit = {
