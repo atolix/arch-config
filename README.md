@@ -54,6 +54,22 @@ The included host is a complete NixOS configuration for the current machine.
 - `nixosModules.default` provides the system services.
 - `homeManagerModules.default` provides the user environment.
 
+### Clone and apply
+
+On a fresh NixOS installation, clone the repository and apply the included
+host configuration:
+
+```sh
+git clone <repository-url> ~/linux-config
+cd ~/linux-config
+sudo nixos-rebuild switch --flake .#nixos
+```
+
+Before the first activation, confirm that the filesystem UUIDs in
+`nix/hosts/nixos/hardware-configuration.nix` match the target machine. Set a
+password for the configured user during installation; passwords are not stored
+in this repository.
+
 Apply the included host as follows:
 
 ```nix
