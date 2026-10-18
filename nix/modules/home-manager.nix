@@ -10,8 +10,8 @@ let
   quickshellConfig = pkgs.callPackage ../packages/quickshell-config.nix { };
   quickshellRoot = "${quickshellConfig}/quickshell";
 
-  render =
-    source:
+  renderText =
+    text:
     builtins.replaceStrings
       [
         "@ARCH_CONFIG_DIR@"
@@ -21,7 +21,16 @@ let
         (toString quickshellConfig)
         config.home.homeDirectory
       ]
-      (builtins.readFile source);
+      text;
+  render = source: renderText (builtins.readFile source);
+  renderHyprland =
+    source:
+    renderText (
+      builtins.replaceStrings
+        [ "exec-once = @ARCH_CONFIG_DIR@/quickshell/run.sh --no-duplicate --daemonize" ]
+        [ "exec-once = ${pkgs.systemd}/bin/systemctl --user start arch-config-quickshell.service" ]
+        (builtins.readFile source)
+    );
 in
 {
   options.archConfig.home.enable = lib.mkEnableOption "the arch-config Home Manager profile";
@@ -59,7 +68,7 @@ in
     ];
 
     xdg.configFile = {
-      "hypr/hyprland.conf".text = render ../../home/atolix/.config/hypr/hyprland.conf;
+      "hypr/hyprland.conf".text = renderHyprland ../../home/atolix/.config/hypr/hyprland.conf;
       "hypr/hyprlock.conf".text = render ../../home/atolix/.config/hypr/hyprlock.conf;
       "hypr/hypridle.conf".text = render ../../quickshell/hypridle.conf;
       "hypr/hyprland-osd.conf".text = render ../../quickshell/hyprland-osd.conf;
@@ -78,6 +87,19 @@ in
       "fcitx5/profile".text = render ../../home/atolix/.config/fcitx5/profile;
       "fcitx5/conf/notifications.conf".text =
         render ../../home/atolix/.config/fcitx5/conf/notifications.conf;
+    };
+
+    systemd.user.services.arch-config-quickshell = {
+      Unit = {
+        Description = "arch-config Quickshell desktop shell";
+        PartOf = [ "graphical-session.target" ];
+      };
+      Service = {
+        ExecStart = "${quickshellRoot}/run.sh --no-duplicate";
+        Restart = "on-failure";
+        RestartSec = 2;
+      };
+      Install.WantedBy = [ "graphical-session.target" ];
     };
 
     home.sessionVariables.ARCH_CONFIG_QUICKSHELL = quickshellRoot;
