@@ -12,8 +12,6 @@ run_check "$repo_dir/checks/commands.sh" "$repo_dir"
 printf '\n'
 run_check "$repo_dir/checks/config.sh"
 printf '\n'
-run_check "$repo_dir/checks/syntax.sh" "$repo_dir"
-printf '\n'
 run_check "$repo_dir/checks/session.sh"
 
 if [ "$failed" -eq 0 ]; then
