@@ -1,6 +1,7 @@
-# Arch configuration
+# Arch and NixOS configuration
 
 Hyprland desktop configuration, managed as a Git repository. The Quickshell bar lives in `quickshell/`.
+The existing Arch installer and an additive Nix flake share the same configuration sources.
 
 ## Quickshell bar
 
@@ -49,6 +50,83 @@ sudo pacman -S --needed - < packages.txt
 ```
 
 The bar expects a Wayland session with PipeWire, its PulseAudio compatibility service, and NetworkManager running.
+
+## Install Nix on Arch Linux
+
+The bootstrap script installs the Arch `nix` package when necessary, initializes `/nix/store`, enables the Nix daemon, enables flakes for the current user, and checks this repository:
+
+```sh
+./bootstrap-nix.sh
+```
+
+It is safe to run the script again. Existing Nix configuration is preserved, and the required flake features are appended only when missing.
+
+## NixOS and Home Manager
+
+The flake exports two opt-in modules:
+
+- `nixosModules.default` enables Hyprland with UWSM, SDDM and the tracked theme, NetworkManager, PipeWire, UPower, and Fcitx5 with Mozc.
+- `homeManagerModules.default` installs the desktop applications and renders the same user configuration files used by `install.sh`.
+
+Import both modules from a host flake and enable them as follows:
+
+```nix
+{
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    arch-config = {
+      url = "path:/home/atolix/development/arch-config";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
+
+  outputs =
+    { nixpkgs, home-manager, arch-config, ... }:
+    {
+      nixosConfigurations.my-host = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./hardware-configuration.nix
+          arch-config.nixosModules.default
+          home-manager.nixosModules.home-manager
+          {
+            archConfig.desktop.enable = true;
+
+            users.users.atolix = {
+              isNormalUser = true;
+              extraGroups = [ "networkmanager" "wheel" ];
+            };
+
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.atolix = {
+              imports = [ arch-config.homeManagerModules.default ];
+              archConfig.home.enable = true;
+              home.stateVersion = "26.05";
+            };
+
+            system.stateVersion = "26.05";
+          }
+        ];
+      };
+    };
+}
+```
+
+Replace the host name, hardware configuration, user, and state versions for the target machine. Then evaluate and apply it from the host flake:
+
+```sh
+nix flake check
+sudo nixos-rebuild switch --flake .#my-host
+```
+
+The repository itself can be checked with `nix flake check`. Its default package is the tracked SDDM theme, so `nix build` also verifies that the theme can be installed into the Nix store.
+
+The Nix modules do not replace the Arch workflow. On Arch Linux, continue to use `packages.txt` and `install.sh`; on NixOS, the modules render the placeholders to immutable Nix store paths.
 
 ## Run
 
@@ -104,6 +182,8 @@ Restart Thunar after applying the settings to load the new GTK theme.
 
 ```text
 arch-config/
+├── flake.nix                         # Export NixOS/Home Manager modules and checks
+├── bootstrap-nix.sh                  # Install and initialize Nix on Arch Linux
 ├── check.sh                         # Run all validation checks
 ├── checks/
 │   ├── commands.sh                  # Check commands and installed packages
@@ -111,6 +191,12 @@ arch-config/
 │   ├── syntax.sh                    # Check shell, Python, and Git syntax
 │   └── session.sh                   # Check the running Hyprland and Quickshell session
 ├── install.sh                       # Render user configs and apply the SDDM theme
+├── nix/
+│   ├── modules/
+│   │   ├── nixos.nix                # System services and SDDM integration
+│   │   └── home-manager.nix          # User packages and rendered dotfiles
+│   └── packages/
+│       └── sddm-theme.nix            # Package the tracked theme for the Nix store
 ├── packages.txt                     # Required Arch packages
 ├── home/atolix/.config/
 │   ├── btop/

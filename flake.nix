@@ -53,6 +53,7 @@
 
             bash -n \
               install.sh \
+              bootstrap-nix.sh \
               check.sh \
               checks/*.sh \
               quickshell/run.sh \
