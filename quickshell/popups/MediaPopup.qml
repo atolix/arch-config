@@ -22,7 +22,6 @@ AnimatedPopup {
 
     implicitWidth: 410
     implicitHeight: 190
-    color: "transparent"
 
     Timer {
         interval: 1000
@@ -41,10 +40,6 @@ AnimatedPopup {
         labelFontFamily: "JetBrainsMono Nerd Font Mono"
         labelPixelSize: 17
     }
-
-    PopupFrame {
-        id: popupBody
-        anchors.fill: parent
 
         Rectangle {
             id: artFrame
@@ -162,7 +157,4 @@ AnimatedPopup {
             color: Theme.muted
             font.pixelSize: 10
         }
-    }
-
-    animatedItem: popupBody
 }

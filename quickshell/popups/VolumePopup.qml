@@ -8,11 +8,6 @@ AnimatedPopup {
     required property var audio
     implicitWidth: 280
     implicitHeight: 120
-    color: "transparent"
-
-    PopupFrame {
-        id: popupBody
-        anchors.fill: parent
 
         BarText {
             x: 16
@@ -65,7 +60,4 @@ AnimatedPopup {
             text: "Close"
             hoverColor: Theme.button
         }
-    }
-
-    animatedItem: popupBody
 }

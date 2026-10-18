@@ -5,18 +5,12 @@ import Quickshell.Hyprland
 PopupWindow {
     id: root
 
-    required property Item animatedItem
+    default property alias content: popupBody.data
     property bool opened: false
     property bool animationVisible: false
 
+    color: "transparent"
     visible: animationVisible
-
-    HyprlandFocusGrab {
-        active: root.opened
-        windows: [root]
-        onCleared: root.opened = false
-    }
-
     onOpenedChanged: {
         if (opened) {
             closeAnimation.stop();
@@ -28,56 +22,80 @@ PopupWindow {
         }
     }
 
+    PopupFrame {
+        id: popupBody
+
+        anchors.fill: parent
+    }
+
+    HyprlandFocusGrab {
+        active: root.opened
+        windows: [root]
+        onCleared: root.opened = false
+    }
+
     SequentialAnimation {
         id: openAnimation
+
         ScriptAction {
             script: {
-                root.animatedItem.transformOrigin = Item.Top;
-                root.animatedItem.opacity = 0;
-                root.animatedItem.scale = 0.97;
+                popupBody.transformOrigin = Item.Top;
+                popupBody.opacity = 0;
+                popupBody.scale = 0.97;
             }
         }
+
         ParallelAnimation {
             NumberAnimation {
-                target: root.animatedItem
+                target: popupBody
                 property: "opacity"
                 to: 1
                 duration: 140
                 easing.type: Easing.OutCubic
             }
+
             NumberAnimation {
-                target: root.animatedItem
+                target: popupBody
                 property: "scale"
                 to: 1
                 duration: 140
                 easing.type: Easing.OutCubic
             }
+
         }
+
     }
 
     SequentialAnimation {
         id: closeAnimation
+
         ParallelAnimation {
             NumberAnimation {
-                target: root.animatedItem
+                target: popupBody
                 property: "opacity"
                 to: 0
                 duration: 100
                 easing.type: Easing.InCubic
             }
+
             NumberAnimation {
-                target: root.animatedItem
+                target: popupBody
                 property: "scale"
                 to: 0.97
                 duration: 100
                 easing.type: Easing.InCubic
             }
+
         }
+
         ScriptAction {
             script: {
                 if (!root.opened)
                     root.animationVisible = false;
+
             }
         }
+
     }
+
 }
