@@ -27,6 +27,8 @@ in
   options.archConfig.home.enable = lib.mkEnableOption "the arch-config Home Manager profile";
 
   config = lib.mkIf cfg.enable {
+    programs.home-manager.enable = true;
+
     home.packages = with pkgs; [
       awww
       brightnessctl

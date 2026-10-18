@@ -123,7 +123,7 @@
 
           home-commands = pkgs.runCommand "arch-config-home-command-check" { } ''
             for command_name in \
-              awww awww-daemon brightnessctl btop cliphist fastfetch ghostty \
+              awww awww-daemon brightnessctl btop cliphist fastfetch ghostty home-manager \
               grim hypridle hyprlock mpv nm-applet pactl python3 quickshell \
               sensors slurp thunar upower wf-recorder wpctl wl-copy wl-paste wofi; do
               test -x "${homeProfile}/bin/$command_name"
