@@ -126,6 +126,27 @@ sudo nixos-rebuild switch --flake .#my-host
 
 The repository itself can be checked with `nix flake check`. Its default package is the tracked SDDM theme, so `nix build` also verifies that the theme can be installed into the Nix store.
 
+### Current machine host
+
+`nixosConfigurations.archlinux` is the migration target generated for the
+current MacBookAir7,1. It includes the detected NVMe filesystems, systemd-boot,
+Intel microcode, the Broadcom BCM4360 `wl` driver, and a zstd zram swap device.
+Build the complete system without applying it to the running Arch installation:
+
+```sh
+nix build path:.#nixosConfigurations.archlinux.config.system.build.toplevel --no-link
+```
+
+Do not run `nixos-rebuild switch` against the current Arch installation. Before
+installing from NixOS installation media:
+
+- confirm that the root and boot UUIDs in
+  `nix/hosts/archlinux/hardware-configuration.nix` still match the target disk;
+- review the version-pinned `broadcom-sta` insecure-package exception—the
+  unmaintained driver has known CVE-2019-9501 and CVE-2019-9502 issues;
+- set a password for `atolix` during installation because no password or secret
+  is committed to this repository.
+
 The flake also exports a standalone `homeConfigurations.atolix` profile. On Arch, build the complete Home Manager generation without changing the active user configuration:
 
 ```sh
@@ -231,6 +252,9 @@ arch-config/
 │   ├── modules/
 │   │   ├── nixos.nix                # System services and SDDM integration
 │   │   └── home-manager.nix          # User packages and rendered dotfiles
+│   ├── hosts/archlinux/
+│   │   ├── configuration.nix          # MacBookAir7,1 system and user settings
+│   │   └── hardware-configuration.nix # Detected filesystems and boot hardware
 │   └── packages/
 │       └── sddm-theme.nix            # Package the tracked theme for the Nix store
 ├── packages.txt                     # Required Arch packages
