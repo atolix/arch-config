@@ -73,6 +73,7 @@ in
       enable = true;
       enableZshIntegration = true;
     };
+    programs.neovim.enable = true;
     programs.ripgrep.enable = true;
     programs.zsh = {
       enable = true;
@@ -117,7 +118,6 @@ in
       hyprlock
       lm_sensors
       mpv
-      neovim
       networkmanagerapplet
       nerd-fonts.jetbrains-mono
       noto-fonts
