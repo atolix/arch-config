@@ -110,7 +110,7 @@ let
     text:
     builtins.replaceStrings
       [
-        "@ARCH_CONFIG_DIR@"
+        "@LINUX_CONFIG_DIR@"
         "@HOME@"
       ]
       [
@@ -124,16 +124,16 @@ let
     renderText (
       builtins.replaceStrings
         [
-          "exec-once = @ARCH_CONFIG_DIR@/quickshell/run.sh --no-duplicate --daemonize"
+          "exec-once = @LINUX_CONFIG_DIR@/quickshell/run.sh --no-duplicate --daemonize"
           "exec-once = hypridle"
           "exec-once = nm-applet --indicator"
-          "exec-once = awww-daemon & awww img @ARCH_CONFIG_DIR@/sddm/mysddm/pictures/wallpapers/v1.jpg"
+          "exec-once = awww-daemon & awww img @LINUX_CONFIG_DIR@/sddm/mysddm/pictures/wallpapers/v1.jpg"
           "exec-once = fcitx5"
           "exec-once = wl-paste --type text --watch cliphist store"
           "exec-once = wl-paste --type image --watch cliphist store"
         ]
         [
-          "exec-once = ${pkgs.dbus}/bin/dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP HYPRLAND_INSTANCE_SIGNATURE && ${pkgs.systemd}/bin/systemctl --user start arch-config-session.target"
+          "exec-once = ${pkgs.dbus}/bin/dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP HYPRLAND_INSTANCE_SIGNATURE && ${pkgs.systemd}/bin/systemctl --user start linux-config-session.target"
           ""
           ""
           ""
@@ -147,6 +147,21 @@ in
 {
   options.linuxConfig.home = {
     enable = lib.mkEnableOption "the Linux desktop Home Manager profile";
+    username = lib.mkOption {
+      type = lib.types.strMatching "[a-z_][a-z0-9_-]*";
+      default = "atolix";
+      description = "The Unix user receiving the desktop profile";
+    };
+    git.name = lib.mkOption {
+      type = lib.types.str;
+      default = "atolix";
+      description = "Git author name";
+    };
+    git.email = lib.mkOption {
+      type = lib.types.str;
+      default = "82761106+atolix@users.noreply.github.com";
+      description = "Git author email";
+    };
     quickshell.executable = lib.mkOption {
       type = lib.types.strMatching "/.+";
       default = "${pkgs.quickshell}/bin/quickshell";
@@ -167,8 +182,8 @@ in
     programs.git = {
       enable = true;
       settings.user = {
-        name = "atolix";
-        email = "82761106+atolix@users.noreply.github.com";
+        name = cfg.git.name;
+        email = cfg.git.email;
       };
     };
     programs.fzf = {
@@ -357,7 +372,7 @@ in
 
       "wofi/style.css".text = wofiStyle;
       "btop/btop.conf".text = render ../../home/atolix/.config/btop/btop.conf;
-      "btop/themes/arch-config.theme".text = btopTheme;
+      "btop/themes/linux-config.theme".text = btopTheme;
 
       "fcitx5/config".text = render ../../home/atolix/.config/fcitx5/config;
       "fcitx5/profile".text = render ../../home/atolix/.config/fcitx5/profile;
@@ -367,37 +382,37 @@ in
 
     home.file.".p10k.zsh".source = ../../home/atolix/.p10k.zsh;
 
-    systemd.user.services.arch-config-quickshell = {
+    systemd.user.services.linux-config-quickshell = {
       Unit = {
-        Description = "arch-config Quickshell desktop shell";
-        PartOf = [ "arch-config-session.target" ];
+        Description = "linux-config Quickshell desktop shell";
+        PartOf = [ "linux-config-session.target" ];
       };
       Service = {
-        Environment = "ARCH_CONFIG_QUICKSHELL_BIN=${cfg.quickshell.executable}";
+        Environment = "LINUX_CONFIG_QUICKSHELL_BIN=${cfg.quickshell.executable}";
         ExecStart = "${cfg.quickshell.executable} --path ${quickshellRoot} --no-duplicate";
         Restart = "on-failure";
         RestartSec = 2;
       };
-      Install.WantedBy = [ "arch-config-session.target" ];
+      Install.WantedBy = [ "linux-config-session.target" ];
     };
 
-    systemd.user.services.arch-config-hypridle = {
+    systemd.user.services.linux-config-hypridle = {
       Unit = {
-        Description = "arch-config Hypridle daemon";
-        PartOf = [ "arch-config-session.target" ];
+        Description = "linux-config Hypridle daemon";
+        PartOf = [ "linux-config-session.target" ];
       };
       Service = {
         ExecStart = "${pkgs.hypridle}/bin/hypridle";
         Restart = "on-failure";
         RestartSec = 2;
       };
-      Install.WantedBy = [ "arch-config-session.target" ];
+      Install.WantedBy = [ "linux-config-session.target" ];
     };
 
-    systemd.user.services.arch-config-wallpaper = {
+    systemd.user.services.linux-config-wallpaper = {
       Unit = {
-        Description = "arch-config wallpaper daemon";
-        PartOf = [ "arch-config-session.target" ];
+        Description = "linux-config wallpaper daemon";
+        PartOf = [ "linux-config-session.target" ];
       };
       Service = {
         ExecStart = "${pkgs.awww}/bin/awww-daemon";
@@ -405,65 +420,65 @@ in
         Restart = "on-failure";
         RestartSec = 2;
       };
-      Install.WantedBy = [ "arch-config-session.target" ];
+      Install.WantedBy = [ "linux-config-session.target" ];
     };
 
-    systemd.user.services.arch-config-network-manager-applet = {
+    systemd.user.services.linux-config-network-manager-applet = {
       Unit = {
-        Description = "arch-config NetworkManager applet";
-        PartOf = [ "arch-config-session.target" ];
+        Description = "linux-config NetworkManager applet";
+        PartOf = [ "linux-config-session.target" ];
       };
       Service = {
         ExecStart = "${pkgs.networkmanagerapplet}/bin/nm-applet --indicator";
         Restart = "on-failure";
         RestartSec = 2;
       };
-      Install.WantedBy = [ "arch-config-session.target" ];
+      Install.WantedBy = [ "linux-config-session.target" ];
     };
 
-    systemd.user.services.arch-config-fcitx5 = {
+    systemd.user.services.linux-config-fcitx5 = {
       Unit = {
-        Description = "arch-config Fcitx5 input method";
-        PartOf = [ "arch-config-session.target" ];
+        Description = "linux-config Fcitx5 input method";
+        PartOf = [ "linux-config-session.target" ];
       };
       Service = {
         ExecStart = "${pkgs.fcitx5}/bin/fcitx5";
         Restart = "on-failure";
         RestartSec = 2;
       };
-      Install.WantedBy = [ "arch-config-session.target" ];
+      Install.WantedBy = [ "linux-config-session.target" ];
     };
 
-    systemd.user.services.arch-config-clipboard-text = {
+    systemd.user.services.linux-config-clipboard-text = {
       Unit = {
-        Description = "arch-config text clipboard history";
-        PartOf = [ "arch-config-session.target" ];
+        Description = "linux-config text clipboard history";
+        PartOf = [ "linux-config-session.target" ];
       };
       Service = {
         ExecStart = "${pkgs.wl-clipboard}/bin/wl-paste --type text --watch ${pkgs.cliphist}/bin/cliphist store";
         Restart = "on-failure";
         RestartSec = 2;
       };
-      Install.WantedBy = [ "arch-config-session.target" ];
+      Install.WantedBy = [ "linux-config-session.target" ];
     };
 
-    systemd.user.services.arch-config-clipboard-image = {
+    systemd.user.services.linux-config-clipboard-image = {
       Unit = {
-        Description = "arch-config image clipboard history";
-        PartOf = [ "arch-config-session.target" ];
+        Description = "linux-config image clipboard history";
+        PartOf = [ "linux-config-session.target" ];
       };
       Service = {
         ExecStart = "${pkgs.wl-clipboard}/bin/wl-paste --type image --watch ${pkgs.cliphist}/bin/cliphist store";
         Restart = "on-failure";
         RestartSec = 2;
       };
-      Install.WantedBy = [ "arch-config-session.target" ];
+      Install.WantedBy = [ "linux-config-session.target" ];
     };
 
-    systemd.user.targets.arch-config-session.Unit.Description =
-      "arch-config graphical session services";
+    systemd.user.targets.linux-config-session.Unit.Description =
+      "linux-config graphical session services";
 
-    home.sessionVariables.ARCH_CONFIG_QUICKSHELL = quickshellRoot;
-    home.sessionVariables.ARCH_CONFIG_QUICKSHELL_BIN = cfg.quickshell.executable;
+    home.sessionVariables.LINUX_CONFIG_QUICKSHELL = quickshellRoot;
+    home.sessionVariables.LINUX_CONFIG_QUICKSHELL_BIN = cfg.quickshell.executable;
   };
 }

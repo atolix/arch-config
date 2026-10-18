@@ -52,6 +52,7 @@
           self.homeManagerModules.default
           {
             linuxConfig.home.enable = true;
+            linuxConfig.home.username = "atolix";
             home = {
               username = "atolix";
               homeDirectory = "/home/atolix";
@@ -155,16 +156,12 @@
                 cd source
 
                 bash -n \
-                  install.sh \
-                  bootstrap-nix.sh \
                   apply-home-manager.sh \
                   check.sh \
                   checks/*.sh \
                   quickshell/run.sh \
                   quickshell/scripts/*.sh
                 shellcheck -x -P quickshell/scripts \
-                  install.sh \
-                  bootstrap-nix.sh \
                   apply-home-manager.sh \
                   check.sh \
                   checks/*.sh \

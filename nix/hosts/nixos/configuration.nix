@@ -5,8 +5,12 @@
   ...
 }:
 
+let
+  userName = "atolix";
+in
 {
   linuxConfig.desktop.enable = true;
+  linuxConfig.home.username = userName;
 
   boot.loader = {
     systemd-boot.enable = true;
@@ -14,6 +18,10 @@
   };
 
   hardware.enableRedistributableFirmware = true;
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
   nixpkgs.config = {
     allowUnfreePredicate = pkg: lib.getName pkg == "broadcom-sta";
     # BCM4360 requires the unmaintained wl driver. Review this exception when
@@ -43,7 +51,7 @@
     memoryPercent = 50;
   };
 
-  users.users.atolix = {
+  users.users.${userName} = {
     isNormalUser = true;
     extraGroups = [
       "networkmanager"
@@ -57,8 +65,10 @@
     useGlobalPkgs = true;
     useUserPackages = true;
     backupFileExtension = "linux-config-before-home-manager";
-    users.atolix = {
+    users.${userName} = {
       linuxConfig.home.enable = true;
+      home.username = userName;
+      home.homeDirectory = "/home/${userName}";
       home.stateVersion = "26.05";
     };
   };
