@@ -128,6 +128,7 @@ in
       btop
       cliphist
       fastfetch
+      fcitx5-mozc
       ghostty
       glslviewer
       grim

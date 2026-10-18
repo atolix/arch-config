@@ -160,6 +160,7 @@
               wf-recorder wpctl wl-copy wl-paste wofi zls; do
               test -x "${homeProfile}/bin/$command_name"
             done
+            test -e "${homeProfile}/lib/fcitx5/fcitx5-mozc.so"
             touch "$out"
           '';
         }
