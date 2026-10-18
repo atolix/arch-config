@@ -177,9 +177,15 @@ for checks and development.
 
 The standalone profile currently manages the Hyprland desktop files and user
 services, Git identity, Zsh aliases and completion, Mise, Fzf, Powerlevel10k,
-Ghostty colors, the Neovim executable and language servers, desktop fonts, and
-the CLI tools referenced by those configurations. Neovim's Lua configuration
-and plugins remain in the separate dotfiles repository.
+Ghostty, Google Chrome, Codex CLI (`codex`), NetworkManager CLI (`nmcli`), the
+Neovim executable and language servers, desktop fonts, and the CLI tools
+referenced by those configurations. Ghostty loads its settings from
+`~/dotfiles/ghostty/config`; Neovim's Lua configuration and plugins also remain
+in the separate dotfiles repository.
+
+Google Chrome is installed through Home Manager. The standalone profile
+explicitly permits this non-free package; the included NixOS host permits
+Google Chrome and `broadcom-sta`.
 
 Quickshell components remain native QML so that editor support and hot reload
 continue to work. Nix generates `shared/Theme.js` inside the packaged copy from
