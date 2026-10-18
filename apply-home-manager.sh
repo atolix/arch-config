@@ -13,7 +13,7 @@ case "$mode" in
 esac
 
 if ! command -v nix >/dev/null 2>&1; then
-    echo 'Nix is required. Run ./bootstrap-nix.sh first.' >&2
+    echo 'Nix is required. Run this script on NixOS or install Nix first.' >&2
     exit 1
 fi
 

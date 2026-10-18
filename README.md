@@ -110,6 +110,11 @@ nix flake check
 sudo nixos-rebuild switch --flake .#nixos
 ```
 
+The host user is defined once as `userName` in
+`nix/hosts/nixos/configuration.nix`. Change that value, and optionally the
+`linuxConfig.home.git.email` option, before the first activation on another
+machine.
+
 The repository itself can be checked with `nix flake check`. This validates the
 Shell and Python sources, Nix configuration, generated Home Manager profile,
 and packaged Quickshell configuration. Its default package is the tracked SDDM
@@ -223,9 +228,7 @@ The timestamped files remain available as a separate fallback for the original
 pre-Home-Manager configuration.
 
 All system packages, services, themes, and user configuration are managed by
-NixOS and Home Manager. `packages.txt`, `install.sh`, and `bootstrap-nix.sh`
-are retained only as legacy Arch migration references and are not part of the
-NixOS workflow.
+NixOS and Home Manager.
 
 ## Run
 
@@ -264,8 +267,6 @@ To preview the OSD without changing a value:
 exec-once = <repo>/quickshell/run.sh --no-duplicate --daemonize
 ```
 
-`install.sh` renders the repository path into the active Hyprland configuration.
-
 ## Apply on NixOS
 
 ```sh
@@ -291,13 +292,11 @@ nix run .#check
 linux-config/
 ├── flake.nix                         # Export NixOS/Home Manager modules and checks
 ├── apply-home-manager.sh             # Preview or activate the Home Manager profile
-├── bootstrap-nix.sh                  # Legacy Arch migration helper
 ├── check.sh                          # Check the installed NixOS desktop session
 ├── checks/
 │   ├── commands.sh                  # Check commands and installed packages
 │   ├── config.sh                    # Check rendered user configuration
 │   └── session.sh                   # Check the running Hyprland and Quickshell session
-├── install.sh                        # Legacy Arch installer
 ├── nix/
 │   ├── modules/
 │   │   ├── nixos.nix                # System services and SDDM integration
@@ -307,11 +306,10 @@ linux-config/
 │   │   └── hardware-configuration.nix # Detected filesystems and boot hardware
 │   └── packages/
 │       └── sddm-theme.nix            # Package the tracked theme for the Nix store
-├── packages.txt                     # Legacy Arch package list
 ├── home/atolix/.config/
 │   ├── btop/
 │   │   ├── btop.conf                  # Custom theme selection and transparent background
-│   │   └── themes/arch-config.theme   # Colors shared with Quickshell
+│   │   └── themes/linux-config.theme   # Colors shared with Quickshell
 │   ├── fastfetch/
 │   │   └── config.jsonc                # Quickshell-matched logo and text colors
 │   ├── gtk-3.0/
