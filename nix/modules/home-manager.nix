@@ -32,8 +32,8 @@ let
           "exec-once = hypridle"
         ]
         [
-          "exec-once = ${pkgs.systemd}/bin/systemctl --user start arch-config-quickshell.service"
-          "exec-once = ${pkgs.systemd}/bin/systemctl --user start arch-config-hypridle.service"
+          "exec-once = ${pkgs.dbus}/bin/dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP HYPRLAND_INSTANCE_SIGNATURE && ${pkgs.systemd}/bin/systemctl --user start arch-config-session.target"
+          ""
         ]
         (builtins.readFile source)
     );
@@ -98,28 +98,31 @@ in
     systemd.user.services.arch-config-quickshell = {
       Unit = {
         Description = "arch-config Quickshell desktop shell";
-        PartOf = [ "graphical-session.target" ];
+        PartOf = [ "arch-config-session.target" ];
       };
       Service = {
         ExecStart = "${quickshellRoot}/run.sh --no-duplicate";
         Restart = "on-failure";
         RestartSec = 2;
       };
-      Install.WantedBy = [ "graphical-session.target" ];
+      Install.WantedBy = [ "arch-config-session.target" ];
     };
 
     systemd.user.services.arch-config-hypridle = {
       Unit = {
         Description = "arch-config Hypridle daemon";
-        PartOf = [ "graphical-session.target" ];
+        PartOf = [ "arch-config-session.target" ];
       };
       Service = {
         ExecStart = "${pkgs.hypridle}/bin/hypridle";
         Restart = "on-failure";
         RestartSec = 2;
       };
-      Install.WantedBy = [ "graphical-session.target" ];
+      Install.WantedBy = [ "arch-config-session.target" ];
     };
+
+    systemd.user.targets.arch-config-session.Unit.Description =
+      "arch-config graphical session services";
 
     home.sessionVariables.ARCH_CONFIG_QUICKSHELL = quickshellRoot;
   };
