@@ -47,7 +47,10 @@
       };
 
       homeConfigurations.atolix = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        pkgs = import nixpkgs {
+          system = "x86_64-linux";
+          config.allowUnfreePredicate = pkg: nixpkgs.lib.getName pkg == "google-chrome";
+        };
         modules = [
           self.homeManagerModules.default
           {
@@ -205,7 +208,7 @@
           home-commands = pkgs.runCommand "linux-config-home-command-check" { } ''
             for command_name in \
               awww awww-daemon brightnessctl btop cliphist codex eza fastfetch fzf ghostty git \
-              glslViewer gopls grim home-manager hypridle hyprlock lua-language-server \
+              glslViewer google-chrome-stable gopls grim home-manager hypridle hyprlock lua-language-server \
               mise mpv nvim nm-applet nmcli pactl python3 rg rust-analyzer sensors \
               slurp solargraph tsc typescript-language-server thunar upower \
               wf-recorder wpctl wl-copy wl-paste wofi zls; do

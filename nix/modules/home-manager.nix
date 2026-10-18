@@ -344,6 +344,7 @@ in
       codex
       fcitx5WithMozc
       glslviewer
+      google-chrome
       grim
       hypridle
       hyprlock

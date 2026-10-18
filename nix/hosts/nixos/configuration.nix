@@ -23,7 +23,7 @@ in
     "flakes"
   ];
   nixpkgs.config = {
-    allowUnfreePredicate = pkg: lib.getName pkg == "broadcom-sta";
+    allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ "broadcom-sta" "google-chrome" ];
     # BCM4360 requires the unmaintained wl driver. Review this exception when
     # updating nixpkgs because the driver has known security issues.
     permittedInsecurePackages = [ "broadcom-sta-6.30.223.271-63-6.18.56" ];
@@ -72,11 +72,6 @@ in
       home.stateVersion = "26.05";
     };
   };
-
-  environment.systemPackages = with pkgs; [
-    google-chrome
-  ];
-  nixpkgs.config.allowUnfree = true;
 
   system.stateVersion = "26.05";
 }
