@@ -8,10 +8,10 @@ fail() { printf '  [!!] %s\n' "$1"; failed=1; }
 
 printf 'Configuration files\n'
 for file in \
-    "$config_dir/hypr/hyprland.conf" \
+    "$config_dir/hypr/hyprland.lua" \
     "$config_dir/hypr/hyprlock.conf" \
     "$config_dir/hypr/hypridle.conf" \
-    "$config_dir/hypr/hyprland-osd.conf" \
+    "$config_dir/hypr/hyprland-osd.lua" \
     "$config_dir/wofi/style.css" \
     "$config_dir/btop/btop.conf" \
     "$config_dir/btop/themes/linux-config.theme" \

@@ -264,10 +264,10 @@ Quickshell owns the desktop notification service.
 
 ## Volume and brightness OSD
 
-The Hyprland key bindings are kept in `hyprland-osd.conf` and are already enabled in this setup:
+The Hyprland key bindings are kept in `hyprland-osd.lua` and are already enabled in this setup:
 
-```ini
-source = ~/.config/hypr/hyprland-osd.conf
+```lua
+dofile(os.getenv("HOME") .. "/.config/hypr/hyprland-osd.lua")
 ```
 
 Volume changes use 2% steps up to 100%; brightness changes use 10% steps. The mute key is supported.
@@ -283,11 +283,9 @@ To preview the OSD without changing a value:
 
 ## Autostart
 
-`~/.config/hypr/hyprland.conf` is configured to start Quickshell automatically:
-
-```ini
-exec-once = <repo>/quickshell/run.sh --no-duplicate --daemonize
-```
+`~/.config/hypr/hyprland.lua` starts `linux-config-session.target` on
+`hyprland.start`. Home Manager manages Quickshell and the other session services
+through that target.
 
 ## Apply on NixOS
 
@@ -338,7 +336,7 @@ linux-config/
 │   │   ├── settings.ini             # Shared GTK theme settings
 │   │   └── gtk.css                  # Shared GTK colors and selection styling
 │   ├── hypr/
-│   │   ├── hyprland.conf            # Hyprland key bindings and window rules
+│   │   ├── hyprland.lua             # Hyprland key bindings and window rules
 │   │   └── hyprlock.conf             # Lock screen appearance
 │   └── wofi/style.css                # Launcher and window switcher styling
 ├── quickshell/
@@ -370,7 +368,7 @@ linux-config/
 │   │   ├── Theme.js                   # Shared colors
 │   │   └── HyprlandHelpers.js         # Hyprland data helpers
 │   ├── hypridle.conf                 # Idle locking and suspend timers
-│   ├── hyprland-osd.conf             # Hardware key bindings for the OSD
+│   ├── hyprland-osd.lua              # Hardware key bindings for the OSD
 │   ├── run.sh                         # Start Quickshell relative to this directory
 │   └── scripts/
 │       ├── paths.sh                  # Shared screenshot and recording directories

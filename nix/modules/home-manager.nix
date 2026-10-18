@@ -122,30 +122,11 @@ let
       ]
       text;
   render = source: renderText (builtins.readFile source);
-  renderHyprland =
-    source:
-    renderText (
-      builtins.replaceStrings
-        [
-          "exec-once = @LINUX_CONFIG_DIR@/quickshell/run.sh --no-duplicate --daemonize"
-          "exec-once = hypridle"
-          "exec-once = nm-applet --indicator"
-          "exec-once = awww-daemon & awww img @LINUX_CONFIG_DIR@/sddm/mysddm/pictures/wallpapers/v1.jpg"
-          "exec-once = fcitx5"
-          "exec-once = wl-paste --type text --watch cliphist store"
-          "exec-once = wl-paste --type image --watch cliphist store"
-        ]
-        [
-          "exec-once = ${pkgs.dbus}/bin/dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP HYPRLAND_INSTANCE_SIGNATURE && ${pkgs.systemd}/bin/systemctl --user start linux-config-session.target"
-          ""
-          ""
-          ""
-          ""
-          ""
-          ""
-        ]
-        (builtins.readFile source)
-    );
+  renderHyprland = source:
+    builtins.replaceStrings
+      [ "@SESSION_START@" ]
+      [ "${pkgs.dbus}/bin/dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP HYPRLAND_INSTANCE_SIGNATURE && ${pkgs.systemd}/bin/systemctl --user start linux-config-session.target" ]
+      (render source);
 in
 {
   options.linuxConfig.home = {
@@ -377,10 +358,10 @@ in
       "nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/nvim";
       "herdr/config.toml".source =
         config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/herdr/config.toml";
-      "hypr/hyprland.conf".text = renderHyprland ../../home/atolix/.config/hypr/hyprland.conf;
+      "hypr/hyprland.lua".text = renderHyprland ../../home/atolix/.config/hypr/hyprland.lua;
       "hypr/hyprlock.conf".text = render ../../home/atolix/.config/hypr/hyprlock.conf;
       "hypr/hypridle.conf".text = render ../../quickshell/hypridle.conf;
-      "hypr/hyprland-osd.conf".text = render ../../quickshell/hyprland-osd.conf;
+      "hypr/hyprland-osd.lua".text = render ../../quickshell/hyprland-osd.lua;
 
       "wofi/style.css".text = wofiStyle;
       "btop/btop.conf".text = render ../../home/atolix/.config/btop/btop.conf;
