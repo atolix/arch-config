@@ -59,6 +59,10 @@ in
   };
   programs.zsh.enable = true;
 
+  # Run toolchains downloaded by mise on NixOS.
+  programs.nix-ld.enable = true;
+  environment.systemPackages = [ pkgs.gcc ];
+
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
